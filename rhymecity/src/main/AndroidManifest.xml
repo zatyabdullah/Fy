@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.fly.firefly">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <application
+        android:name=".FireFlyApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/MyCustomTheme">
+
+        <!-- android:theme="@style/Theme1" -->
+        <!-- android:name="com.fly.firefly.ui.activity.MainActivity" -->
+        <activity
+            android:name=".ui.activity.Homepage.HomeActivity"
+            android:label="@string/app_name" />
+        <activity android:name=".ui.activity.Login.LoginActivity" />
+        <activity android:name=".ui.activity.Register.RegisterActivity" />
+        <activity android:name=".ui.activity.BookingFlight.SearchFlightActivity" />
+        <activity android:name=".ui.activity.BookingFlight.FlightDetailActivity" />
+        <activity android:name=".ui.activity.BookingFlight.PersonalDetailActivity" />
+        <activity android:name=".ui.activity.BookingFlight.SeatSelectionActivity" />
+        <activity android:name=".ui.activity.BookingFlight.PaymentFlightActivity" />
+        <activity android:name=".ui.activity.MobileCheckIn.MobileCheckInActivity1" />
+        <activity android:name=".ui.activity.MobileCheckIn.MobileCheckInActivity2" />
+        <activity android:name=".ui.activity.MobileCheckIn.MobileCheckInActivity3" />
+        <activity android:name=".ui.activity.ManageFlight.ManageFlight_Activity" />
+        <activity android:name=".ui.activity.ManageFlight.ManageFlight_SelectAction" />
+        <activity android:name=".ui.activity.ManageFlight.ManageFlight_ChangeContact" />
+        <activity android:name=".ui.activity.ManageFlight.ManageFlight_EditPassenger" />
+        <activity android:name=".ui.activity.ManageFlight.ManageFlight_ChangeFlight" />
+        <activity android:name=".ui.activity.ManageFlight.ManageFlight_SeatSelection" />
+        <activity android:name=".ui.activity.ManageFlight.ManageFlight_SentItinerary" />
+
+        <!-- Boarding PASS -->
+        <activity android:name=".ui.activity.BoardingPass.BoardingPassActivity" />
+
+        <!-- DEMO -->
+        <activity android:name=".ui.activity.Gate.CurrentGateActivity" />
+        <activity android:name=".ui.activity.Beacon.BeaconRanging" />
+        <activity android:name=".ui.activity.Beacon.RangingActivity" />
+        <activity android:name=".ui.activity.Map.IndoorMapActivity" />
+        <activity android:name=".ui.activity.Sensor.SensorActivity" />
+        <activity android:name=".ui.activity.Sensor.Compass" />
+
+        <!-- SPLASH SCREEN -->
+        <activity android:name=".ui.activity.SplashScreen.SplashScreenActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.activity.PasswordExpired.ChangePasswordActivity"
+            android:label="@string/title_activity_password_expired"></activity>
+    </application>
+
+</manifest>
