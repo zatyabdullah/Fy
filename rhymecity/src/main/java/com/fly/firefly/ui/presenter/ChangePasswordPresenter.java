@@ -2,8 +2,7 @@ package com.fly.firefly.ui.presenter;
 
 import android.util.Log;
 
-import com.fly.firefly.ui.object.LoginRequest;
-import com.fly.firefly.ui.object.PasswordRequest;
+import com.fly.firefly.ui.object.ChangePasswordRequest;
 import com.squareup.otto.Bus;
 
 public class ChangePasswordPresenter {
@@ -30,15 +29,12 @@ public class ChangePasswordPresenter {
         bus.unregister(this);
     }
 
-    public void loginFunction(LoginRequest data) {
-        Log.e("xxxx",data.getUsername());
-        bus.post(new LoginRequest(data));
-    }
 
-
-    public void forgotPassword(PasswordRequest data) {
+    public void changePassword(ChangePasswordRequest data) {
         Log.e("xxxx",data.getEmail());
-        bus.post(new PasswordRequest(data));
+        Log.e("xxxx",data.getCurrentPassword());
+        Log.e("xxxx",data.getNewPassword());
+        bus.post(new ChangePasswordRequest(data));
     }
 
 

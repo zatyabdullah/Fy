@@ -1,21 +1,19 @@
-package com.fly.firefly.ui.activity.PasswordExpired;
+package com.fly.firefly.ui.activity.UpdateProfile;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
-
 import com.fly.firefly.AnalyticsApplication;
 import com.fly.firefly.MainFragmentActivity;
 import com.fly.firefly.R;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
-
 import butterknife.ButterKnife;
 
-//import android.view.WindowManager;
 
-public class ChangePasswordActivity extends MainFragmentActivity implements FragmentContainerActivity {
+
+public class UpdateProfileActivity extends MainFragmentActivity implements FragmentContainerActivity {
 
     //@InjectView(R.id.btnLogin) Button btnLogin;
     private Tracker mTracker;
@@ -27,7 +25,7 @@ public class ChangePasswordActivity extends MainFragmentActivity implements Frag
         ButterKnife.inject(this);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.main_content, ChangePasswordFragment.newInstance()).commit();
+        fragmentManager.beginTransaction().replace(R.id.main_content, UpdateProfileFragment.newInstance()).commit();
 
         // [START shared_tracker]
         // Obtain the shared Tracker instance.
@@ -42,8 +40,8 @@ public class ChangePasswordActivity extends MainFragmentActivity implements Frag
     public void onResume() {
         super.onResume();
         // presenter.onResume();
-        Log.i("Page Name", "Setting screen name: " + "Change Password");
-        mTracker.setScreenName("Change Password" + "B");
+        Log.i("Page Name", "Setting screen name: " + "Update Profile");
+        mTracker.setScreenName("Update Profile" + "B");
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 

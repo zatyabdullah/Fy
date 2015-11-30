@@ -214,8 +214,8 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
 
         if (obj.getStatus().equals("success")) {
             pref.setLoginStatus("Y");
-            Log.e("X",obj.getUser_info().getFirstname());
-            pref.setUsername(obj.getUser_info().getFirstname());
+            Log.e("X",obj.getUser_info().getFirst_name());
+            pref.setUsername(obj.getUser_info().getFirst_name());
             goBookingPage();
         }
         else if (obj.getStatus().equals("change_password")) {

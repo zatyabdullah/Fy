@@ -1,53 +1,40 @@
 package com.fly.firefly.api.obj;
 
 /*
- * Created by ImalPasha on 11/6/2015.
+ * Created by Metech USer
  */
 
  /* Response From API */
 
-public class LoginReceive {
+public class UpdateProfileReceive {
 
-    private final LoginReceive userObj;
+    private final UpdateProfileReceive userObj;
     private String status;
     private String message;
-    private user_info user_info;
+    private UserInfo userInfo;
 
-    public LoginReceive(LoginReceive param_userObj) {
+    public UpdateProfileReceive(UpdateProfileReceive param_userObj) {
         this.userObj = param_userObj;
     }
 
-    public LoginReceive getUserObj() {
+    public UpdateProfileReceive getUserObj() {
         return userObj;
     }
 
-   public class user_info{
+    public class UserInfo{
 
         private String username;
         private String password;
-       private String first_name;
+        private String signature;
 
-       public String getLast_name() {
-           return last_name;
-       }
+        public String getSignature() {
+            return signature;
+        }
 
-       public void setLast_name(String last_name) {
-           this.last_name = last_name;
-       }
-
-       private String last_name;
-
-       public String getFirst_name() {
-           return first_name;
-       }
-
-       public void setFirst_name(String first_name) {
-           this.first_name = first_name;
-       }
-
-
-
-       public String getUsername() {
+        public void setSignature(String signature) {
+            this.signature = signature;
+        }
+        public String getUsername() {
             return username;
         }
         public void setUsername(String username) {
@@ -62,12 +49,12 @@ public class LoginReceive {
 
     }
 
-    public user_info getUser_info() {
-        return user_info;
+    public UserInfo getUserInfo() {
+        return userInfo;
     }
 
-    public void setUser_info(user_info user_info) {
-        this.user_info = user_info;
+    public void setUserInfo(UserInfo userInfo) {
+        this.userInfo = userInfo;
     }
 
     public String getStatus() {
@@ -85,4 +72,5 @@ public class LoginReceive {
     public void setStatus(String status) {
         this.status = status;
     }
+
 }
