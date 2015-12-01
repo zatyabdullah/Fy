@@ -26,6 +26,7 @@ import com.fly.firefly.utils.SharedPrefManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.DateFormatSymbols;
 import java.util.ArrayList;
@@ -184,6 +185,30 @@ public class BaseFragment extends Fragment {
 		Collections.sort(countries);
 		return countries;*/
 	}
+
+
+
+	/*Get All User Info From OS*/
+	public JSONObject getUserInfo(Activity act)
+	{
+		JSONObject json = null;
+
+		prefManager = new SharedPrefManager(act);
+		HashMap<String, String> init = prefManager.getUserInfo();
+		String userInfo = init.get(SharedPrefManager.USER_INFO);
+		Log.e("user_info",userInfo);
+
+		try {
+			json = new JSONObject(userInfo);
+			Log.e("json",Integer.toString(json.length()));
+		}catch (JSONException e){
+			e.printStackTrace();
+		}
+
+		return json;
+
+	}
+
 
 
 	public static void initiateLoading(Activity act){

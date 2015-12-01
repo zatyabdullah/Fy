@@ -43,6 +43,7 @@
         <activity android:name=".ui.activity.ManageFlight.ManageFlight_ChangeFlight" />
         <activity android:name=".ui.activity.ManageFlight.ManageFlight_SeatSelection" />
         <activity android:name=".ui.activity.ManageFlight.ManageFlight_SentItinerary" />
+        <activity android:name=".ui.activity.UpdateProfile.UpdateProfileActivity" />
 
         <!-- Boarding PASS -->
         <activity android:name=".ui.activity.BoardingPass.BoardingPassActivity" />

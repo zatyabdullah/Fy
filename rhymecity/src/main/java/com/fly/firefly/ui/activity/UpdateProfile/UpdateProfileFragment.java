@@ -177,10 +177,12 @@ public class UpdateProfileFragment extends BaseFragment implements
 
 
 
-        HashMap<String, String> prefusername = pref.getUsername();
-        String email = prefusername.get(SharedPrefManager.USERNAME);
+        HashMap<String, String> userinfo = pref.getUserEmail();
+        String username = userinfo.get(SharedPrefManager.USER_EMAIL);
 
-        editEmail.setText(email);
+        editEmail.setText(username);
+
+
 
 
         /*Display Country Data*/
@@ -270,7 +272,8 @@ public class UpdateProfileFragment extends BaseFragment implements
             public void onClick(View v) {
                 //Validate form
                 // Log.e("selectedTitle",selectedTitle);
-               mValidator.validate(); requestUpdateProfile();
+              mValidator.validate();
+                requestUpdateProfile();
                 //requestChangePassword(editTextemail.getText().toString(), editTextPasswordCurrent.getText().toString(), editTextPasswordNew.getText().toString());
 
             }
@@ -374,6 +377,10 @@ public class UpdateProfileFragment extends BaseFragment implements
 
         }
     }
+
+
+
+
     //Validator Result//
     @Override
     public void onValidationSucceeded() {

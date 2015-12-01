@@ -10,6 +10,8 @@ public class SharedPrefManager {
     private static final String PREF_NAME = "AndroidHivePref";
     public static final String SIGNATURE = "SIGNATURE";
     public static final String SELECTED = "SELECTED";
+    public static final String USER_EMAIL = "USERNAME";
+    public static final String USER_INFO = "USERINFO";
 
     public static final String TITLE = "TITLE";
     public static final String FLIGHT = "FLIGHT";
@@ -48,6 +50,14 @@ public class SharedPrefManager {
         init.put(USERNAME, _sharedPrefs.getString(USERNAME, null));
         return init;
     }
+
+    /*Return UserInfo*/
+    public HashMap<String, String> getUserInfo() {
+        HashMap<String, String> init = new HashMap<String, String>();
+        init.put(USER_INFO, _sharedPrefs.getString(USER_INFO, null));
+        return init;
+    }
+
 
     /*Return Login Status*/
     public HashMap<String, String> getDefaultBanner() {
@@ -100,9 +110,23 @@ public class SharedPrefManager {
     }
 
 
+    /*Return User_info*/
+    public HashMap<String, String> getUserEmail() {
+        HashMap<String, String> init = new HashMap<String, String>();
+        init.put(USERNAME, _sharedPrefs.getString(USER_EMAIL, null));
+        return init;
+    }
+
     /*Set Username Value*/
     public void setUsername(String url) {
         _prefsEditor.putString(USERNAME, url);
+        _prefsEditor.apply();
+    }
+
+
+    /*Set Username Value*/
+    public void setUserInfo(String url) {
+        _prefsEditor.putString(USER_INFO, url);
         _prefsEditor.apply();
     }
 
@@ -154,6 +178,13 @@ public class SharedPrefManager {
         _prefsEditor.apply();
     }
 
+
+    /*Set Userinfo Value*/
+    public void setUserEmail(String url) {
+        _prefsEditor.putString(USER_EMAIL, url);
+        _prefsEditor.apply();
+    }
+
     /*Clear Signature Value*/
     public void clearBannerURL() {
         // Clearing All URL
@@ -180,6 +211,11 @@ public class SharedPrefManager {
         _sharedPrefs.edit().remove(USERNAME).apply();
     }
 
+    public void setUserInfo() {
+        // Clearing Siganture
+        _sharedPrefs.edit().remove(USER_INFO).apply();
+    }
+
     /*Clear Selected Value*/
     public void clearSelectedPopupSelection() {
         // Clearing Selected
@@ -204,4 +240,10 @@ public class SharedPrefManager {
         _sharedPrefs.edit().remove(COUNTRY).apply();
     }
 
+
+    /*Clear UserInfo Value*/
+    public void clearUserEmail() {
+        // Clearing Selected
+        _sharedPrefs.edit().remove(USER_EMAIL).apply();
+    }
 }
