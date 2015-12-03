@@ -16,6 +16,8 @@ public class SharedPrefManager {
     public static final String TITLE = "TITLE";
     public static final String FLIGHT = "FLIGHT";
     public static final String COUNTRY = "COUNTRY";
+    public static final String STATE = "STATE";
+
     public static final String ISLOGIN = "ISLOGIN";
 
     public static final String PROMO_BANNER = "PM";
@@ -41,6 +43,13 @@ public class SharedPrefManager {
     public HashMap<String, String> getPromoBanner() {
         HashMap<String, String> init = new HashMap<String, String>();
         init.put(PROMO_BANNER, _sharedPrefs.getString(PROMO_BANNER, null));
+        return init;
+    }
+
+    /*Return State*/
+    public HashMap<String, String> getState() {
+        HashMap<String, String> init = new HashMap<String, String>();
+        init.put(STATE, _sharedPrefs.getString(STATE, null));
         return init;
     }
 
@@ -110,6 +119,7 @@ public class SharedPrefManager {
     }
 
 
+
     /*Return User_info*/
     public HashMap<String, String> getUserEmail() {
         HashMap<String, String> init = new HashMap<String, String>();
@@ -120,6 +130,12 @@ public class SharedPrefManager {
     /*Set Username Value*/
     public void setUsername(String url) {
         _prefsEditor.putString(USERNAME, url);
+        _prefsEditor.apply();
+    }
+
+    /*Set STATE value*/
+    public void setState(String url) {
+        _prefsEditor.putString(STATE, url);
         _prefsEditor.apply();
     }
 
@@ -226,6 +242,12 @@ public class SharedPrefManager {
     public void clearTitle() {
         // Clearing Selected
         _sharedPrefs.edit().remove(TITLE).apply();
+    }
+
+    /*Clear State Value*/
+    public void clearState() {
+        // Clearing Selected
+        _sharedPrefs.edit().remove(STATE).apply();
     }
 
     /*Clear Flight Value*/

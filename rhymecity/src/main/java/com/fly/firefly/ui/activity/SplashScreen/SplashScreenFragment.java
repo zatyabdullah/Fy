@@ -31,7 +31,6 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
     private int fragmentContainerId;
     private SharedPrefManager pref;
     private DeviceInformation info;
-    //@InjectView(R.id.search_edit_text) EditText searchEditText;
 
     public static SplashScreenFragment newInstance() {
 
@@ -97,6 +96,10 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
         Gson gsonCountry = new Gson();
         String country = gsonCountry.toJson(obj.getObj().getData_country());
         pref.setCountry(country);
+
+        Gson gsonState = new Gson();
+        String state = gsonState.toJson(obj.getObj().getData_state());
+        pref.setState(state);
 
         Gson gsonFlight = new Gson();
         String flight = gsonFlight.toJson(obj.getObj().getData_market());

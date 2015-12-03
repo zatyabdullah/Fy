@@ -171,6 +171,24 @@ public class BaseFragment extends Fragment {
 		return json;
 	}
 
+	public JSONArray getState(Activity act){
+
+		JSONArray json = null;
+
+		prefManager = new SharedPrefManager(act);
+		HashMap<String, String> init = prefManager.getState();
+		String dataState = init.get(SharedPrefManager.STATE);
+
+		try {
+			json = new JSONArray(dataState);
+		}catch (JSONException e){
+			e.printStackTrace();
+		}
+
+		return json;
+	}
+
+
 	public static JSONArray getFlight(Activity act){
 
 		JSONArray json = null;

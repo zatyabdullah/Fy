@@ -2,6 +2,7 @@ package com.fly.firefly.api.obj;
 
 import com.fly.firefly.ui.object.AirportObj;
 import com.fly.firefly.ui.object.Country;
+import com.fly.firefly.ui.object.State;
 import com.fly.firefly.ui.object.TitleObj;
 
 import java.util.ArrayList;
@@ -19,11 +20,20 @@ public class DeviceInfoSuccess{
     private String banner_promo;
     private List<TitleObj> data_title = new ArrayList<TitleObj>();
     private List<Country> data_country = new ArrayList<Country>();
+    private List<State> data_state = new ArrayList<State>();
     private List<AirportObj> data_market = new ArrayList<AirportObj>();
     private String titleCode;
     private String titleName;
     private String status;
     private String signature;
+
+    public List<State> getData_state() {
+        return data_state;
+    }
+
+    public void setData_state(List<State> data_state) {
+        this.data_state = data_state;
+    }
 
     public String getData_version() {
         return data_version;

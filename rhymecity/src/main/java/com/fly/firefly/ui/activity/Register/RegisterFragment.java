@@ -191,7 +191,6 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
 
         pref = new SharedPrefManager(getActivity());
         countrys = new ArrayList<DropDownItem>();
-        state = new ArrayList<DropDownItem>();
         titleList = new ArrayList<DropDownItem>();
 
 
@@ -212,24 +211,7 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
 
 
 
-        /* Get State From Local String*/
-        state_val = getResources().getStringArray(R.array.state);
-        for(int x = 0 ; x < state_val.length ; x++) {
 
-            /*Split data*/
-            String[] parts = state_val[x].split("-");
-            String state_name = parts[0];
-            String state_code = parts[1];
-
-            DropDownItem itemCountry = new DropDownItem();
-            itemCountry.setText(state_name);
-            itemCountry.setCode(state_code);
-            itemCountry.setTag("State");
-            itemCountry.setId(x);
-            state.add(itemCountry);
-            //titleList.add(itemCountry);
-
-        }
 
 
         /*Display Title Data*/
@@ -328,6 +310,24 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
                if (selectedCountry.getTag() == "Country") {
                    editTextCountry.setText(selectedCountry.getText());
                    selectedCountryCode = selectedCountry.getCode();
+
+                   /*Each country click - reset state obj*/
+                   state = new ArrayList<DropDownItem>();
+
+                    /* Set state from selected Country Code*/
+                   JSONArray jsonState = getState(getActivity());
+                   for(int x = 0 ; x < jsonState.length() ; x++) {
+
+                       JSONObject row = (JSONObject) jsonState.opt(x);
+                       if(selectedCountryCode.equals(row.optString("country_code"))) {
+                           DropDownItem itemCountry = new DropDownItem();
+                           itemCountry.setText(row.optString("state_name"));
+                           itemCountry.setCode(row.optString("state_code"));
+                           itemCountry.setTag("State");
+                           state.add(itemCountry);
+                       }
+                   }
+
                } else {
                    editTextState.setText(selectedCountry.getText());
                    selectedState = selectedCountry.getCode();
