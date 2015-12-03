@@ -8,9 +8,7 @@ import com.squareup.otto.Bus;
 public class ChangePasswordPresenter {
 
     public interface ChangePasswordView {
-
         //void onPasswordRequesFailed(String dumm);
-
     }
 
     private final ChangePasswordView view;

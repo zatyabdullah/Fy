@@ -18,7 +18,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import com.fly.firefly.ui.fragment.BookingFlight.SearchFlightFragment;
+import com.fly.firefly.ui.activity.BookingFlight.SearchFlightFragment;
 import com.fly.firefly.ui.object.Country;
 import com.fly.firefly.utils.DropDownItem;
 import com.fly.firefly.utils.DropMenuAdapter;
@@ -32,16 +32,62 @@ import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import de.keyboardsurfer.android.widget.crouton.Configuration;
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
+
 
 public class BaseFragment extends Fragment {
 
-	protected com.fly.firefly.base.AQuery aq;
-	protected SharedPreferences pref;
-	int indexForState = -1;
+	public com.fly.firefly.base.AQuery aq;
+	private SharedPreferences pref;
+	private int indexForState = -1;
 	private String selected;
 	private static SharedPrefManager prefManager;
 	private static Country obj = new Country();
+	private static ProgressDialog mProgressDialog;
 
+
+	public void croutonAlert(Activity act,String msg){
+		Crouton.makeText(act, msg, Style.ALERT)
+				.setConfiguration(new Configuration.Builder()
+				.setDuration(Configuration.DURATION_LONG).build())
+				.show();
+	}
+
+	/*public void initiateLoading(Activity act){
+
+		ProgressDialog mProgressDialog;
+		mProgressDialog = new ProgressDialog(act);
+		mProgressDialog.setIndeterminate(false);
+		mProgressDialog.setCancelable(true);
+		mProgressDialog.setMessage("Loading...");
+		mProgressDialog.show();
+	}*/
+
+	public static void initiateLoading(Activity act){
+
+		mProgressDialog = new ProgressDialog(act);
+		mProgressDialog.setIndeterminate(false);
+		mProgressDialog.setCancelable(true);
+		mProgressDialog.setMessage("Loading...");
+
+		WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+		//lp.copyFrom(mProgressDialog.getWindow().getAttributes());
+		lp.width = 50;
+		lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+		mProgressDialog.getWindow().setAttributes(lp);
+
+		mProgressDialog.show();
+
+
+	}
+
+	public static void dismissLoading(){
+		if(mProgressDialog.isShowing()){
+			mProgressDialog.dismiss();
+		}
+	}
 
 	public void popupAlert(String message){
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -196,7 +242,7 @@ public class BaseFragment extends Fragment {
 		prefManager = new SharedPrefManager(act);
 		HashMap<String, String> init = prefManager.getUserInfo();
 		String userInfo = init.get(SharedPrefManager.USER_INFO);
-		Log.e("user_info",userInfo);
+		Log.e("user_info", userInfo);
 
 		try {
 			json = new JSONObject(userInfo);
@@ -211,23 +257,7 @@ public class BaseFragment extends Fragment {
 
 
 
-	public static void initiateLoading(Activity act){
 
-		ProgressDialog mProgressDialog = new ProgressDialog(act);
-		mProgressDialog.setIndeterminate(false);
-		mProgressDialog.setCancelable(true);
-		mProgressDialog.setMessage("Loading...");
-
-		WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-		//lp.copyFrom(mProgressDialog.getWindow().getAttributes());
-		lp.width = 50;
-		lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-		mProgressDialog.getWindow().setAttributes(lp);
-
-		mProgressDialog.show();
-
-
-	}
 
 	/*public static void showConnectionError(String test, Activity activity)
 	{

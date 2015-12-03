@@ -28,6 +28,7 @@ import com.fly.firefly.ui.presenter.RegisterPresenter;
 import com.fly.firefly.utils.DropDownItem;
 import com.fly.firefly.utils.SharedPrefManager;
 import com.fly.firefly.utils.Utils;
+import com.fourmob.datetimepicker.date.DatePickerDialog;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.Checked;
@@ -42,6 +43,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -52,7 +54,7 @@ import butterknife.InjectView;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 
-public class RegisterFragment extends BaseFragment implements RegisterPresenter.RegisterView,Validator.ValidationListener {
+public class RegisterFragment extends BaseFragment implements DatePickerDialog.OnDateSetListener,RegisterPresenter.RegisterView,Validator.ValidationListener {
 
 
     // Validator Attributes
@@ -151,9 +153,11 @@ public class RegisterFragment extends BaseFragment implements RegisterPresenter.
     private DatePickerObj date;
     private ArrayList<DropDownItem> titleList;
     private String selectedTitle;
-    String[] state_val;
+    private String[] state_val;
     private String selectedState;
     private String selectedCountryCode;
+    public static final String DATEPICKER_TAG = "datepicker";
+    private String fullDate;
 
     public static RegisterFragment newInstance() {
 
@@ -181,6 +185,9 @@ public class RegisterFragment extends BaseFragment implements RegisterPresenter.
         final View view = inflater.inflate(R.layout.register, container, false);
         ButterKnife.inject(this, view);
 
+
+        final Calendar calendar = Calendar.getInstance();
+        final DatePickerDialog datePickerDialog = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 
         pref = new SharedPrefManager(getActivity());
         countrys = new ArrayList<DropDownItem>();
@@ -256,8 +263,11 @@ public class RegisterFragment extends BaseFragment implements RegisterPresenter.
         txtRegisterDatePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showTimePickerDialog(view);
 
+                //datePickerDialog.setVibrate(isVibrate());
+                datePickerDialog.setYearRange(1985, 2028);
+                //datePickerDialog.setCloseOnSingleTapDay(isCloseOnSingleTapDay());
+                datePickerDialog.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
             }
         });
 
@@ -323,44 +333,24 @@ public class RegisterFragment extends BaseFragment implements RegisterPresenter.
                    selectedState = selectedCountry.getCode();
                }
 
-           }else{
-
-               date = (DatePickerObj)data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
-               String month =  getMonthAlphabet(date.getMonth());
-               month_number = date.getMonth();
-
-               txtRegisterDatePicker.setText(date.getDay() + " " + month + " " + date.getYear());
-        }
+           }
        }
     }
 
     public void requestRegister(){
 
+            initiateLoading(getActivity());
+
             HashMap<String, String> init = pref.getSignatureFromLocalStorage();
             String signatureFromLocal = init.get(SharedPrefManager.SIGNATURE);
 
             RegisterObj regObj = new RegisterObj();
-
-            //Reconstruct DOB
-            String varMonth = "";
-            String varDay = "";
-
-            if(date.getMonth() < 10){
-                varMonth = "0";
-            }
-            if(date.getDay() < 10){
-                varDay = "0";
-            }
-
-
-            String dob = date.getYear()+"-"+(varMonth+""+date.getMonth())+"-"+varDay+""+date.getDay();
-
             regObj.setUsername(txtUsername.getText().toString());
             regObj.setFirst_name(txtFirstName.getText().toString());
             regObj.setLast_name(txtLastName.getText().toString());
             regObj.setPassword(txtPassword.getText().toString());
             regObj.setTitle(txtTitle.getTag().toString());
-            regObj.setDob(dob);
+            regObj.setDob(fullDate);
             regObj.setAddress_1(txtAddressLine1.getText().toString());
             regObj.setAddress_2(txtAddressLine2.getText().toString());
             regObj.setAddress_3(txtAddressLine2.getText().toString());
@@ -378,6 +368,8 @@ public class RegisterFragment extends BaseFragment implements RegisterPresenter.
 
     @Override
     public void onSuccessRegister(RegisterReceive obj) {
+
+        dismissLoading();
 
         if (obj.getStatus().equals("success")) {
 
@@ -402,7 +394,7 @@ public class RegisterFragment extends BaseFragment implements RegisterPresenter.
     public void onValidationSucceeded() {
 
         requestRegister();
-        Log.e("Success","True");
+        Log.e("Success", "True");
     }
 
     @Override
@@ -449,10 +441,23 @@ public class RegisterFragment extends BaseFragment implements RegisterPresenter.
         presenter.onPause();
     }
 
-    /*public void registerBackFunction()
-    {
-            showHiddenBlock(currentPage-1);
+    @Override
+    public void onDateSet(DatePickerDialog datePickerDialog, int year, int month, int day) {
+        String monthInAlphabet = getMonthAlphabet(month);
+        txtRegisterDatePicker.setText(day + " " + monthInAlphabet + " " + year);
 
-    }*/
+        //Reconstruct DOB
+        String varMonth = "";
+        String varDay = "";
+
+        if(month < 10){
+            varMonth = "0";
+        }
+        if(day < 10){
+            varDay = "0";
+        }
+        fullDate = varDay+""+day+ "-" + varMonth+""+varMonth + "-" + year;
+        Log.e("fullDate",fullDate);
+    }
 
 }

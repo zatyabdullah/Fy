@@ -98,7 +98,7 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
         /*SET BANNER*/
         HashMap<String, String> init = pref.getDefaultBanner();
         String defaultBanner = init.get(SharedPrefManager.DEFAULT_BANNER);
-        Log.e("defaultBanner",defaultBanner);
+        //Log.e("defaultBanner",defaultBanner);
         //aq.id(R.id.bannerImg).image(defaultBanner);
 
         // [START shared_tracker]

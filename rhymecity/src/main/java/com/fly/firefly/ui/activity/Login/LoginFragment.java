@@ -28,6 +28,7 @@ import com.fly.firefly.ui.object.LoginRequest;
 import com.fly.firefly.ui.object.PasswordRequest;
 import com.fly.firefly.ui.presenter.LoginPresenter;
 import com.fly.firefly.utils.AESCBC;
+import com.fly.firefly.utils.App;
 import com.fly.firefly.utils.SharedPrefManager;
 import com.fly.firefly.utils.Utils;
 import com.google.android.gms.analytics.HitBuilders;
@@ -139,11 +140,10 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
 
         //try {
            // String encryptedMsg = AESCrypt.encrypt("test", "owNLfnLjPvwbQH3hUmj5Wb7wBIv83pR7");
-            String encryptedMsg = AESCBC.encrypt("owNLfnLjPvwbQH3hUmj5Wb7wBIv83pR7", "owNLfnLjPvwbQH3h","1234");
-            Log.e("encryptedMsg",encryptedMsg);
 
-            String decrypt = AESCBC.decrypt("owNLfnLjPvwbQH3hUmj5Wb7wBIv83pR7", "owNLfnLjPvwbQH3h",encryptedMsg);
-            Log.e("decrypt",decrypt);
+
+            //String decrypt = AESCBC.decrypt("owNLfnLjPvwbQH3hUmj5Wb7wBIv83pR7", "owNLfnLjPvwbQH3h",encryptedMsg);
+            //Log.e("decrypt",decrypt);
 
 
        // }catch (GeneralSecurityException e){
@@ -154,6 +154,10 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
     }
 
     public void loginFromFragment(String username,String password){
+
+        /*Start Loading*/
+        initiateLoading(getActivity());
+
         LoginRequest data = new LoginRequest();
         data.setUsername(username);
         data.setPassword(password);
@@ -212,6 +216,9 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
     @Override
     public void onLoginSuccess(LoginReceive obj) {
 
+        /*Dismiss Loading*/
+        dismissLoading();
+
         if (obj.getStatus().equals("success")) {
             pref.setLoginStatus("Y");
             Log.e("X", obj.getUser_info().getFirst_name());
@@ -221,9 +228,14 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
         }
         else if (obj.getStatus().equals("change_password")) {
             pref.setLoginStatus("Y");
+            pref.setUsername(obj.getUser_info().getFirst_name());
             goChangePasswordPage();
         }else{
-           Crouton.makeText(getActivity(), obj.getMessage(), Style.ALERT).show();
+            croutonAlert(getActivity(),obj.getMessage());
+           /*Crouton.makeText(getActivity(), obj.getMessage(), Style.ALERT)
+           .setConfiguration(new Configuration.Builder()
+                   .setDuration(Configuration.DURATION_LONG).build())
+                   .show();*/
         }
 
     }
@@ -249,7 +261,13 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
     /* Validation Success - Start send data to server */
     @Override
     public void onValidationSucceeded() {
-        loginFromFragment(txtLoginEmail.getText().toString(), txtLoginPassword.getText().toString());
+        String encryptedMsg = AESCBC.encrypt("owNLfnLjPvwbQH3hUmj5Wb7wBIv83pR7", "owNLfnLjPvwbQH3h",txtLoginPassword.getText().toString());
+        Log.e("encryptedMsg", encryptedMsg);
+
+        String decrypt = AESCBC.decrypt("owNLfnLjPvwbQH3hUmj5Wb7wBIv83pR7", "owNLfnLjPvwbQH3h",encryptedMsg);
+        Log.e("decrypt",decrypt);
+
+        loginFromFragment(txtLoginEmail.getText().toString(), AESCBC.encrypt(App.KEY, App.IV, txtLoginPassword.getText().toString()));
     }
 
     /* Validation Failed - Toast Error */

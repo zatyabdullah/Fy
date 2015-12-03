@@ -1,5 +1,6 @@
 package com.fly.firefly;
 
+import android.app.Activity;
 import android.content.Context;
 
 import com.fly.firefly.api.ApiRequestHandler;
@@ -14,7 +15,7 @@ import me.mattlogan.rhymecity.Modules;
 public class FireFlyApplication extends AnalyticsApplication {
 
     private ObjectGraph objectGraph;
-
+    private static Activity instance;
     @Inject Bus bus;
     @Inject
     ApiService apiService;
@@ -24,6 +25,7 @@ public class FireFlyApplication extends AnalyticsApplication {
         super.onCreate();
         buildObjectGraphAndInject();
         createApiRequestHandler();
+        //instance = FireFlyApplicationthis;
     }
 
 
@@ -43,5 +45,11 @@ public class FireFlyApplication extends AnalyticsApplication {
 
     public static FireFlyApplication get(Context context) {
         return (FireFlyApplication) context.getApplicationContext();
+    }
+
+    public static Activity getContext() {
+        return instance;
+        //return instance;
+
     }
 }

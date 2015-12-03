@@ -104,6 +104,9 @@ public class ChangePasswordFragment extends BaseFragment implements ChangePasswo
 
 
     public void requestChangePassword(String username,String password ,String new_password){
+
+        //initiateLoading(getActivity());
+
         ChangePasswordRequest data = new ChangePasswordRequest();
         data.setEmail(username);
         data.setNewPassword(new_password);

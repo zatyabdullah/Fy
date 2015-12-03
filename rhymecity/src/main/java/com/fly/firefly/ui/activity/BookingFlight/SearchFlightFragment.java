@@ -1,9 +1,7 @@
-package com.fly.firefly.ui.fragment.BookingFlight;
+package com.fly.firefly.ui.activity.BookingFlight;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,9 +16,7 @@ import com.fly.firefly.MainFragmentActivity;
 import com.fly.firefly.R;
 import com.fly.firefly.api.obj.SearchFlightReceive;
 import com.fly.firefly.base.BaseFragment;
-import com.fly.firefly.ui.activity.BookingFlight.FlightDetailActivity;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
-import com.fly.firefly.ui.activity.Picker.DatePickerFragment;
 import com.fly.firefly.ui.activity.Register.RegisterActivity;
 import com.fly.firefly.ui.module.SearchFlightModule;
 import com.fly.firefly.ui.object.DatePickerObj;
@@ -29,12 +25,14 @@ import com.fly.firefly.ui.presenter.BookingPresenter;
 import com.fly.firefly.utils.DropDownItem;
 import com.fly.firefly.utils.SharedPrefManager;
 import com.fly.firefly.utils.Utils;
+import com.fourmob.datetimepicker.date.DatePickerDialog;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -45,7 +43,7 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class SearchFlightFragment extends BaseFragment implements BookingPresenter.SearchFlightView {
+public class SearchFlightFragment extends BaseFragment implements DatePickerDialog.OnDateSetListener,BookingPresenter.SearchFlightView {
 
     @Inject
     BookingPresenter presenter;
@@ -122,6 +120,11 @@ public class SearchFlightFragment extends BaseFragment implements BookingPresent
     private String ARRIVAL_FLIGHT_DATE = "Please choose your arrival date.";
     private String FLIGHT_OBJECT = "FLIGHT_OBJECT";
 
+    private String DEPARTURE_DATE_PICKER = "DEPARTURE_DATE_PICKER";
+    private String RETURN_DATE_PICKER = "RETURN_DATE_PICKER";
+    private String PICKER;
+    public static final String DATEPICKER_TAG = "datepicker";
+
     public static SearchFlightFragment newInstance() {
 
         SearchFlightFragment fragment = new SearchFlightFragment();
@@ -144,14 +147,19 @@ public class SearchFlightFragment extends BaseFragment implements BookingPresent
         final View view = inflater.inflate(R.layout.search_flight, container, false);
         ButterKnife.inject(this, view);
 
+
+        /*DatePicker Setup - Failed to make it global*/
+        final Calendar calendar = Calendar.getInstance();
+        final DatePickerDialog datePickerDialog = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.setYearRange(1985, 2028);
+
+        /*Preference Manager*/
         pref = new SharedPrefManager(MainFragmentActivity.getContext());
 
         txtDepartureFlight.setTag(DEPARTURE_FLIGHT);
         txtArrivalFlight.setTag(ARRIVAL_FLIGHT);
-        bookFlightDepartureDate.setTag(DEPARTURE_FLIGHT_DATE);
-        bookFlightReturnDate.setTag(ARRIVAL_FLIGHT_DATE);
 
-        /*Retrieve all - Display Flight Data*/
+        /*Retrieve All Flight Data From Preference Manager - Display Flight Data*/
         JSONArray jsonFlight = getFlight(getActivity());
         dataFlightDeparture = new ArrayList<>();
 
@@ -210,7 +218,9 @@ public class SearchFlightFragment extends BaseFragment implements BookingPresent
         departureBlock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showTimePickerDialog(view, "datepicker");
+
+                datePickerDialog.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
+                PICKER = DEPARTURE_DATE_PICKER;
             }
         });
 
@@ -218,7 +228,10 @@ public class SearchFlightFragment extends BaseFragment implements BookingPresent
         returnDateBlock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showTimePickerDialog(view, "datepicker2");
+
+                datePickerDialog.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
+                PICKER = RETURN_DATE_PICKER;
+
             }
         });
 
@@ -334,7 +347,6 @@ public class SearchFlightFragment extends BaseFragment implements BookingPresent
                 if(totalInfant == 0){
                     blockInfantNumber = true;
                 }
-
                 if(!blockInfantNumber){
                     totalInfant--;
                     setPassengerTotal(INFANT);
@@ -378,28 +390,16 @@ public class SearchFlightFragment extends BaseFragment implements BookingPresent
                     searchFlight();
                 }
 
-
-                // Define a constant in your class. Use a HashSet for performance
-                /*Set<String> values = new HashSet<String>(Arrays.asList(df, af, d1,d2));
-
-                if (!values.contains("NOT SELECTED")) {
-                    searchFlight();
-                }else
-                {
-                    popupAlert("Fill Empty Field");
-                }*/
-
-
-
             }
         });
-
 
 
         return view;
     }
 
     public void searchFlight(){
+
+        initiateLoading(getActivity());
 
         HashMap<String, String> init = pref.getSignatureFromLocalStorage();
         String signatureFromLocal = init.get(SharedPrefManager.SIGNATURE);
@@ -413,13 +413,12 @@ public class SearchFlightFragment extends BaseFragment implements BookingPresent
         flightObj.setDeparture_date(bookFlightDepartureDate.getTag().toString());
         flightObj.setArrival_station(txtArrivalFlight.getTag().toString());
 
-                    /*Return Flight*/
+        /*Return Flight*/
         String returnDate = flightType.equals("1") ? bookFlightReturnDate.getTag().toString() : "";
         flightObj.setReturn_date(returnDate);
 
         flightObj.setSignature(signatureFromLocal);
         searchFlightFragment(flightObj);
-        //goFlightDetailPage();
                     /*FragmentManager fragmentManager = getFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.main_activity_fragment_container, BF_FlightDetailFragment.newInstance(), "FLIGHT_DETAIL");
@@ -431,31 +430,6 @@ public class SearchFlightFragment extends BaseFragment implements BookingPresent
     public void searchFlightFragment(SearchFlightObj flightObj){
 
         presenter.searchFlight(flightObj);
-    }
-
-    public void showTimePickerDialog(View v,String tag){
-        DialogFragment newFragment = new DatePickerFragment();
-        newFragment.setTargetFragment(SearchFlightFragment.this, 0);
-        newFragment.show(getFragmentManager(), tag);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.e("enter here", "ok");
-        if (resultCode != Activity.RESULT_OK) {
-            return;
-        } else {
-            date = (DatePickerObj)data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
-
-            String month = getMonthAlphabet(date.getMonth()-1);
-            if (requestCode == 2) {
-                bookFlightDepartureDate.setText(date.getDay()+" "+month+" "+date.getYear());
-                bookFlightDepartureDate.setTag(date.getYear()+"-"+date.getMonth()+"-"+date.getDay());
-            }else{
-                bookFlightReturnDate.setText(date.getDay()+" "+month+" "+date.getYear());
-                bookFlightReturnDate.setTag(date.getYear()+"-"+date.getMonth()+"-"+date.getDay());
-            }
-        }
     }
 
     /*Filter Arrival Airport*/
@@ -586,6 +560,8 @@ public class SearchFlightFragment extends BaseFragment implements BookingPresent
     @Override
     public void onBookingDataReceive(SearchFlightReceive obj) {
 
+        dismissLoading();
+
         Gson gson = new Gson();
         String countryList = gson.toJson(obj);
 
@@ -595,7 +571,6 @@ public class SearchFlightFragment extends BaseFragment implements BookingPresent
             Intent flight = new Intent(getActivity(), FlightDetailActivity.class);
             flight.putExtra("FLIGHT_OBJ", (new Gson()).toJson(obj));
             getActivity().startActivity(flight);
-            //getActivity().finish();
         }
 
     }
@@ -618,5 +593,30 @@ public class SearchFlightFragment extends BaseFragment implements BookingPresent
     public void onPause() {
         super.onPause();
         presenter.onPause();
+    }
+
+    @Override
+    public void onDateSet(DatePickerDialog datePickerDialog, int year, int month, int day) {
+
+        //Reconstruct DOB
+        String varMonth = "";
+        String varDay = "";
+
+        if(month < 10) {
+            varMonth = "0";
+        }
+        if(day < 10){
+            varDay = "0";
+        }
+
+        if(PICKER.equals(DEPARTURE_DATE_PICKER)) {
+            bookFlightDepartureDate.setText(day + " " + getMonthAlphabet(month) + " " + year);
+            bookFlightDepartureDate.setTag(year + "-" + varMonth + "" + month + "-" + varDay + "" + day);
+        }else if(PICKER.equals(DEPARTURE_DATE_PICKER)){
+            bookFlightReturnDate.setText(day + " " + getMonthAlphabet(month) + " " + year);
+            bookFlightReturnDate.setTag(year + "-" + varMonth + "" + month + "-" + varDay + "" + day);
+        }else{
+            //DeadBlock
+        }
     }
 }

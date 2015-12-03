@@ -1,7 +1,7 @@
 package com.fly.firefly.ui.module;
 
 import com.fly.firefly.AppModule;
-import com.fly.firefly.ui.fragment.BookingFlight.SearchFlightFragment;
+import com.fly.firefly.ui.activity.BookingFlight.SearchFlightFragment;
 import com.fly.firefly.ui.presenter.BookingPresenter;
 import com.squareup.otto.Bus;
 
