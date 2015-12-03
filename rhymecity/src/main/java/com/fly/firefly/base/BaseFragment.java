@@ -125,6 +125,9 @@ public class BaseFragment extends Fragment {
 		return json;
 	}
 
+
+
+
 	public static JSONArray getFlight(Activity act){
 
 		JSONArray json = null;
@@ -147,7 +150,7 @@ public class BaseFragment extends Fragment {
 
 	/*Return month in alphabet*/
 	public String getMonthAlphabet(int month) {
-		return new DateFormatSymbols().getShortMonths()[month];
+		return new DateFormatSymbols().getShortMonths()[month-1];
 	}
 
 	/*Get All Country From OS*/

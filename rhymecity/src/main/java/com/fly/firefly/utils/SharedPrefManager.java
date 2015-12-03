@@ -10,8 +10,8 @@ public class SharedPrefManager {
     private static final String PREF_NAME = "AndroidHivePref";
     public static final String SIGNATURE = "SIGNATURE";
     public static final String SELECTED = "SELECTED";
-    public static final String USER_EMAIL = "USERNAME";
-    public static final String USER_INFO = "USERINFO";
+    public static final String USER_EMAIL = "USER_EMAIL";
+    public static final String USER_INFO = "USER_INFO";
 
     public static final String TITLE = "TITLE";
     public static final String FLIGHT = "FLIGHT";
