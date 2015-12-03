@@ -141,7 +141,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:hint="Email"
-                                        android:padding="5dp"
+                                        android:padding="8dp"
                                         android:textStyle="bold"
                                         android:id="@+id/editEmail" />
                                 </LinearLayout>
@@ -315,7 +315,7 @@
                                         android:layout_width="fill_parent"
                                         android:layout_height="wrap_content"
                                         android:text="Mr."
-                                        android:padding="5dp"
+                                        android:padding="8dp"
                                         android:textStyle="bold"
                                         android:id="@+id/editTitle" />
 
@@ -441,7 +441,7 @@
                                         android:layout_width="fill_parent"
                                         android:layout_height="wrap_content"
                                         android:background="@null"
-                                        android:paddingBottom="8dp"
+                                        android:padding="8dp"
                                         android:hint="@string/register_country"
                                         android:textSize="@dimen/font16sp"
                                         android:textColorHint="@color/loginFontTxt"
@@ -476,7 +476,7 @@
                                         android:layout_height="wrap_content"
                                         android:background="@null"
                                         android:inputType="textLongMessage"
-                                        android:paddingBottom="8dp"
+                                        android:padding="8dp"
                                         android:hint="@string/register_city"
                                         android:textSize="@dimen/font16sp"
                                         android:textColorHint="@color/loginFontTxt"
@@ -511,7 +511,7 @@
                                         android:layout_height="wrap_content"
                                         android:inputType="textPersonName"
                                         android:background="@null"
-                                        android:paddingBottom="8dp"
+                                        android:padding="8dp"
                                         android:hint="@string/register_state"
                                         android:textSize="@dimen/font16sp"
                                         android:textColorHint="@color/loginFontTxt"
@@ -544,7 +544,7 @@
                                     <EditText
                                         android:layout_width="fill_parent"
                                         android:layout_height="wrap_content"
-                                        android:padding="5dp"
+                                        android:padding="8dp"
                                         android:inputType="number"
                                         android:id="@+id/editPostcode"
                                         android:background="@null" />
@@ -578,7 +578,7 @@
                                         android:layout_height="wrap_content"
                                         android:inputType="phone"
                                         android:background="@null"
-                                        android:paddingBottom="8dp"
+                                        android:padding="8dp"
                                         android:hint="@string/register_mobile_phone"
                                         android:textSize="@dimen/font16sp"
                                         android:textColorHint="@color/loginFontTxt"
@@ -611,7 +611,7 @@
                                     <EditText
                                         android:layout_width="fill_parent"
                                         android:layout_height="wrap_content"
-                                        android:padding="5dp"
+                                        android:padding="8dp"
                                         android:inputType="phone"
                                         android:id="@+id/editAltPhone"
                                         android:background="@null" />
@@ -643,7 +643,7 @@
                                     <EditText
                                         android:layout_width="fill_parent"
                                         android:layout_height="wrap_content"
-                                        android:padding="5dp"
+                                        android:padding="8dp"
                                         android:inputType="phone"
                                         android:id="@+id/editFax"
                                         android:background="@null" />
@@ -670,14 +670,15 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:weightSum="1"
-                                    android:layout_marginTop="5dp">
+                                    android:layout_marginTop="5dp"
+                                    android:background="@drawable/block_with_border">
 
                                     <TextView
                                         android:layout_width="fill_parent"
                                         android:layout_height="wrap_content"
                                         android:inputType="date"
                                         android:background="@null"
-                                        android:paddingBottom="8dp"
+                                        android:padding="8dp"
                                         android:hint="@string/dob"
                                         android:textSize="@dimen/font16sp"
                                         android:textColorHint="@color/loginFontTxt"

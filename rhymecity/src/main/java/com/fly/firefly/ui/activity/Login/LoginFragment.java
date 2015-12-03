@@ -140,7 +140,7 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
         //try {
            // String encryptedMsg = AESCrypt.encrypt("test", "owNLfnLjPvwbQH3hUmj5Wb7wBIv83pR7");
             String encryptedMsg = AESCBC.encrypt("owNLfnLjPvwbQH3hUmj5Wb7wBIv83pR7", "owNLfnLjPvwbQH3h","1234");
-            Log.e("encryptedMsg",encryptedMsg);
+            Log.e("encryptedMsg", encryptedMsg);
 
             String decrypt = AESCBC.decrypt("owNLfnLjPvwbQH3hUmj5Wb7wBIv83pR7", "owNLfnLjPvwbQH3h",encryptedMsg);
             Log.e("decrypt",decrypt);
@@ -249,7 +249,7 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
     /* Validation Success - Start send data to server */
     @Override
     public void onValidationSucceeded() {
-        loginFromFragment(txtLoginEmail.getText().toString(), txtLoginPassword.getText().toString());
+        loginFromFragment(txtLoginEmail.getText().toString(),AESCBC.encrypt("owNLfnLjPvwbQH3hUmj5Wb7wBIv83pR7", "owNLfnLjPvwbQH3h", txtLoginPassword.getText().toString()));
     }
 
     /* Validation Failed - Toast Error */
