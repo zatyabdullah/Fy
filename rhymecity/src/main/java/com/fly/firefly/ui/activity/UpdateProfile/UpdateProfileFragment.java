@@ -30,6 +30,7 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
+import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Optional;
 import com.mobsandgeeks.saripaar.annotation.Order;
 
@@ -70,9 +71,10 @@ public class UpdateProfileFragment extends BaseFragment implements
     private int fragmentContainerId;
 
     @Inject UpdateProfilePresenter presenter;
+
     @InjectView(R.id.editEmail) TextView editEmail;
 
-    @Order(1)@Optional
+    @Order(1)@NotEmpty
     //@Length(sequence = 1, min = 6, message = "Must at least 6 character")
     //@Password(sequence =2,scheme = Password.Scheme.ALPHA_NUMERIC_MIXED_CASE_SYMBOLS,message = "Must have uppercase char,number and symbols") // Password validator
     @InjectView(R.id.editCurrentPassword)
@@ -87,34 +89,40 @@ public class UpdateProfileFragment extends BaseFragment implements
     @InjectView(R.id.editConfirmPassword)
     EditText editConfirmPassword;
 
-    @Order(4)@Optional
+    @Order(4)@NotEmpty
     @InjectView(R.id.editTitle)
     TextView editTitle;
 
-    @Order(5)@Optional@InjectView(R.id.editFirstName)
+    @Order(5)@NotEmpty
+    @InjectView(R.id.editFirstName)
     EditText editFirstName;
 
-    @Order(6)@Optional @InjectView(R.id.editLastName)
+    @Order(6)
+    @InjectView(R.id.editLastName)
     EditText editLastName;
 
-    @Order(7) @Optional@InjectView(R.id.editAddress)
+    @Order(7)@NotEmpty
+    @InjectView(R.id.editAddress)
     EditText editAddressLine1;
 
-    @Order(8) @Optional @InjectView(R.id.editCountry)
+    @Order(8) @NotEmpty
+    @InjectView(R.id.editCountry)
     TextView editCountry;
 
-    @Order(9)@InjectView(R.id.editCity)
+    @Order(9)@NotEmpty
+    @InjectView(R.id.editCity)
     EditText editCity;
 
-    @Order(10) @InjectView(R.id.editState)
+    @Order(10) @NotEmpty
+    @InjectView(R.id.editState)
     TextView editState;
 
-    @Order(11) @Optional
+    @Order(11)@NotEmpty
     //@Length(sequence = 1, min = 5,max = 7, message = "invalid postcode")
     @InjectView(R.id.editPostcode)
     EditText editPostcode;
 
-    @Order(12)@Optional
+    @Order(12)@NotEmpty
     //@Length(sequence = 1, min = 6,max = 14, message = "invalid phone number")
     @InjectView(R.id.editMobilePhone)
     EditText editMobilePhone;
@@ -130,9 +138,10 @@ public class UpdateProfileFragment extends BaseFragment implements
     @InjectView(R.id.editFax)
     EditText editFax;
 
-    @Order(15) @Optional
+    @Order(15)@NotEmpty
     @InjectView(R.id.txtRegisterDatePicker)
     TextView txtRegisterDatePicker;
+
 
     @InjectView(R.id.btnUpdateProfile)
     Button btnUpdateProfile;
@@ -171,18 +180,47 @@ public class UpdateProfileFragment extends BaseFragment implements
         mTracker = application.getDefaultTracker();
         // [END shared_tracker]
 
-      //  editEmail.setText("zaty.abdullah@gmail.com");
+
         pref = new SharedPrefManager(getActivity());
         countrys = new ArrayList<DropDownItem>();
         state = new ArrayList<DropDownItem>();
         titleList = new ArrayList<DropDownItem>();
 
 
+        /*Display Existing User Data*/
 
-        HashMap<String, String> userinfo = pref.getUserEmail();
-        String username = userinfo.get(SharedPrefManager.USER_EMAIL);
+        HashMap<String, String> userinfo = pref.getUserInfo();
+        String username = userinfo.get(SharedPrefManager.USER_INFO);
+        Log.e("", username);
 
         editEmail.setText(username);
+        editCurrentPassword.setText("Zatyzaty123!", TextView.BufferType.EDITABLE);
+        editTitle.setText("Ms.", TextView.BufferType.EDITABLE);
+
+           /* editFirstName.setText(obj.getUserInfo().getFirst_name(), TextView.BufferType.EDITABLE);
+            editLastName.setText(obj.getUserInfo().getLast_name(), TextView.BufferType.EDITABLE);*/
+        editFirstName.setText("zaty", TextView.BufferType.EDITABLE);
+        editLastName.setText("abdullah", TextView.BufferType.EDITABLE);
+
+        editAddressLine1.setText("30,Jalan Pungguk,Pengkalan Pegoh", TextView.BufferType.EDITABLE);
+        editCountry.setText("Malaysia");
+        editState.setText("Selangor");
+        editCity.setText("Ipoh", TextView.BufferType.EDITABLE);
+        editPostcode.setText("31500", TextView.BufferType.EDITABLE);
+        editMobilePhone.setText("0123456789", TextView.BufferType.EDITABLE);
+        editAltPhone.setText("0123456789", TextView.BufferType.EDITABLE);
+        editFax.setText("0123456789", TextView.BufferType.EDITABLE);
+        txtRegisterDatePicker.setText("31 Dec 2015");
+
+
+       /* *//*Display user Data*//*
+        JSONObject jsonUserInfo = getUserInfo(getActivity());
+
+
+        String password = jsonUserInfo.optString("password");*/
+
+
+
 
 
 
@@ -274,7 +312,7 @@ public class UpdateProfileFragment extends BaseFragment implements
             public void onClick(View v) {
                 //Validate form
                 // Log.e("selectedTitle",selectedTitle);
-              mValidator.validate();
+                mValidator.validate();
                 requestUpdateProfile();
                 //requestChangePassword(editTextemail.getText().toString(), editTextPasswordCurrent.getText().toString(), editTextPasswordNew.getText().toString());
 
@@ -337,6 +375,10 @@ public class UpdateProfileFragment extends BaseFragment implements
     }
 
 
+
+
+
+
     public void requestUpdateProfile() {
 
         try {
@@ -387,6 +429,7 @@ public class UpdateProfileFragment extends BaseFragment implements
     @Override
     public void onValidationSucceeded() {
         Crouton.makeText(getActivity(), "Profile Successfully Updated", Style.CONFIRM).show();
+        requestUpdateProfile();
         //goHomePage();
     }
 

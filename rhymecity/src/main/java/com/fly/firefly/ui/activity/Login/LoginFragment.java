@@ -10,9 +10,12 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.fly.firefly.AnalyticsApplication;
 import com.fly.firefly.FireFlyApplication;
 import com.fly.firefly.R;
@@ -33,6 +36,7 @@ import com.fly.firefly.utils.SharedPrefManager;
 import com.fly.firefly.utils.Utils;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+import com.google.gson.Gson;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.Email;
@@ -53,10 +57,13 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
     // Validator Attributes
     private Validator mValidator;
     private Tracker mTracker;
+
     @Inject
     LoginPresenter presenter;
 
     //@InjectView(R.id.search_edit_text) EditText searchEditText;
+
+    @InjectView(R.id.edit_area) LinearLayout edit_area;
     @InjectView(R.id.registerBtn) Button registerButton;
     @InjectView(R.id.btnLogin) Button btnLogin;
 
@@ -125,6 +132,9 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
             public void onClick(View v) {
                 //Validate form
                 mValidator.validate();
+                YoYo.with(Techniques.Tada)
+                        .duration(700)
+                        .playOn(edit_area);
                 Utils.hideKeyboard(getActivity(), v);
             }
         });
@@ -210,6 +220,11 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
             Log.e("X", obj.getUser_info().getFirst_name());
             pref.setUsername(obj.getUser_info().getFirst_name());
             pref.setUserEmail(obj.getUser_info().getUsername());
+
+            Gson gsonFlight = new Gson();
+            String userInfo = gsonFlight.toJson(obj.getUser_info());
+            pref.setUserInfo(userInfo);
+
             goBookingPage();
         }
         else if (obj.getStatus().equals("change_password")) {
@@ -229,7 +244,11 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
     /*IF Login Failed*/
     @Override
     public void onLoginFailed(String obj) {
+
+
         Crouton.makeText(getActivity(), obj, Style.ALERT).show();
+
+
     }
 
 
@@ -265,7 +284,12 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
             if (view instanceof EditText) {
                ((EditText) view).setError(splitErrorMsg[0]);
             } else {
+                YoYo.with(Techniques.Tada)
+                        .duration(700)
+                        .playOn(edit_area);
                Toast.makeText(getActivity(), splitErrorMsg[0], Toast.LENGTH_LONG).show();
+
+
             }
         }
     }

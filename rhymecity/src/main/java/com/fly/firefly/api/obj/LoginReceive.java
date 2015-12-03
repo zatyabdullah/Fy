@@ -26,7 +26,7 @@ public class LoginReceive {
        private String username;
        private String password;
        private String first_name;
-      /* private String last_name;
+       private String last_name;
        private String new_password;
        private String title;
        private String dob;
@@ -39,9 +39,9 @@ public class LoginReceive {
        private String postcode;
        private String mobile_phone;
        private String  alternate_phone;
-       private String fax;*/
+       private String fax;
 
-       /*public String getNew_password() {
+       public String getNew_password() {
            return new_password;
        }
 
@@ -155,7 +155,7 @@ public class LoginReceive {
 
        public void setLast_name(String last_name) {
            this.last_name = last_name;
-       }*/
+       }
 
 
 
