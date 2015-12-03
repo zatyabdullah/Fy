@@ -110,11 +110,13 @@ public class UpdateProfileFragment extends BaseFragment implements
     TextView editState;
 
     @Order(11) @Optional
-    //@Length(sequence = 1, min = 5,max = 7, message = "invalid postcode")@InjectView(R.id.editPostcode)
+    //@Length(sequence = 1, min = 5,max = 7, message = "invalid postcode")
+    @InjectView(R.id.editPostcode)
     EditText editPostcode;
 
     @Order(12)@Optional
-    //@Length(sequence = 1, min = 6,max = 14, message = "invalid phone number") @InjectView(R.id.editMobilePhone)
+    //@Length(sequence = 1, min = 6,max = 14, message = "invalid phone number")
+    @InjectView(R.id.editMobilePhone)
     EditText editMobilePhone;
 
 
