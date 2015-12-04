@@ -1,22 +1,20 @@
 package com.fly.firefly.ui.presenter;
 
-import android.util.Log;
-
+import com.fly.firefly.api.obj.UpdateProfileReceive;
 import com.fly.firefly.ui.object.UpdateProfileRequest;
 import com.squareup.otto.Bus;
+import com.squareup.otto.Subscribe;
 
 public class UpdateProfilePresenter {
 
     public interface UpdateProfileView {
-
-        //void onPasswordRequesFailed(String dumm);
-
+        void onSuccessUpdate(UpdateProfileReceive obj);
     }
 
-    private final UpdateProfileView view;
+    private final  UpdateProfileView  view;
     private final Bus bus;
 
-    public UpdateProfilePresenter(UpdateProfileView view, Bus bus) {
+    public UpdateProfilePresenter ( UpdateProfileView  view, Bus bus) {
         this.view = view;
         this.bus = bus;
     }
@@ -29,37 +27,16 @@ public class UpdateProfilePresenter {
         bus.unregister(this);
     }
 
-    public void updateProfile(UpdateProfileRequest data) {
-        Log.e("xxxx",data.getUsername());
-       // Log.e("xxxx",data.getPassword());
-        Log.e("xxxx",data.getNewPassword());
-        Log.e("xxxx",data.getCountry());
-        Log.e("xxxx",data.getState());
-        Log.e("xxxx",data.getUsername());
-        Log.e("xxxx",data.getPassword());
-        Log.e("xxxx",data.getFirst_name());
-        Log.e("xxxx",data.getDob());
-        Log.e("xxxx",data.getLast_name());
-        Log.e("xxxx",data.getAddress_1());
-        Log.e("xxxx",data.getAddress_2());
-        Log.e("xxxx",data.getAddress_3());
-        Log.e("xxxx",data.getTitle());
-        Log.e("xxxx",data.getCity());
-        //registerAddressLine2 = data.getRegisterAddressLine2();
-        Log.e("xxxx",data.getPostcode());
-        Log.e("xxxx",data.getMobile_phone());
-        Log.e("xxxx",data.getAlternate_phone());
-        Log.e("xxxx", data.getFax());
-        bus.post(new UpdateProfileRequest(data));
+    public void onUpdateProfile(UpdateProfileRequest obj) {
+        bus.post(new UpdateProfileRequest(obj));
     }
 
 
+    @Subscribe
+    public void onUserSuccessUpdate(UpdateProfileReceive event) {
 
-   // @Subscribe
-    //public void onUserFailedReqPassword(FailedConnectToServer event) {
-//
-        //*Save Session And Redirect To Homepage*//*
-  //      view.onPasswordRequesFailed(event.getDummy());
-   // }
-
+        //Log.e("Messages", event.getStatus());
+        /*Save Session And Redirect To Homepage*/
+        view.onSuccessUpdate(event.getUserObj());
+    }
 }

@@ -226,10 +226,9 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
             pref.setLoginStatus("Y");
             Log.e("X", obj.getUser_info().getFirst_name());
             pref.setUsername(obj.getUser_info().getFirst_name());
-            pref.setUserEmail(obj.getUser_info().getUsername());
 
-            Gson gsonFlight = new Gson();
-            String userInfo = gsonFlight.toJson(obj.getUser_info());
+            Gson gsonUserInfo = new Gson();
+            String userInfo = gsonUserInfo.toJson(obj.getUser_info());
             pref.setUserInfo(userInfo);
 
             goBookingPage();

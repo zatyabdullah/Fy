@@ -1,13 +1,13 @@
 package com.fly.firefly.ui.object;
 
 /**
- * Created by Metech user
+ * Created by Metech User
  */
 public class UpdateProfileRequest {
 
+
     private String username;
     private String password;
-    private String new_password;
     private String title;
     private String first_name;
     private String last_name;
@@ -22,18 +22,14 @@ public class UpdateProfileRequest {
     private String mobile_phone;
     private String alternate_phone;
     private String fax;
+
+
     private String signature;
 
 
-   // private String dob;
-    /*Initiate Class*/
-    public UpdateProfileRequest(){
-    }
+    //private String registerAddressLine2;
 
     public UpdateProfileRequest(UpdateProfileRequest data){
-        //username = data.getEmail();
-       // password = data.getPassword();
-        new_password = data.getNewPassword();
         country = data.getCountry();
         state = data.getState();
         username = data.getUsername();
@@ -52,21 +48,8 @@ public class UpdateProfileRequest {
         alternate_phone = data.getAlternate_phone();
         fax = data.getFax();
         signature = data.getSignature();
-
+        //"OTZSeE9vSkVNV1k9fE5LbVBwb2NjM3VwcnZJZERvYlZlRzNVWkdwWG5GNTBvaHRaUjd5RGd6YXV0SDI0ZmhFd3lLVzdwem5TMDh1Qk9pbFRxYWE1bjJTeElVV0NyYk13bmd2cktJRzNXR0JlYTk4MEtIR3RRclA4MURUYTNRUFJjTTV4Skt3bzZmWXdKQ0ZTNmNoajJhUlk9";
     }
-
-
-
-    public String getNewPassword() {
-
-        return new_password ;
-    }
-
-    public void setNewPassword(String new_password ) {
-
-        this.new_password  = new_password ;
-    }
-
 
     public String getCountry() {
         return country;
@@ -206,15 +189,15 @@ public class UpdateProfileRequest {
         this.address_3 = address_3;
     }
 
-
-
-
-    /*Response Data From Server*/
-    String status;
-
-    public String getStatus() {
-        return status;
+    /*Initiate Class*/
+    public UpdateProfileRequest(){
     }
+
+    //public LoginRequest(String username123){
+    //    this.username = username123;
+    //}
+
+
 
 
 }

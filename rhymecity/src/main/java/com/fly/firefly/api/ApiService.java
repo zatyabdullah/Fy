@@ -57,7 +57,7 @@ public interface ApiService {
     void onRequestChangePassword(@Body ChangePasswordRequest task, Callback<ChangePasswordReceive> callback);
 
     @POST("/UpdateProfile")
-    void onRequestUpdateProfile(@Body UpdateProfileRequest task, Callback<UpdateProfileReceive> callback);
+    void onUpdateProfileRequest(@Body UpdateProfileRequest task, Callback<UpdateProfileReceive> callback);
 
 }
 

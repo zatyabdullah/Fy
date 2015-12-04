@@ -26,28 +26,23 @@ public class LoginReceive {
        private String username;
        private String password;
        private String first_name;
-       private String last_name;
-       private String new_password;
        private String title;
-       private String dob;
-       private String address_1;
-       private String address_2;
-       private String address_3;
-       private String country;
-       private String city;
-       private String state;
-       private String postcode;
-       private String mobile_phone;
-       private String  alternate_phone;
-       private String fax;
-
-       public String getNew_password() {
-           return new_password;
-       }
-
-       public void setNew_password(String new_password) {
-           this.new_password = new_password;
-       }
+       private String last_name;
+       private String  DOB;
+       private String contact_title;
+       private String contact_first_name;
+       private String contact_last_name;
+       private String contact_address1;
+       private String contact_address2;
+       private String contact_address3;
+       private String contact_country;
+       private String contact_city;
+       private String contact_state;
+       private String contact_postcode;
+       private String contact_mobile_phone;
+       private String contact_alternate_phone;
+       private String contact_fax;
+       private String contact_email;
 
        public String getTitle() {
            return title;
@@ -57,98 +52,6 @@ public class LoginReceive {
            this.title = title;
        }
 
-       public String getDob() {
-           return dob;
-       }
-
-       public void setDob(String dob) {
-           this.dob = dob;
-       }
-
-       public String getAddress_1() {
-           return address_1;
-       }
-
-       public void setAddress_1(String address_1) {
-           this.address_1 = address_1;
-       }
-
-       public String getAddress_2() {
-           return address_2;
-       }
-
-       public void setAddress_2(String address_2) {
-           this.address_2 = address_2;
-       }
-
-       public String getAddress_3() {
-           return address_3;
-       }
-
-       public void setAddress_3(String address_3) {
-           this.address_3 = address_3;
-       }
-
-       public String getCountry() {
-           return country;
-       }
-
-       public void setCountry(String country) {
-           this.country = country;
-       }
-
-       public String getCity() {
-           return city;
-       }
-
-       public void setCity(String city) {
-           this.city = city;
-       }
-
-       public String getState() {
-           return state;
-       }
-
-       public void setState(String state) {
-           this.state = state;
-       }
-
-       public String getPostcode() {
-           return postcode;
-       }
-
-       public void setPostcode(String postcode) {
-           this.postcode = postcode;
-       }
-
-       public String getMobile_phone() {
-           return mobile_phone;
-       }
-
-       public void setMobile_phone(String mobile_phone) {
-           this.mobile_phone = mobile_phone;
-       }
-
-       public String getAlternate_phone() {
-           return alternate_phone;
-       }
-
-       public void setAlternate_phone(String alternate_phone) {
-           this.alternate_phone = alternate_phone;
-       }
-
-       public String getFax() {
-           return fax;
-       }
-
-       public void setFax(String fax) {
-           this.fax = fax;
-       }
-
-
-
-
-
        public String getLast_name() {
            return last_name;
        }
@@ -157,8 +60,125 @@ public class LoginReceive {
            this.last_name = last_name;
        }
 
+       public String getDOB() {
+           return DOB;
+       }
 
+       public void setDOB(String DOB) {
+           this.DOB = DOB;
+       }
 
+       public String getContact_title() {
+           return contact_title;
+       }
+
+       public void setContact_title(String contact_title) {
+           this.contact_title = contact_title;
+       }
+
+       public String getContact_first_name() {
+           return contact_first_name;
+       }
+
+       public void setContact_first_name(String contact_first_name) {
+           this.contact_first_name = contact_first_name;
+       }
+
+       public String getContact_last_name() {
+           return contact_last_name;
+       }
+
+       public void setContact_last_name(String contact_last_name) {
+           this.contact_last_name = contact_last_name;
+       }
+
+       public String getContact_address1() {
+           return contact_address1;
+       }
+
+       public void setContact_address1(String contact_address1) {
+           this.contact_address1 = contact_address1;
+       }
+
+       public String getContact_address2() {
+           return contact_address2;
+       }
+
+       public void setContact_address2(String contact_address2) {
+           this.contact_address2 = contact_address2;
+       }
+
+       public String getContact_address3() {
+           return contact_address3;
+       }
+
+       public void setContact_address3(String contact_address3) {
+           this.contact_address3 = contact_address3;
+       }
+
+       public String getContact_country() {
+           return contact_country;
+       }
+
+       public void setContact_country(String contact_country) {
+           this.contact_country = contact_country;
+       }
+
+       public String getContact_city() {
+           return contact_city;
+       }
+
+       public void setContact_city(String contact_city) {
+           this.contact_city = contact_city;
+       }
+
+       public String getContact_state() {
+           return contact_state;
+       }
+
+       public void setContact_state(String contact_state) {
+           this.contact_state = contact_state;
+       }
+
+       public String getContact_postcode() {
+           return contact_postcode;
+       }
+
+       public void setContact_postcode(String contact_postcode) {
+           this.contact_postcode = contact_postcode;
+       }
+
+       public String getContact_mobile_phone() {
+           return contact_mobile_phone;
+       }
+
+       public void setContact_mobile_phone(String contact_mobile_phone) {
+           this.contact_mobile_phone = contact_mobile_phone;
+       }
+
+       public String getContact_alternate_phone() {
+           return contact_alternate_phone;
+       }
+
+       public void setContact_alternate_phone(String contact_alternate_phone) {
+           this.contact_alternate_phone = contact_alternate_phone;
+       }
+
+       public String getContact_fax() {
+           return contact_fax;
+       }
+
+       public void setContact_fax(String contact_fax) {
+           this.contact_fax = contact_fax;
+       }
+
+       public String getContact_email() {
+           return contact_email;
+       }
+
+       public void setContact_email(String contact_email) {
+           this.contact_email = contact_email;
+       }
 
 
        public String getFirst_name() {
@@ -168,7 +188,6 @@ public class LoginReceive {
        public void setFirst_name(String first_name) {
            this.first_name = first_name;
        }
-
 
 
         public String getUsername() {
@@ -187,9 +206,7 @@ public class LoginReceive {
 
     }
 
-    public user_info getUser_info() {
-        return user_info;
-    }
+    public user_info getUser_info() {return user_info;}
 
     public void setUser_info(user_info user_info) {
         this.user_info = user_info;

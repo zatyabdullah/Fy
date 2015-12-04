@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.fly.firefly.AnalyticsApplication;
 import com.fly.firefly.FireFlyApplication;
 import com.fly.firefly.R;
+import com.fly.firefly.api.obj.UpdateProfileReceive;
 import com.fly.firefly.base.BaseFragment;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
 import com.fly.firefly.ui.activity.Picker.CountryListDialogFragment;
@@ -24,8 +25,10 @@ import com.fly.firefly.ui.module.UpdateProfileModule;
 import com.fly.firefly.ui.object.DatePickerObj;
 import com.fly.firefly.ui.object.UpdateProfileRequest;
 import com.fly.firefly.ui.presenter.UpdateProfilePresenter;
+import com.fly.firefly.utils.AESCBC;
 import com.fly.firefly.utils.DropDownItem;
 import com.fly.firefly.utils.SharedPrefManager;
+import com.fly.firefly.utils.Utils;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.mobsandgeeks.saripaar.ValidationError;
@@ -189,38 +192,42 @@ public class UpdateProfileFragment extends BaseFragment implements
 
         /*Display Existing User Data*/
 
-        HashMap<String, String> userinfo = pref.getUserInfo();
-        String username = userinfo.get(SharedPrefManager.USER_INFO);
-        Log.e("", username);
-
-        editEmail.setText(username);
-        editCurrentPassword.setText("Zatyzaty123!", TextView.BufferType.EDITABLE);
-        editTitle.setText("Ms.", TextView.BufferType.EDITABLE);
-
-           /* editFirstName.setText(obj.getUserInfo().getFirst_name(), TextView.BufferType.EDITABLE);
-            editLastName.setText(obj.getUserInfo().getLast_name(), TextView.BufferType.EDITABLE);*/
-        editFirstName.setText("zaty", TextView.BufferType.EDITABLE);
-        editLastName.setText("abdullah", TextView.BufferType.EDITABLE);
-
-        editAddressLine1.setText("30,Jalan Pungguk,Pengkalan Pegoh", TextView.BufferType.EDITABLE);
-        editCountry.setText("Malaysia");
-        editState.setText("Selangor");
-        editCity.setText("Ipoh", TextView.BufferType.EDITABLE);
-        editPostcode.setText("31500", TextView.BufferType.EDITABLE);
-        editMobilePhone.setText("0123456789", TextView.BufferType.EDITABLE);
-        editAltPhone.setText("0123456789", TextView.BufferType.EDITABLE);
-        editFax.setText("0123456789", TextView.BufferType.EDITABLE);
-        txtRegisterDatePicker.setText("31 Dec 2015");
-
-
-       /* *//*Display user Data*//*
         JSONObject jsonUserInfo = getUserInfo(getActivity());
 
+        String email = jsonUserInfo.optString("username");
+        String password = jsonUserInfo.optString("password");
+        String title = jsonUserInfo.optString("title");
+        String first_name = jsonUserInfo.optString("first_name");
+        String last_name = jsonUserInfo.optString("last_name");
+        String addressline1 = jsonUserInfo.optString("contact_address1");
+        String country = jsonUserInfo.optString("contact_country");
+        String stateU = jsonUserInfo.optString("contact_state");
+        String city = jsonUserInfo.optString("contact_city");
+        String postcode = jsonUserInfo.optString("contact_postcode");
+        String dob = jsonUserInfo.optString("DOB");
+        String mobile_phone = jsonUserInfo.optString("contact_mobile_phone");
+        String alternate_phone = jsonUserInfo.optString("contact_alternate_phone");
+        String fax = jsonUserInfo.optString("contact_fax");
 
-        String password = jsonUserInfo.optString("password");*/
+        HashMap<String, String> userinfo = pref.getUserInfo();
+        String username = userinfo.get(SharedPrefManager.USER_EMAIL);
 
-
-
+        editEmail.setText(email);
+        editTitle.setText(title, TextView.BufferType.EDITABLE);
+        editFirstName.setText(first_name, TextView.BufferType.EDITABLE);
+        editLastName.setText(last_name, TextView.BufferType.EDITABLE);
+        editAddressLine1.setText(addressline1, TextView.BufferType.EDITABLE);
+        editMobilePhone.setText(mobile_phone, TextView.BufferType.EDITABLE);
+        editAltPhone.setText(alternate_phone, TextView.BufferType.EDITABLE);
+        editPostcode.setText(postcode, TextView.BufferType.EDITABLE);
+        editCity.setText(city, TextView.BufferType.EDITABLE);
+        editFax.setText(fax, TextView.BufferType.EDITABLE);
+        editCountry.setText(country);
+        editState.setText(stateU);
+        txtRegisterDatePicker.setText(dob);
+        editCurrentPassword.setText(
+                AESCBC.decrypt("owNLfnLjPvwbQH3hUmj5Wb7wBIv83pR7", "owNLfnLjPvwbQH3h", password),
+                TextView.BufferType.EDITABLE);
 
 
 
@@ -313,7 +320,7 @@ public class UpdateProfileFragment extends BaseFragment implements
                 //Validate form
                 // Log.e("selectedTitle",selectedTitle);
                 mValidator.validate();
-                requestUpdateProfile();
+                Utils.hideKeyboard(getActivity(), v);
                 //requestChangePassword(editTextemail.getText().toString(), editTextPasswordCurrent.getText().toString(), editTextPasswordNew.getText().toString());
 
             }
@@ -375,62 +382,75 @@ public class UpdateProfileFragment extends BaseFragment implements
     }
 
 
-
-
-
-
     public void requestUpdateProfile() {
 
-        try {
-            HashMap<String, String> init = pref.getSignatureFromLocalStorage();
-            String signatureFromLocal = init.get(SharedPrefManager.SIGNATURE);
+    try {
+
+        UpdateProfileRequest data = new UpdateProfileRequest();
+
+        //Reconstruct DOB
+        String varMonth = "";
+        String varDay = "";
+
+        if(date.getMonth() < 10){
+            varMonth = "0";
+        }
+        if(date.getDay() < 10){
+            varDay = "0";
+        }
 
 
-            UpdateProfileRequest data = new UpdateProfileRequest();
+        String dob = date.getYear()+"-"+(varMonth+""+date.getMonth())+"-"+varDay+""+date.getDay();
 
-            //Reconstruct DOB
-            String var = "";
-            if (date.getMonth() < 10) {
-                var = "0";
-            }
+        data.setUsername(editEmail.getText().toString());
+        data.setFirst_name(editFirstName.getText().toString());
+        data.setLast_name(editLastName.getText().toString());
+        data.setPassword(editCurrentPassword.getText().toString());
+        data.setTitle(editTitle.getTag().toString());
+        data.setDob(dob);
+        data.setAddress_1(editAddressLine1.getText().toString());
+       /* data.setAddress_2(txtAddressLine2.getText().toString());
+        data.setAddress_3(txtAddressLine2.getText().toString());*/
+        data.setAlternate_phone(editAltPhone.getText().toString());
+        data.setMobile_phone(editMobilePhone.getText().toString());
+        data.setCountry(selectedCountryCode);
+        data.setState(selectedState);
+        data.setCity(editCity.getText().toString());
+        data.setPostcode(editPostcode.getText().toString());
+        data.setFax(editFax.getText().toString());
+        data.setSignature("");
 
-            String dob = date.getYear() + "-" + (var + "" + date.getMonth()) + "-" + date.getDay();
-
-            data.setUsername(editEmail.getText().toString());
-            data.setFirst_name(editFirstName.getText().toString());
-            data.setLast_name(editLastName.getText().toString());
-            data.setPassword(editCurrentPassword.getText().toString());
-            data.setNewPassword(editNewPassword.getText().toString());
-            data.setTitle(editTitle.getTag().toString());
-            data.setDob(dob);
-            data.setAddress_1(editAddressLine1.getText().toString());
-            //data.setAddress_2(txtAddressLine2.getText().toString());
-            // data.setAddress_3(txtAddressLine2.getText().toString());
-            data.setAlternate_phone(editAltPhone.getText().toString());
-            data.setMobile_phone(editMobilePhone.getText().toString());
-            data.setCountry(selectedCountryCode);
-            data.setState(selectedState);
-            data.setCity(editCity.getText().toString());
-            data.setPostcode(editPostcode.getText().toString());
-            data.setFax(editFax.getText().toString());
-            data.setSignature("");
-
-            presenter.updateProfile(data);
+            presenter.onUpdateProfile(data);
 
         } catch (Exception e) {
 
         }
     }
 
+@Override
+    public void onSuccessUpdate(UpdateProfileReceive obj) {
 
+        if (obj.getStatus().equals("success")) {
 
+            Crouton.makeText(getActivity(), obj.getMessage(), Style.CONFIRM).show();
+
+        }
+        else if (obj.getStatus().equals("error")) {
+
+            Crouton.makeText(getActivity(), obj.getMessage(), Style.ALERT).show();
+
+        }else{
+
+            Crouton.makeText(getActivity(), obj.getMessage(), Style.ALERT).show();
+
+        }
+    }
 
     //Validator Result//
     @Override
     public void onValidationSucceeded() {
-        Crouton.makeText(getActivity(), "Profile Successfully Updated", Style.CONFIRM).show();
         requestUpdateProfile();
-        //goHomePage();
+
     }
 
     @Override
@@ -453,6 +473,8 @@ public class UpdateProfileFragment extends BaseFragment implements
 
 
 
+
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -463,8 +485,8 @@ public class UpdateProfileFragment extends BaseFragment implements
     public void onResume() {
         super.onResume();
         presenter.onResume();
-        Log.i("Page Name", "Setting screen name: " + "Change password Page");
-        mTracker.setScreenName("Login" + "B");
+        Log.i("Page Name", "Setting screen name: " + "Update Profile Page");
+        mTracker.setScreenName("Update Profile" + "B");
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
