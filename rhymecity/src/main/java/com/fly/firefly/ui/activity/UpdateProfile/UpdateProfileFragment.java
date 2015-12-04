@@ -26,9 +26,11 @@ import com.fly.firefly.ui.object.DatePickerObj;
 import com.fly.firefly.ui.object.UpdateProfileRequest;
 import com.fly.firefly.ui.presenter.UpdateProfilePresenter;
 import com.fly.firefly.utils.AESCBC;
+import com.fly.firefly.utils.App;
 import com.fly.firefly.utils.DropDownItem;
 import com.fly.firefly.utils.SharedPrefManager;
 import com.fly.firefly.utils.Utils;
+import com.fourmob.datetimepicker.date.DatePickerDialog;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.mobsandgeeks.saripaar.ValidationError;
@@ -41,6 +43,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -52,7 +55,7 @@ import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 
 public class UpdateProfileFragment extends BaseFragment implements
-        UpdateProfilePresenter.UpdateProfileView,Validator.ValidationListener  {
+        DatePickerDialog.OnDateSetListener,UpdateProfilePresenter.UpdateProfileView,Validator.ValidationListener  {
 
     // Validator Attributes
     private Validator mValidator;
@@ -72,6 +75,8 @@ public class UpdateProfileFragment extends BaseFragment implements
     private AlertDialog dialog;
     private SharedPrefManager pref;
     private int fragmentContainerId;
+    public static final String DATEPICKER_TAG = "datepicker";
+    private String fullDate;
 
     @Inject UpdateProfilePresenter presenter;
 
@@ -108,7 +113,15 @@ public class UpdateProfileFragment extends BaseFragment implements
     @InjectView(R.id.editAddress)
     EditText editAddressLine1;
 
-    @Order(8) @NotEmpty
+    @Order(16)@Optional
+    @InjectView(R.id.editAddress2)
+    EditText editAddressLine2;
+
+    @Order(17)@Optional
+    @InjectView(R.id.editAddress3)
+    EditText editAddressLine3;
+
+    @Order(18) @NotEmpty
     @InjectView(R.id.editCountry)
     TextView editCountry;
 
@@ -177,6 +190,10 @@ public class UpdateProfileFragment extends BaseFragment implements
         View view = inflater.inflate(R.layout.update_profile, container, false);
         ButterKnife.inject(this, view);
 
+        final Calendar calendar = Calendar.getInstance();
+        final DatePickerDialog datePickerDialog = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+
+
         // [START shared_tracker]
         // Obtain the shared Tracker instance.
         AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
@@ -200,6 +217,8 @@ public class UpdateProfileFragment extends BaseFragment implements
         String first_name = jsonUserInfo.optString("first_name");
         String last_name = jsonUserInfo.optString("last_name");
         String addressline1 = jsonUserInfo.optString("contact_address1");
+        String addressline2 = jsonUserInfo.optString("contact_address2");
+        String addressline3 = jsonUserInfo.optString("contact_address3");
         String country = jsonUserInfo.optString("contact_country");
         String stateU = jsonUserInfo.optString("contact_state");
         String city = jsonUserInfo.optString("contact_city");
@@ -217,6 +236,8 @@ public class UpdateProfileFragment extends BaseFragment implements
         editFirstName.setText(first_name, TextView.BufferType.EDITABLE);
         editLastName.setText(last_name, TextView.BufferType.EDITABLE);
         editAddressLine1.setText(addressline1, TextView.BufferType.EDITABLE);
+        editAddressLine2.setText(addressline2, TextView.BufferType.EDITABLE);
+        editAddressLine3.setText(addressline3, TextView.BufferType.EDITABLE);
         editMobilePhone.setText(mobile_phone, TextView.BufferType.EDITABLE);
         editAltPhone.setText(alternate_phone, TextView.BufferType.EDITABLE);
         editPostcode.setText(postcode, TextView.BufferType.EDITABLE);
@@ -299,7 +320,10 @@ public class UpdateProfileFragment extends BaseFragment implements
         txtRegisterDatePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showTimePickerDialog(v);
+                //datePickerDialog.setVibrate(isVibrate());
+                datePickerDialog.setYearRange(1985, 2028);
+                //datePickerDialog.setCloseOnSingleTapDay(isCloseOnSingleTapDay());
+                datePickerDialog.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
 
             }
         });
@@ -318,7 +342,7 @@ public class UpdateProfileFragment extends BaseFragment implements
             @Override
             public void onClick(View v) {
                 //Validate form
-                // Log.e("selectedTitle",selectedTitle);
+                Log.e("Clicked", "Ok");
                 mValidator.validate();
                 Utils.hideKeyboard(getActivity(), v);
                 //requestChangePassword(editTextemail.getText().toString(), editTextPasswordCurrent.getText().toString(), editTextPasswordNew.getText().toString());
@@ -335,6 +359,7 @@ public class UpdateProfileFragment extends BaseFragment implements
         newFragment.setTargetFragment(UpdateProfileFragment.this, 0);
         newFragment.show(getFragmentManager(), "datePicker");
     }
+
     public void showCountrySelector(Activity act,ArrayList constParam)
     {
         if(act != null) {
@@ -353,95 +378,124 @@ public class UpdateProfileFragment extends BaseFragment implements
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.e("enter here", "ok");
+
+        JSONObject jsonUserInfo = getUserInfo(getActivity());
         if (resultCode != Activity.RESULT_OK) {
             return;
         } else {
             if (requestCode == 1) {
-                // if (requestCode == 1) {
-                Log.e("requestCode", "1");
                 DropDownItem selectedCountry = data.getParcelableExtra(CountryListDialogFragment.EXTRA_COUNTRY);
 
                 if (selectedCountry.getTag() == "Country") {
                     editCountry.setText(selectedCountry.getText());
                     selectedCountryCode = selectedCountry.getCode();
+
+                   /*Each country click - reset state obj*/
+                    state = new ArrayList<DropDownItem>();
+
+                    /* Set state from selected Country Code*/
+                    JSONArray jsonState = getState(getActivity());
+                    for(int x = 0 ; x < jsonState.length() ; x++) {
+
+                        JSONObject row = (JSONObject) jsonState.opt(x);
+                        if(selectedCountryCode.equals(row.optString("country_code"))) {
+                            DropDownItem itemCountry = new DropDownItem();
+                            itemCountry.setText(row.optString("state_name"));
+                            itemCountry.setCode(row.optString("state_code"));
+                            itemCountry.setTag("State");
+                            state.add(itemCountry);
+                        }
+                    }
+
                 } else {
                     editState.setText(selectedCountry.getText());
                     selectedState = selectedCountry.getCode();
+
                 }
 
-            }else{
-
-                date = (DatePickerObj)data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
-                String month =  getMonthAlphabet(date.getMonth());
-                month_number = date.getMonth();
-                Log.e("Date Picker",Integer.toString(date.getMonth()));
-                txtRegisterDatePicker.setText(date.getDay()+" "+month+" "+date.getYear());
             }
         }
     }
 
-
     public void requestUpdateProfile() {
 
-    try {
+        //initiateLoading(getActivity());
+
+        HashMap<String, String> init = pref.getSignatureFromLocalStorage();
+        String signatureFromLocal = init.get(SharedPrefManager.SIGNATURE);
 
         UpdateProfileRequest data = new UpdateProfileRequest();
 
-        //Reconstruct DOB
-        String varMonth = "";
-        String varDay = "";
-
-        if(date.getMonth() < 10){
-            varMonth = "0";
-        }
-        if(date.getDay() < 10){
-            varDay = "0";
-        }
 
 
-        String dob = date.getYear()+"-"+(varMonth+""+date.getMonth())+"-"+varDay+""+date.getDay();
-
+        String currentPassword = AESCBC.encrypt(App.KEY, App.IV, editCurrentPassword.getText().toString());
+        String newPassword = AESCBC.encrypt(App.KEY, App.IV, editNewPassword.getText().toString());
         data.setUsername(editEmail.getText().toString());
         data.setFirst_name(editFirstName.getText().toString());
         data.setLast_name(editLastName.getText().toString());
-        data.setPassword(editCurrentPassword.getText().toString());
-        data.setTitle(editTitle.getTag().toString());
-        data.setDob(dob);
+        data.setPassword(currentPassword);
+        data.setNew_password(newPassword);
+        data.setTitle(editTitle.getText().toString());
         data.setAddress_1(editAddressLine1.getText().toString());
-       /* data.setAddress_2(txtAddressLine2.getText().toString());
-        data.setAddress_3(txtAddressLine2.getText().toString());*/
-        data.setAlternate_phone(editAltPhone.getText().toString());
+        data.setAddress_2(editAddressLine2.getText().toString());
+        data.setAddress_3(editAddressLine3.getText().toString());
         data.setMobile_phone(editMobilePhone.getText().toString());
-        data.setCountry(selectedCountryCode);
-        data.setState(selectedState);
+        data.setAlternate_phone(editAltPhone.getText().toString());
         data.setCity(editCity.getText().toString());
         data.setPostcode(editPostcode.getText().toString());
         data.setFax(editFax.getText().toString());
         data.setSignature("");
 
-            presenter.onUpdateProfile(data);
+        JSONObject jsonUserInfo = getUserInfo(getActivity());
+        if (editCountry.getText().toString().equals(jsonUserInfo.optString("contact_country"))){
+            data.setCountry(jsonUserInfo.optString("contact_country").toString());
+             if(editState.getText().toString().equals(jsonUserInfo.optString("contact_state"))){
+                 data.setState(jsonUserInfo.optString("contact_state").toString());
+                 if(txtRegisterDatePicker.getText().toString().equals(jsonUserInfo.optString("DOB"))){
+                     data.setDob(jsonUserInfo.optString("DOB").toString());
+                 }
+            }else{
+                 data.setCountry(selectedCountryCode);
+                 data.setState(selectedState);
+                 data.setDob(fullDate);}
 
-        } catch (Exception e) {
+        }else if (editState.getText().toString().equals(jsonUserInfo.optString("contact_state").toString())) {
+                data.setState(jsonUserInfo.optString("contact_state").toString());
+            if(editCountry.getText().toString().equals(jsonUserInfo.optString("contact_country"))){
+                data.setCountry(jsonUserInfo.optString("contact_country").toString());
+                if(txtRegisterDatePicker.getText().toString().equals(jsonUserInfo.optString("DOB"))){
+                    data.setDob(jsonUserInfo.optString("DOB").toString());
+                }
+            }
+        }else{
+            data.setCountry(selectedCountryCode);
+            data.setState(selectedState);
+            data.setDob(fullDate);
 
         }
+
+
+        presenter.onUpdateProfile(data);
+
+
     }
 
-@Override
+   @Override
     public void onSuccessUpdate(UpdateProfileReceive obj) {
+    //dismissLoading();
+       Log.e("Update","success");
 
         if (obj.getStatus().equals("success")) {
 
             Crouton.makeText(getActivity(), obj.getMessage(), Style.CONFIRM).show();
 
         }
-        else if (obj.getStatus().equals("error")) {
+        else if (obj.getStatus().equals("error_validation")) {
 
-            Crouton.makeText(getActivity(), obj.getMessage(), Style.ALERT).show();
+            croutonAlert(getActivity(), obj.getMessage());
 
         }else{
-
-            Crouton.makeText(getActivity(), obj.getMessage(), Style.ALERT).show();
+            croutonAlert(getActivity(), obj.getMessage());
 
         }
     }
@@ -450,15 +504,16 @@ public class UpdateProfileFragment extends BaseFragment implements
     @Override
     public void onValidationSucceeded() {
         requestUpdateProfile();
+        Log.e("Validation", "success");
 
     }
 
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
-        for (ValidationError error : errors) {
+        Log.e("Validation","fail");
+       for (ValidationError error : errors) {
             View view = error.getView();
 
-             /* Split Error Message. Display first sequence only */
             String message = error.getCollatedErrorMessage(getActivity());
             String splitErrorMsg[] = message.split("\\r?\\n");
 
@@ -469,9 +524,8 @@ public class UpdateProfileFragment extends BaseFragment implements
                 Crouton.makeText(getActivity(), message, Style.ALERT).show();
             }
         }
+
     }
-
-
 
 
 
@@ -485,8 +539,9 @@ public class UpdateProfileFragment extends BaseFragment implements
     public void onResume() {
         super.onResume();
         presenter.onResume();
-        Log.i("Page Name", "Setting screen name: " + "Update Profile Page");
-        mTracker.setScreenName("Update Profile" + "B");
+      //  Log.i("Page Name", "Setting screen name: " + "Update Profile Page");
+        String e = UpdateProfileFragment.class.getSimpleName();
+        mTracker.setScreenName(e);
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
@@ -494,5 +549,26 @@ public class UpdateProfileFragment extends BaseFragment implements
     public void onPause() {
         super.onPause();
         presenter.onPause();
+    }
+
+
+
+    @Override
+    public void onDateSet(DatePickerDialog datePickerDialog, int year, int month, int day) {
+        String monthInAlphabet = getMonthAlphabet(month);
+        txtRegisterDatePicker.setText(day + " " + monthInAlphabet + " " + year);
+
+        //Reconstruct DOB
+        String varMonth = "";
+        String varDay = "";
+
+        if(month < 10){
+            varMonth = "0";
+        }
+        if(day < 10){
+            varDay = "0";
+        }
+        fullDate = varDay+""+day+ "-" + varMonth+""+month + "-" + year;
+        Log.e("fullDate", fullDate);
     }
 }

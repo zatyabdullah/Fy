@@ -55,6 +55,8 @@ public class BaseFragment extends Fragment {
 				.show();
 	}
 
+
+
 	/*public void initiateLoading(Activity act){
 
 		ProgressDialog mProgressDialog;
@@ -210,7 +212,7 @@ public class BaseFragment extends Fragment {
 
 	/*Return month in alphabet*/
 	public String getMonthAlphabet(int month) {
-		return new DateFormatSymbols().getShortMonths()[month-1];
+		return new DateFormatSymbols().getShortMonths()[month];
 	}
 
 	/*Get All Country From OS*/

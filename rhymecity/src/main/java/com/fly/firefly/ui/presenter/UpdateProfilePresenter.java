@@ -11,10 +11,10 @@ public class UpdateProfilePresenter {
         void onSuccessUpdate(UpdateProfileReceive obj);
     }
 
-    private final  UpdateProfileView  view;
+    private final UpdateProfileView view;
     private final Bus bus;
 
-    public UpdateProfilePresenter ( UpdateProfileView  view, Bus bus) {
+    public UpdateProfilePresenter(UpdateProfileView view, Bus bus) {
         this.view = view;
         this.bus = bus;
     }
@@ -27,13 +27,13 @@ public class UpdateProfilePresenter {
         bus.unregister(this);
     }
 
-    public void onUpdateProfile(UpdateProfileRequest obj) {
-        bus.post(new UpdateProfileRequest(obj));
+    public void onUpdateProfile(UpdateProfileRequest data) {
+        bus.post(new UpdateProfileRequest(data));
     }
 
 
     @Subscribe
-    public void onUserSuccessUpdate(UpdateProfileReceive event) {
+    public void onUserSuccessRegister(UpdateProfileReceive event) {
 
         //Log.e("Messages", event.getStatus());
         /*Save Session And Redirect To Homepage*/

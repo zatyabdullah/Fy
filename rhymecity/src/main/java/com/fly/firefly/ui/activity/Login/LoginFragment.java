@@ -243,8 +243,6 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
     /*IF Login Failed*/
     @Override
     public void onLoginFailed(String obj) {
-
-
         Crouton.makeText(getActivity(), obj, Style.ALERT).show();
 
 
@@ -257,7 +255,7 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
         if (obj.getStatus().equals("success")) {
             Crouton.makeText(getActivity(), obj.getMessage(), Style.CONFIRM).show();
         }else{
-            Crouton.makeText(getActivity(), obj.getMessage(), Style.ALERT).show();
+            croutonAlert(getActivity(),obj.getMessage());
         }
 
     }

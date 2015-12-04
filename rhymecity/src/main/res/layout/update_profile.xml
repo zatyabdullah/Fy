@@ -415,6 +415,37 @@
                                         android:padding="5dp"
                                         android:id="@+id/editAddress"
                                         android:background="@null" />
+
+                                </LinearLayout>
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@drawable/block_with_border"
+                                    android:layout_marginTop="5dp" >
+
+                                    <EditText
+                                        android:layout_width="fill_parent"
+                                        android:layout_height="wrap_content"
+                                        android:padding="5dp"
+                                        android:id="@+id/editAddress2"
+                                        android:background="@null" />
+
+                                </LinearLayout>
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@drawable/block_with_border"
+                                    android:layout_marginTop="5dp" >
+
+                                    <EditText
+                                        android:layout_width="fill_parent"
+                                        android:layout_height="wrap_content"
+                                        android:padding="5dp"
+                                        android:id="@+id/editAddress3"
+                                        android:background="@null" />
+
                                 </LinearLayout>
                             </LinearLayout>
 

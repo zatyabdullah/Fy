@@ -8,6 +8,7 @@ public class UpdateProfileRequest {
 
     private String username;
     private String password;
+    private String new_password;
     private String title;
     private String first_name;
     private String last_name;
@@ -34,6 +35,7 @@ public class UpdateProfileRequest {
         state = data.getState();
         username = data.getUsername();
         password = data.getPassword();
+        new_password = data. getNew_password();
         first_name = data.getFirst_name();
         dob = data.getDob();
         last_name = data.getLast_name();
@@ -49,6 +51,14 @@ public class UpdateProfileRequest {
         fax = data.getFax();
         signature = data.getSignature();
         //"OTZSeE9vSkVNV1k9fE5LbVBwb2NjM3VwcnZJZERvYlZlRzNVWkdwWG5GNTBvaHRaUjd5RGd6YXV0SDI0ZmhFd3lLVzdwem5TMDh1Qk9pbFRxYWE1bjJTeElVV0NyYk13bmd2cktJRzNXR0JlYTk4MEtIR3RRclA4MURUYTNRUFJjTTV4Skt3bzZmWXdKQ0ZTNmNoajJhUlk9";
+    }
+
+    public String getNew_password() {
+        return new_password;
+    }
+
+    public void setNew_password(String new_password) {
+        this.new_password = new_password;
     }
 
     public String getCountry() {
@@ -79,9 +89,7 @@ public class UpdateProfileRequest {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    public void setPassword(String password) {this.password = password;}
 
     public String getSignature() {
         return signature;

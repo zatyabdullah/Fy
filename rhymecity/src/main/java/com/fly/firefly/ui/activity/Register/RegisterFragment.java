@@ -456,8 +456,8 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
         if(day < 10){
             varDay = "0";
         }
-        fullDate = varDay+""+day+ "-" + varMonth+""+varMonth + "-" + year;
-        Log.e("fullDate",fullDate);
+        fullDate = varDay+""+day+ "-" + varMonth+""+month + "-" + year;
+        Log.e("fullDate", fullDate);
     }
 
 }
