@@ -18,34 +18,8 @@ public class App extends Application {
 	public static final String CURRENCY = "MYR";
 
 	public static final String WIKITUDE_SDK_KEY = "o61KXnIOPpFAXlZ3DVLTnTN2vRWE57IZmYW8RMUbbsh/k13re8CM4tTzBZ3rs/v/rYG7SPUXo3bklsdu6HPJAh+adM1+ANtYBs7MqIxLrU4nMYpWgex0F1Ju8MYWe8+ICd8Htc5G8yoCggJ4GkM0S4rQMXNr2/vmsLQkXOUuJ29TYWx0ZWRfX9zKvlEAsYcwZw8zo9XrLUBmNNSu5pBP1a8d7AGunC1Zlj5soG/bN5/C4u/cWg3985MjE0fOGHKGVHEianLD5b0h4pt06k70D6+WArNauN3PU9i0rBNgdlNOrVd1Gdzs0eGRQvNLj4ynqyP72scrj9cWjjO2pKYAXDcDnu8NO4SetYcO+8utyNCbZQrRuqmxQok/yzswLm7yZxhMPI6BuaWCA5h1nlsbO3wipvuImCepQ9XoWEj+F/egSOgCcxMzwAJwsoYGWlDnsBKAi1UmWFaiN4Tf3xKrZq/gr52HU33UKx3IVMdA3aRl6l8U/CLojyte/pkr1OXfV5ZJaDhTy8TRlGJWwP5fR+YU/mYlOp6+rYCSq+n0YwWoKgPYoc0vxQAgV7pJdoiKLeF6P11gusGwhi1PUZjnZgoygeoFMrXCf7wCh6Ad4Hh+MJKB/NT4VOVk3xhWxI61I2Ks28JUotw/DCRhjNKQcpLEVL3AF87A7YFPSw/qmnE=";
-
-
-    //External Ip
-   // public static final String WS_URL = "http://175.136.195.53:88/vrsm/generalHTTP/1.1";
-   // public static final String WS_SECURE_URL = "http://175.136.195.53:88/vrsm/secureHTTP/1.1";
-   // public static final String ADS_URL = "http://mobilityg303.ddns.eagleeyes.tw:88/ma/api/advert/list";
-   // public static final String ADS_URL_IMG = "http://mobilityg303.ddns.eagleeyes.tw:88/ma/api/advert/";
-//	public static final String WS_IMAGE = "http://175.136.195.53:88/vrsm/digital/";
-//	public static final String WS_MEDIA = "http://175.136.195.53:88/vrsm/media/";
-
-
-	//Internal Ip
-//	public static final String WS_URL = "http://192.168.208.46:9766/vrsm/generalHTTP/1.1";
-//	public static final String WS_SECURE_URL = "http://192.168.208.46:9766/vrsm/secureHTTP/1.1";
-//	public static final String ADS_URL = "http://mobilityg303.ddns.eagleeyes.tw:88/ma/api/advert/list";
-//	public static final String ADS_URL_IMG = "http://mobilityg303.ddns.eagleeyes.tw:88/ma/api/advert/";
-//	public static final String WS_IMAGE = "http://192.168.208.46:9766/vrsm/digital/";
-  //  public static final String WS_MEDIA = "http://192.168.208.46:9766/vrsm/media/";
-
-
-	//Internal Ip
-	public static final String WS_URL = "http://smes.silverlakegroup.com.my:82/VRSM2/vrsm/generalHTTP/1.1";
-	public static final String WS_SECURE_URL = "http://smes.silverlakegroup.com.my:82/VRSM2/vrsm/secureHTTP/1.1";
-	public static final String ADS_URL = "http://mobilityg303.ddns.eagleeyes.tw:88/ma/api/advert/list";
-	public static final String ADS_URL_IMG = "http://mobilityg303.ddns.eagleeyes.tw:88/ma/api/advert/";
-    public static final String WS_IMAGE = "http://smes.silverlakegroup.com.my:82/VRSM2/vrsm/digital/";
-	public static final String WS_MEDIA = "http://smes.silverlakegroup.com.my:82/VRSM2/vrsm/media/";
-
+	public static final String KEY = "owNLfnLjPvwbQH3hUmj5Wb7wBIv83pR7";
+	public static final String IV = "owNLfnLjPvwbQH3h";
 
 
 	// code 7 is success code with badge

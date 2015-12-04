@@ -1,4 +1,4 @@
-package com.fly.firefly.ui.fragment.BookingFlight;
+package com.fly.firefly.ui.activity.BookingFlight;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,7 +14,6 @@ import com.fly.firefly.R;
 import com.fly.firefly.api.obj.FlightInfo;
 import com.fly.firefly.api.obj.SearchFlightReceive;
 import com.fly.firefly.base.BaseFragment;
-import com.fly.firefly.ui.activity.BookingFlight.PersonalDetailActivity;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
 import com.fly.firefly.ui.adapter.FlightDetailAdapter;
 import com.fly.firefly.ui.module.FlightDetailModule;
@@ -42,13 +41,22 @@ public class FlightDetailFragment extends BaseFragment implements BookingPresent
     @InjectView(R.id.txtReturnType)TextView txtReturnType;
     @InjectView(R.id.txtReturnAirport)TextView txtReturnAirport;
     @InjectView(R.id.txtReturnDate)TextView txtReturnDate;
+
     @InjectView(R.id.btnBasic)LinearLayout btnBasic;
     @InjectView(R.id.btnPremier)LinearLayout btnPremier;
+    @InjectView(R.id.btnBasicReturn)LinearLayout btnBasicReturn;
+    @InjectView(R.id.btnPremierReturn)LinearLayout btnPremierReturn;
 
     @InjectView(R.id.premierFlightDeparture)ExpandAbleGridView premierFlightDeparture;
+    @InjectView(R.id.premierFlightArrival)ExpandAbleGridView premierFlightArrival;
 
     private int fragmentContainerId;
-    private FlightDetailAdapter departListBasic,departListPremier,returnList;
+    private FlightDetailAdapter departListBasic,departListPremier, returnListBasic,returnListPremier;
+
+    private final String DEPART_BASIC = "DEPART_BASIC";
+    private final String DEPART_PREMIER = "DEPART_PREMIER";
+    private final String RETURN_PREMIER = "RETURN_PREMIER";
+    private final String RETURN_BASIC = "RETURN_BASIC";
     private final String BASIC = "BASIC";
     private final String PREMIER = "PREMIER";
 
@@ -74,6 +82,7 @@ public class FlightDetailFragment extends BaseFragment implements BookingPresent
 
         Bundle bundle = getArguments();
         btnPremier.setBackgroundColor(getResources().getColor(R.color.grey));
+        btnPremierReturn.setBackgroundColor(getResources().getColor(R.color.grey));
 
         String dataFlight2 = bundle.getString("FLIGHT_OBJ");
         Gson gson = new Gson();
@@ -88,11 +97,12 @@ public class FlightDetailFragment extends BaseFragment implements BookingPresent
         String type = obj.getJourneyObj().getJourneys().get(0).getType();
         txtDepartAirport.setText(departPort+" - "+arrivalPort);
         txtFlightType.setText(type);
+
         //Reformat Date
         String departDate = obj.getJourneyObj().getJourneys().get(0).getDeparture_date();
-        String[] output = departDate.split("-");
-        String month = getMonthAlphabet(Integer.parseInt(output[1]));
-        txtDepartureDate.setText(output[0] + " " + month + " " + output[2]);
+        //String[] output = departDate.split(" ");
+        //String month = output[1];
+        txtDepartureDate.setText(departDate);
 
         /*Basic*/
         departListBasic = new FlightDetailAdapter(getActivity(),departFlight,departPort,arrivalPort,BASIC);
@@ -116,12 +126,13 @@ public class FlightDetailFragment extends BaseFragment implements BookingPresent
 
             //Reformat Date
             String returnDate = obj.getJourneyObj().getJourneys().get(1).getDeparture_date();
-            String[] returnDateOutput = returnDate.split("-");
-            String returnMonth = getMonthAlphabet(Integer.parseInt(returnDateOutput[1]));
-            txtReturnDate.setText(returnDateOutput[0]+" "+returnMonth+" "+returnDateOutput[2]);
+            txtReturnDate.setText(returnDate);
 
-            returnList = new FlightDetailAdapter(getActivity(),returnFlight,returnDepartPort,returnArrivalPort,BASIC);
-            flightArrival.setAdapter(returnList);
+            returnListBasic = new FlightDetailAdapter(getActivity(),returnFlight,returnDepartPort,returnArrivalPort,BASIC);
+            flightArrival.setAdapter(returnListBasic);
+
+            returnListPremier = new FlightDetailAdapter(getActivity(),returnFlight,returnDepartPort,returnArrivalPort,PREMIER);
+            premierFlightArrival.setAdapter(returnListPremier);
 
         }
 
@@ -136,16 +147,32 @@ public class FlightDetailFragment extends BaseFragment implements BookingPresent
         btnBasic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switchFare(BASIC);
+                switchFare(DEPART_BASIC);
             }
         });
 
         btnPremier.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switchFare(PREMIER);
+                switchFare(DEPART_PREMIER);
             }
         });
+
+        btnBasicReturn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switchFare(RETURN_BASIC);
+            }
+        });
+
+        btnPremierReturn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switchFare(RETURN_PREMIER);
+            }
+        });
+
+
 
         return view;
     }
@@ -168,20 +195,29 @@ public class FlightDetailFragment extends BaseFragment implements BookingPresent
     //Switch Flight Type
     public void switchFare(String way)
     {
-        if(way == BASIC) {
+        if(way == DEPART_BASIC) {
             premierFlightDeparture.setVisibility(View.GONE);
             flightDeparture.setVisibility(View.VISIBLE);
             btnBasic.setBackgroundColor(getResources().getColor(R.color.white));
             btnPremier.setBackgroundColor(getResources().getColor(R.color.grey));
             //flightClass = "1";
-        }else {
+        }else if (way == DEPART_PREMIER){
             premierFlightDeparture.setVisibility(View.VISIBLE);
             flightDeparture.setVisibility(View.GONE);
             btnBasic.setBackgroundColor(getResources().getColor(R.color.grey));
             btnPremier.setBackgroundColor(getResources().getColor(R.color.white));
-
-            //flightClass = "0";
-
+           //flightClass = "0";
+        }else if (way == RETURN_BASIC){
+            premierFlightArrival.setVisibility(View.GONE);
+            flightArrival.setVisibility(View.VISIBLE);
+            btnPremierReturn.setBackgroundColor(getResources().getColor(R.color.grey));
+            btnBasicReturn.setBackgroundColor(getResources().getColor(R.color.white));
+        }else if (way == RETURN_PREMIER)
+        {
+            premierFlightArrival.setVisibility(View.VISIBLE);
+            flightArrival.setVisibility(View.GONE);
+            btnBasicReturn.setBackgroundColor(getResources().getColor(R.color.grey));
+            btnPremierReturn.setBackgroundColor(getResources().getColor(R.color.white));
         }
     }
 

@@ -2,6 +2,7 @@ package com.fly.firefly.ui.presenter;
 
 import android.util.Log;
 
+import com.fly.firefly.api.obj.FailedConnectToServer;
 import com.fly.firefly.api.obj.SearchFlightReceive;
 import com.fly.firefly.rhymes.RhymesRequestedEvent;
 import com.fly.firefly.ui.object.SearchFlightObj;
@@ -58,4 +59,5 @@ public class BookingPresenter {
     public void onRhymesForWordRequested(String word) {
         bus.post(new RhymesRequestedEvent(word));
     }
+
 }

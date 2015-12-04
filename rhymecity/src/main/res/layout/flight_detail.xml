@@ -210,7 +210,7 @@
 
                         <LinearLayout
                             android:id="@+id/returnFlightBlock"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             android:orientation="vertical"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
@@ -245,6 +245,52 @@
                                 android:textStyle="bold"
                                 android:textColor="@color/white"
                                 android:id="@+id/txtReturnDate" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:weightSum="1"
+                            android:layout_marginTop="5dp" >
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.5"
+                                android:gravity="center"
+                                android:id="@+id/btnBasicReturn" >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textAppearance="?android:attr/textAppearanceMedium"
+                                    android:text="@string/book_flight_basic"
+                                    android:textStyle="bold"
+                                    android:padding="6dp"
+                                    android:id="@+id/textView30" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:clickable="true"
+                                android:orientation="vertical"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.5"
+                                android:gravity="center"
+                                android:id="@+id/btnPremierReturn" >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textAppearance="?android:attr/textAppearanceMedium"
+                                    android:text="@string/book_flight_premier"
+                                    android:textStyle="bold"
+                                    android:padding="6dp"
+                                    android:id="@+id/textView145" />
+                            </LinearLayout>
                         </LinearLayout>
 
                         <com.fly.firefly.utils.ExpandAbleGridView
@@ -258,6 +304,20 @@
                             android:stretchMode="columnWidth"
                             android:verticalSpacing="1dp">
                         </com.fly.firefly.utils.ExpandAbleGridView>
+
+                        <com.fly.firefly.utils.ExpandAbleGridView
+                            android:id="@+id/premierFlightArrival"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:columnWidth="220dp"
+                            android:gravity="center"
+                            android:horizontalSpacing="1dp"
+                            android:numColumns="1"
+                            android:stretchMode="columnWidth"
+                            android:verticalSpacing="1dp"
+                            android:visibility="gone">
+                        </com.fly.firefly.utils.ExpandAbleGridView>
+
 
                     </LinearLayout>
 

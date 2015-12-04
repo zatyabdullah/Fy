@@ -1,7 +1,7 @@
 package com.fly.firefly.api;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.util.Log;
 
 import com.fly.firefly.MainFragmentActivity;
@@ -23,6 +23,8 @@ import com.fly.firefly.api.obj.UpdateProfileReceive;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -31,7 +33,7 @@ public class ApiRequestHandler {
 
     private final Bus bus;
     private final ApiService apiService;
-    Activity context;
+    Context context;
     ProgressDialog mProgressDialog;
     public ApiRequestHandler(Bus bus, ApiService apiService) {
         this.bus = bus;
@@ -45,8 +47,8 @@ public class ApiRequestHandler {
         Log.e("Username", event.getUsername());
         Log.e("Password", event.getPassword());
 
-        initiateLoading();
-        loading(true);
+       // initiateLoading();
+       // loading(true);
 
 
         apiService.onRequestToLogin(event, new Callback<LoginReceive>() {
@@ -54,16 +56,16 @@ public class ApiRequestHandler {
             @Override
             public void success(LoginReceive rhymesResponse, Response response) {
 
-                Log.e("Success", "OK");
-                bus.post(new LoginReceive(rhymesResponse));
-                loading(false);
+
+     Log.e("Success","OK");
+               bus.post(new LoginReceive(rhymesResponse));
             }
 
             @Override
             public void failure(RetrofitError error) {
 
                 bus.post(new FailedConnectToServer("Unable to connect to server"));
-                loading(false);
+              //  loading(false);
             }
 
         });
@@ -77,8 +79,8 @@ public class ApiRequestHandler {
         Log.e("Email", event.getEmail());
 
 
-        initiateLoading();
-        loading(true);
+       // initiateLoading();
+        //loading(true);
 
 
         apiService.onRequestPassword(event, new Callback<ForgotPasswordReceive>() {
@@ -88,14 +90,14 @@ public class ApiRequestHandler {
 
                 Log.e("Success", "OK");
                 bus.post(new ForgotPasswordReceive(rhymesResponse));
-                loading(false);
+                //loading(false);
             }
 
             @Override
             public void failure(RetrofitError error) {
 
                 bus.post(new FailedConnectToServer("Unable to connect to server"));
-                loading(false);
+               // loading(false);
             }
 
         });
@@ -109,8 +111,8 @@ public class ApiRequestHandler {
         Log.e("new_password", event.getCurrentPassword());
 
 
-        initiateLoading();
-        loading(true);
+       // initiateLoading();
+       //loading(true);
 
 
         apiService.onRequestChangePassword(event, new Callback<ChangePasswordReceive>() {
@@ -120,14 +122,14 @@ public class ApiRequestHandler {
 
                 Log.e("Success", "OK");
                 bus.post(new ChangePasswordReceive(rhymesResponse));
-                loading(false);
+               // loading(false);
             }
 
             @Override
             public void failure(RetrofitError error) {
 
                 bus.post(new FailedConnectToServer("Unable to connect to server"));
-                loading(false);
+               // loading(false);
             }
 
         });
@@ -141,8 +143,8 @@ public class ApiRequestHandler {
         Log.e("new_password", event.getPassword());
 
 
-        initiateLoading();
-        loading(true);
+        //initiateLoading();
+        //loading(true);
 
 
         apiService.onRequestUpdateProfile(event, new Callback<UpdateProfileReceive>() {
@@ -152,14 +154,14 @@ public class ApiRequestHandler {
 
                 Log.e("Success", "OK");
                 bus.post(new UpdateProfileReceive(rhymesResponse));
-                loading(false);
+               // loading(false);
             }
 
             @Override
             public void failure(RetrofitError error) {
 
                 bus.post(new FailedConnectToServer("Unable to connect to server"));
-                loading(false);
+              //  loading(false);
             }
 
         });
@@ -171,8 +173,7 @@ public class ApiRequestHandler {
     @Subscribe
     public void onUpdateProfileRequest(final UpdateProfileRequest event) {
 
-        initiateLoading();
-        loading(true);
+
 
 
         apiService.onUpdateProfileRequest(event, new Callback<UpdateProfileReceive>() {
@@ -182,14 +183,14 @@ public class ApiRequestHandler {
 
                 Log.e("Success", "True");
                 bus.post(new UpdateProfileReceive(rhymesResponse));
-                loading(false);
+
             }
 
             @Override
             public void failure(RetrofitError error) {
 
                 Log.e("Failed", "True");
-                loading(false);
+
                 //bus.post(new RhymesFailureEvent(rhymesResponse));
             }
 
@@ -232,8 +233,8 @@ public class ApiRequestHandler {
     @Subscribe
     public void onRegisterRequest(final RegisterObj event) {
 
-        initiateLoading();
-        loading(true);
+       // initiateLoading();
+       // loading(true);
 
 
         apiService.onRegisterRequest(event, new Callback<RegisterReceive>() {
@@ -243,14 +244,14 @@ public class ApiRequestHandler {
 
                 Log.e("Success", "True");
                 bus.post(new RegisterReceive(rhymesResponse));
-                loading(false);
+               // loading(false);
             }
 
             @Override
             public void failure(RetrofitError error) {
 
                 Log.e("Failed", "True");
-                loading(false);
+                //loading(false);
                 //bus.post(new RhymesFailureEvent(rhymesResponse));
             }
 
@@ -270,14 +271,16 @@ public class ApiRequestHandler {
             public void success(SearchFlightReceive rhymesResponse, Response response) {
                 Log.e(rhymesResponse.getStatus(),"x");
                 bus.post(new SearchFlightReceive(rhymesResponse));
-                //loading(false);
+               // loading(false);
 
             }
 
             @Override
             public void failure(RetrofitError error) {
 
-                Log.e("Failed",error.getMessage());
+                Crouton.makeText(MainFragmentActivity.getContext(), "Unable to connect to server", Style.ALERT).show();
+                Log.e("Failed", "True");
+                //bus.post(new FailedConnectToServer("Unable to connect to server"));
                 //loading(false);
 
             }
@@ -319,7 +322,7 @@ public class ApiRequestHandler {
 
     /* ------------------------- Loading ------------------------- */
 
-    public void initiateLoading(){
+    /*public void initiateLoading(){
 
         context = MainFragmentActivity.getContext();
         mProgressDialog = new ProgressDialog(context);
@@ -342,7 +345,7 @@ public class ApiRequestHandler {
             }
         }
 
-    }
+    }*/
 
 }
 

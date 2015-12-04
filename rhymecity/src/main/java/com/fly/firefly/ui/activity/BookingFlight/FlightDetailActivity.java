@@ -8,7 +8,6 @@ import com.fly.firefly.AnalyticsApplication;
 import com.fly.firefly.MainFragmentActivity;
 import com.fly.firefly.R;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
-import com.fly.firefly.ui.fragment.BookingFlight.FlightDetailFragment;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 

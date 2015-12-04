@@ -132,7 +132,10 @@ public class NavigationDrawerFragment extends Fragment {
             HashMap<String, String> username = pref.getUsername();
             userName = username.get(SharedPrefManager.USERNAME);
         }
-        catch (Exception e){}
+        catch (Exception e){
+            Log.e("loginStatus",e.getMessage());
+
+        }
 
 		/* Initiate NavigationDrawer Item */
         menuTop();
@@ -149,7 +152,8 @@ public class NavigationDrawerFragment extends Fragment {
         itemList.clear();
         itemList = new ArrayList<DrawerItem>();
 
-        if(!loginStatus.equals("Y")){
+       // if(!loginStatus.equals("Y")){
+        if( loginStatus != "Y"){
 
             DrawerItem vrsm = new DrawerItem();
             vrsm.setId(0);

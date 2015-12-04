@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.widget.DatePicker;
 
 import com.fly.firefly.ui.object.DatePickerObj;
@@ -40,7 +41,10 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
     public void onDateSet(DatePicker view, int year, int month, int day) {
         // Do something with the date chosen by the user
         datePickerObj.setYear(year);
-        datePickerObj.setMonth(month+1);
+        datePickerObj.setMonth(month + 1);
+
+        Log.e("Day",Integer.toString(day));
+
         datePickerObj.setDay(day);
 
         sendResult(datePickerObj);
