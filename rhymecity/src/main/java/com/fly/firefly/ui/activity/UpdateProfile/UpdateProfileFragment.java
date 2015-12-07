@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ import com.fly.firefly.R;
 import com.fly.firefly.api.obj.UpdateProfileReceive;
 import com.fly.firefly.base.BaseFragment;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
+import com.fly.firefly.ui.activity.Login.LoginActivity;
 import com.fly.firefly.ui.activity.Picker.CountryListDialogFragment;
 import com.fly.firefly.ui.activity.Picker.DatePickerFragment;
 import com.fly.firefly.ui.module.UpdateProfileModule;
@@ -35,6 +37,7 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
+import com.mobsandgeeks.saripaar.annotation.Checked;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Optional;
 import com.mobsandgeeks.saripaar.annotation.Order;
@@ -80,9 +83,11 @@ public class UpdateProfileFragment extends BaseFragment implements
 
     @Inject UpdateProfilePresenter presenter;
 
-    @InjectView(R.id.editEmail) TextView editEmail;
+    @InjectView(R.id.editEmail)
+    TextView editEmail;
 
-    @Order(1)@NotEmpty
+    @Order(1)@Optional
+    //@NotEmpty
     //@Length(sequence = 1, min = 6, message = "Must at least 6 character")
     //@Password(sequence =2,scheme = Password.Scheme.ALPHA_NUMERIC_MIXED_CASE_SYMBOLS,message = "Must have uppercase char,number and symbols") // Password validator
     @InjectView(R.id.editCurrentPassword)
@@ -158,6 +163,14 @@ public class UpdateProfileFragment extends BaseFragment implements
     @InjectView(R.id.txtRegisterDatePicker)
     TextView txtRegisterDatePicker;
 
+    @Order(16)
+    @InjectView(R.id.checkSubscribe)
+    CheckBox checkSubscribe;
+
+    @Order(17)
+    @Checked(message = "You must agree with tem & condition")
+    @InjectView(R.id.checkTNC)
+    CheckBox checkTNC;
 
     @InjectView(R.id.btnUpdateProfile)
     Button btnUpdateProfile;
@@ -212,7 +225,7 @@ public class UpdateProfileFragment extends BaseFragment implements
         JSONObject jsonUserInfo = getUserInfo(getActivity());
 
         String email = jsonUserInfo.optString("username");
-        String password = jsonUserInfo.optString("password");
+        //final String password = jsonUserInfo.optString("password");
         String title = jsonUserInfo.optString("title");
         String first_name = jsonUserInfo.optString("first_name");
         String last_name = jsonUserInfo.optString("last_name");
@@ -246,9 +259,8 @@ public class UpdateProfileFragment extends BaseFragment implements
         editCountry.setText(country);
         editState.setText(stateU);
         txtRegisterDatePicker.setText(dob);
-        editCurrentPassword.setText(
-                AESCBC.decrypt("owNLfnLjPvwbQH3hUmj5Wb7wBIv83pR7", "owNLfnLjPvwbQH3h", password),
-                TextView.BufferType.EDITABLE);
+        editCurrentPassword.setText("",TextView.BufferType.EDITABLE);
+       // editCurrentPassword.setText("");
 
 
 
@@ -424,17 +436,19 @@ public class UpdateProfileFragment extends BaseFragment implements
         HashMap<String, String> init = pref.getSignatureFromLocalStorage();
         String signatureFromLocal = init.get(SharedPrefManager.SIGNATURE);
 
+        HashMap<String, String> init2 = pref.getNewsletterStatus();
+        String newsletter = init2.get(SharedPrefManager.ISNEWSLETTER);
+
+        JSONObject jsonUserInfo = getUserInfo(getActivity());
         UpdateProfileRequest data = new UpdateProfileRequest();
 
-
-
-        String currentPassword = AESCBC.encrypt(App.KEY, App.IV, editCurrentPassword.getText().toString());
+        String currentPassword= AESCBC.encrypt(App.KEY, App.IV, editCurrentPassword.getText().toString());
         String newPassword = AESCBC.encrypt(App.KEY, App.IV, editNewPassword.getText().toString());
         data.setUsername(editEmail.getText().toString());
         data.setFirst_name(editFirstName.getText().toString());
         data.setLast_name(editLastName.getText().toString());
-        data.setPassword(currentPassword);
-        data.setNew_password(newPassword);
+       // data.setPassword(currentPassword);
+        //data.setNew_password(newPassword);
         data.setTitle(editTitle.getText().toString());
         data.setAddress_1(editAddressLine1.getText().toString());
         data.setAddress_2(editAddressLine2.getText().toString());
@@ -444,27 +458,46 @@ public class UpdateProfileFragment extends BaseFragment implements
         data.setCity(editCity.getText().toString());
         data.setPostcode(editPostcode.getText().toString());
         data.setFax(editFax.getText().toString());
-        data.setSignature("");
+        data.setSignature(signatureFromLocal);
+        data.setNewsletter(newsletter);
 
-        JSONObject jsonUserInfo = getUserInfo(getActivity());
-        if (editCountry.getText().toString().equals(jsonUserInfo.optString("contact_country"))){
+        if (editCurrentPassword.getText().toString().equals("")) {
+            data.setPassword("");
+        }else{
+            data.setPassword(currentPassword);
+        }
+
+        if (editNewPassword.getText().toString().equals("")) {
+            data.setNew_password("");
+        }else{
+            data.setNew_password(newPassword);
+        }
+
+        if (editCountry.getText().toString().equals(jsonUserInfo.optString("contact_country"))) {
             data.setCountry(jsonUserInfo.optString("contact_country").toString());
-             if(editState.getText().toString().equals(jsonUserInfo.optString("contact_state"))){
+
+             if(editState.getText().toString().equals(jsonUserInfo.optString("contact_state"))) {
                  data.setState(jsonUserInfo.optString("contact_state").toString());
-                 if(txtRegisterDatePicker.getText().toString().equals(jsonUserInfo.optString("DOB"))){
+
+                 if(txtRegisterDatePicker.getText().toString().equals(jsonUserInfo.optString("DOB"))) {
                      data.setDob(jsonUserInfo.optString("DOB").toString());
+
                  }
-            }else{
+             }else{
                  data.setCountry(selectedCountryCode);
                  data.setState(selectedState);
-                 data.setDob(fullDate);}
+                 data.setDob(fullDate);
+                 }
 
         }else if (editState.getText().toString().equals(jsonUserInfo.optString("contact_state").toString())) {
-                data.setState(jsonUserInfo.optString("contact_state").toString());
-            if(editCountry.getText().toString().equals(jsonUserInfo.optString("contact_country"))){
+            data.setState(jsonUserInfo.optString("contact_state").toString());
+
+            if(editCountry.getText().toString().equals(jsonUserInfo.optString("contact_country"))) {
                 data.setCountry(jsonUserInfo.optString("contact_country").toString());
-                if(txtRegisterDatePicker.getText().toString().equals(jsonUserInfo.optString("DOB"))){
+
+                if(txtRegisterDatePicker.getText().toString().equals(jsonUserInfo.optString("DOB"))) {
                     data.setDob(jsonUserInfo.optString("DOB").toString());
+
                 }
             }
         }else{
@@ -472,8 +505,13 @@ public class UpdateProfileFragment extends BaseFragment implements
             data.setState(selectedState);
             data.setDob(fullDate);
 
-        }
 
+        }
+        if (checkSubscribe.isChecked()) {
+            pref.setNewsletterStatus("Y");
+        }else{
+            pref.setNewsletterStatus("N");
+        }
 
         presenter.onUpdateProfile(data);
 
@@ -486,9 +524,12 @@ public class UpdateProfileFragment extends BaseFragment implements
        Log.e("Update","success");
 
         if (obj.getStatus().equals("success")) {
-
             Crouton.makeText(getActivity(), obj.getMessage(), Style.CONFIRM).show();
 
+            Intent home = new Intent(getActivity(), LoginActivity.class);
+            home.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            getActivity().startActivity(home);
+            getActivity().finish();
         }
         else if (obj.getStatus().equals("error_validation")) {
 
@@ -522,6 +563,7 @@ public class UpdateProfileFragment extends BaseFragment implements
                 ((EditText) view).setError(splitErrorMsg[0]);
             } else {
                 Crouton.makeText(getActivity(), message, Style.ALERT).show();
+                //croutonAlert(getActivity(), splitErrorMsg[0]);
             }
         }
 
@@ -568,7 +610,9 @@ public class UpdateProfileFragment extends BaseFragment implements
         if(day < 10){
             varDay = "0";
         }
-        fullDate = varDay+""+day+ "-" + varMonth+""+month + "-" + year;
+        //fullDate = varDay+""+day+ "-" + varMonth+""+month + "-" + year;
+
+        fullDate = year + "-" + varMonth+""+month+"-"+varDay+""+day;
         Log.e("fullDate", fullDate);
     }
 }

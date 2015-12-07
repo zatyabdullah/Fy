@@ -182,7 +182,7 @@ public class ApiRequestHandler {
             @Override
             public void success(UpdateProfileReceive rhymesResponse, Response response) {
 
-                Log.e("Success", "True");
+                Log.e("success", "True");
                 bus.post(new UpdateProfileReceive(rhymesResponse));
                 // loading(false);
             }

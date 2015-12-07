@@ -23,10 +23,8 @@ public class UpdateProfileRequest {
     private String mobile_phone;
     private String alternate_phone;
     private String fax;
-
-
     private String signature;
-
+    private String newsletter;
 
     //private String registerAddressLine2;
 
@@ -50,9 +48,18 @@ public class UpdateProfileRequest {
         alternate_phone = data.getAlternate_phone();
         fax = data.getFax();
         signature = data.getSignature();
+        newsletter = data.getNewsletter();
         //"OTZSeE9vSkVNV1k9fE5LbVBwb2NjM3VwcnZJZERvYlZlRzNVWkdwWG5GNTBvaHRaUjd5RGd6YXV0SDI0ZmhFd3lLVzdwem5TMDh1Qk9pbFRxYWE1bjJTeElVV0NyYk13bmd2cktJRzNXR0JlYTk4MEtIR3RRclA4MURUYTNRUFJjTTV4Skt3bzZmWXdKQ0ZTNmNoajJhUlk9";
     }
 
+
+    public String getNewsletter() {
+        return newsletter;
+    }
+
+    public void setNewsletter(String newsletter) {
+        this.newsletter = newsletter;
+    }
     public String getNew_password() {
         return new_password;
     }

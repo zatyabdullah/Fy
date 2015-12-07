@@ -23,6 +23,7 @@ public class LoginReceive {
 
    public class user_info{
 
+       private String signature;
        private String username;
        private String password;
        private String first_name;
@@ -44,6 +45,14 @@ public class LoginReceive {
        private String contact_fax;
        private String contact_email;
 
+
+       public String getSignature() {
+           return signature;
+       }
+
+       public void setSignature(String signature) {
+           this.signature = signature;
+       }
        public String getTitle() {
            return title;
        }

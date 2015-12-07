@@ -22,8 +22,7 @@ public class RegisterObj {
     private String mobile_phone;
     private String alternate_phone;
     private String fax;
-
-
+    private String newsletter;
     private String signature;
 
 
@@ -48,6 +47,7 @@ public class RegisterObj {
         alternate_phone = data.getAlternate_phone();
         fax = data.getFax();
         signature = data.getSignature();
+        newsletter = data.getNewsletter();
         //"OTZSeE9vSkVNV1k9fE5LbVBwb2NjM3VwcnZJZERvYlZlRzNVWkdwWG5GNTBvaHRaUjd5RGd6YXV0SDI0ZmhFd3lLVzdwem5TMDh1Qk9pbFRxYWE1bjJTeElVV0NyYk13bmd2cktJRzNXR0JlYTk4MEtIR3RRclA4MURUYTNRUFJjTTV4Skt3bzZmWXdKQ0ZTNmNoajJhUlk9";
     }
 
@@ -91,7 +91,13 @@ public class RegisterObj {
         this.signature = signature;
     }
 
+    public String getNewsletter() {
+        return newsletter;
+    }
 
+    public void setNewsletter(String newsletter) {
+        this.newsletter = newsletter;
+    }
     public String getTitle() {
         return title;
     }

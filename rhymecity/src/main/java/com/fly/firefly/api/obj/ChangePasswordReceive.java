@@ -20,8 +20,8 @@ public class ChangePasswordReceive {
 
    public class UserInfo{
 
-        private String username;
-        private String new_password;
+       private String username;
+       private String new_password;
        private String password;
 
         public String getEmail() {

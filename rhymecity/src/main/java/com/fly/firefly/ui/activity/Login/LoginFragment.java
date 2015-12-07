@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -228,7 +227,6 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
         }
         else if (obj.getStatus().equals("change_password")) {
             pref.setLoginStatus("Y");
-            pref.setUsername(obj.getUser_info().getFirst_name());
             goChangePasswordPage();
         }else{
             croutonAlert(getActivity(),obj.getMessage());
@@ -263,7 +261,7 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
     /* Validation Success - Start send data to server */
     @Override
     public void onValidationSucceeded() {
-        loginFromFragment(txtLoginEmail.getText().toString(), AESCBC.encrypt(App.KEY, App.IV, txtLoginPassword.getText().toString()));
+        loginFromFragment(txtLoginEmail.getText().toString(), AESCBC.encrypt(App.KEY, App.IV,txtLoginPassword.getText().toString()));
     }
 
     /* Validation Failed - Toast Error */
@@ -281,10 +279,8 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
             if (view instanceof EditText) {
                ((EditText) view).setError(splitErrorMsg[0]);
             } else {
-                YoYo.with(Techniques.Tada)
-                        .duration(700)
-                        .playOn(edit_area);
-               Toast.makeText(getActivity(), splitErrorMsg[0], Toast.LENGTH_LONG).show();
+                croutonAlert(getActivity(), splitErrorMsg[0]);
+              // Toast.makeText(getActivity(), splitErrorMsg[0], Toast.LENGTH_LONG).show();
 
 
             }

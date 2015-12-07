@@ -51,8 +51,6 @@ import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import de.keyboardsurfer.android.widget.crouton.Crouton;
-import de.keyboardsurfer.android.widget.crouton.Style;
 
 public class RegisterFragment extends BaseFragment implements DatePickerDialog.OnDateSetListener,RegisterPresenter.RegisterView,Validator.ValidationListener {
 
@@ -137,6 +135,10 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
     @InjectView(R.id.chkTNC)
     CheckBox chkTNC;
 
+    @Order(17)
+    @InjectView(R.id.checkBox2)
+    CheckBox checkBox2;
+
     @InjectView(R.id.registerContinueButton)
     Button registerContinueButton;
 
@@ -210,10 +212,6 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
         }
 
 
-
-
-
-
         /*Display Title Data*/
         JSONArray jsonTitle = getTitle(getActivity());
         for (int i = 0; i < jsonTitle.length(); i++)
@@ -269,6 +267,8 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
                 Utils.hideKeyboard(getActivity(), v);
             }
         });
+
+
 
 
         return view;
@@ -344,6 +344,9 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
             HashMap<String, String> init = pref.getSignatureFromLocalStorage();
             String signatureFromLocal = init.get(SharedPrefManager.SIGNATURE);
 
+            HashMap<String, String> initi = pref.getNewsletterStatus();
+            String newsletter = initi.get(SharedPrefManager.ISNEWSLETTER);
+
             RegisterObj regObj = new RegisterObj();
             regObj.setUsername(txtUsername.getText().toString());
             regObj.setFirst_name(txtFirstName.getText().toString());
@@ -362,6 +365,13 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
             regObj.setPostcode(editTextPostcode.getText().toString());
             regObj.setFax(editTextFax.getText().toString());
             regObj.setSignature("");
+            regObj.setNewsletter(newsletter);
+
+            if (checkBox2.isChecked()) {
+                pref.setNewsletterStatus("Y");
+            }else{
+                pref.setNewsletterStatus("N");
+            }
 
             presenter.onRequestRegister(regObj);
     }
@@ -370,9 +380,7 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
     public void onSuccessRegister(RegisterReceive obj) {
 
         dismissLoading();
-
         if (obj.getStatus().equals("success")) {
-
             Intent home = new Intent(getActivity(), LoginActivity.class);
             home.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             getActivity().startActivity(home);
@@ -381,18 +389,17 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
         }
         else if (obj.getStatus().equals("error")) {
 
-            Crouton.makeText(getActivity(), obj.getMessage(), Style.ALERT).show();
+            croutonAlert(getActivity(), obj.getMessage());
 
         }else{
-
-            Crouton.makeText(getActivity(), obj.getMessage(), Style.ALERT).show();
+            croutonAlert(getActivity(), obj.getMessage());
+           /* Crouton.makeText(getActivity(), obj.getMessage(), Style.ALERT).show();*/
 
         }
     }
 
     @Override
     public void onValidationSucceeded() {
-
         requestRegister();
         Log.e("Success", "True");
     }
@@ -412,7 +419,7 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
             }
             else if (view instanceof CheckBox){
                 ((CheckBox) view).setError(splitErrorMsg[0]);
-                Crouton.makeText(getActivity(), splitErrorMsg[0],Style.ALERT).show();
+                 croutonAlert(getActivity(), splitErrorMsg[0]);
             }
 
             Log.e("Validation Failed",splitErrorMsg[0]);
@@ -456,8 +463,11 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
         if(day < 10){
             varDay = "0";
         }
-        fullDate = varDay+""+day+ "-" + varMonth+""+month + "-" + year;
+
+        fullDate = year + "-" + varMonth+""+month+"-"+varDay+""+day;
         Log.e("fullDate", fullDate);
+        /*fullDate = varDay+""+day+ "-" + varMonth+""+month + "-" + year;
+        Log.e("fullDate", fullDate);*/
     }
 
 }

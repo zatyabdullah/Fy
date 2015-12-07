@@ -3,6 +3,7 @@ package com.fly.firefly.ui.activity.PasswordExpired;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,8 @@ import com.fly.firefly.ui.activity.Homepage.HomeActivity;
 import com.fly.firefly.ui.module.ChangePasswordModule;
 import com.fly.firefly.ui.object.ChangePasswordRequest;
 import com.fly.firefly.ui.presenter.ChangePasswordPresenter;
+import com.fly.firefly.utils.AESCBC;
+import com.fly.firefly.utils.App;
 import com.fly.firefly.utils.SharedPrefManager;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
@@ -28,8 +31,11 @@ import com.mobsandgeeks.saripaar.annotation.Email;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Order;
 import com.mobsandgeeks.saripaar.annotation.Password;
+
 import java.util.List;
+
 import javax.inject.Inject;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
@@ -44,16 +50,26 @@ public class ChangePasswordFragment extends BaseFragment implements ChangePasswo
     private SharedPrefManager pref;
     private int fragmentContainerId;
     @Inject ChangePasswordPresenter presenter;
+
     //@InjectView(R.id.search_edit_text) EditText searchEditText;
-    @Order(1)@NotEmpty(sequence = 1)@Email(sequence = 2)@InjectView(R.id.editTextemail) EditText editTextemail;
+    @Order(1)@NotEmpty(sequence = 1)@Email(sequence = 2
+    )@InjectView(R.id.editTextemail)
+    EditText editTextemail;
 
     @Order(2)@NotEmpty (sequence = 1)
     @InjectView(R.id.editTextforgotPasswordCurrent)
     EditText editTextPasswordCurrent;
 
-    @Order(3)@NotEmpty (sequence = 1)@Password(sequence = 2) @InjectView(R.id.editTextforgotPasswordConfirm) EditText editTextPasswordConfirm;
-    @Order(4)@NotEmpty(sequence = 1)@ConfirmPassword(sequence = 2) @InjectView(R.id.editTextforgotPasswordNew) EditText editTextPasswordNew;
-    @InjectView(R.id.btnchangepassword) Button changepasswordButton;
+    @Order(3)@NotEmpty (sequence = 1)@Password(sequence = 2)
+    @InjectView(R.id.editTextforgotPasswordConfirm)
+    EditText editTextPasswordConfirm;
+
+    @Order(4)@NotEmpty(sequence = 1)@ConfirmPassword(sequence = 2)
+    @InjectView(R.id.editTextforgotPasswordNew)
+    EditText editTextPasswordNew;
+
+    @InjectView(R.id.btnchangepassword)
+    Button changepasswordButton;
 
 
     public static ChangePasswordFragment newInstance() {
@@ -94,7 +110,9 @@ public class ChangePasswordFragment extends BaseFragment implements ChangePasswo
             @Override
             public void onClick(View v) {
                 mValidator.validate();
-                requestChangePassword(editTextemail.getText().toString(), editTextPasswordCurrent.getText().toString(), editTextPasswordNew.getText().toString());
+                requestChangePassword(editTextemail.getText().toString(),
+                        AESCBC.encrypt(App.KEY, App.IV, editTextPasswordCurrent.getText().toString()),
+                        AESCBC.encrypt(App.KEY, App.IV, editTextPasswordNew.getText().toString()));
 
             }
         });
@@ -106,7 +124,7 @@ public class ChangePasswordFragment extends BaseFragment implements ChangePasswo
     public void requestChangePassword(String username,String password ,String new_password){
 
         //initiateLoading(getActivity());
-
+       Log.e("Changepassword", "success");
         ChangePasswordRequest data = new ChangePasswordRequest();
         data.setEmail(username);
         data.setNewPassword(new_password);

@@ -19,7 +19,7 @@ public class SharedPrefManager {
     public static final String STATE = "STATE";
 
     public static final String ISLOGIN = "ISLOGIN";
-
+    public static final String ISNEWSLETTER = "ISNEWSLETTER";
     public static final String PROMO_BANNER = "PM";
     public static final String DEFAULT_BANNER = "DB";
     public static final String USERNAME = "USERNAME";
@@ -82,6 +82,14 @@ public class SharedPrefManager {
         init.put(ISLOGIN, _sharedPrefs.getString(ISLOGIN, null));
         return init;
     }
+
+    /*Return newsletter Status*/
+    public HashMap<String, String> getNewsletterStatus() {
+        HashMap<String, String> init = new HashMap<String, String>();
+        init.put(ISNEWSLETTER, _sharedPrefs.getString(ISNEWSLETTER, null));
+        return init;
+    }
+
 
     /*Return Signature Value*/
     public HashMap<String, String> getSignatureFromLocalStorage() {
@@ -164,6 +172,13 @@ public class SharedPrefManager {
         _prefsEditor.putString(ISLOGIN, status);
         _prefsEditor.apply();
     }
+
+
+    /*Set Signature Value*/
+    public void setNewsletterStatus(String status) {
+        _prefsEditor.putString(ISNEWSLETTER, status);
+        _prefsEditor.apply();
+    }
     /*Set Signature Value*/
     public void setSignatureToLocalStorage(String signature) {
         _prefsEditor.putString(SIGNATURE, signature);
@@ -213,6 +228,12 @@ public class SharedPrefManager {
     public void clearLoginStatus() {
         // Clearing Siganture
         _sharedPrefs.edit().remove(ISLOGIN).apply();
+    }
+
+    /*Clear Login Status*/
+    public void clearNewsletterStatus() {
+        // Clearing Siganture
+        _sharedPrefs.edit().remove(ISNEWSLETTER).apply();
     }
 
     /*Clear Signature Value*/
