@@ -35,6 +35,7 @@ import com.fly.firefly.utils.Utils;
 import com.fourmob.datetimepicker.date.DatePickerDialog;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+import com.google.gson.Gson;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.Checked;
@@ -462,52 +463,47 @@ public class UpdateProfileFragment extends BaseFragment implements
         data.setSignature(signatureFromLocal);
         data.setNewsletter(newsletter);
 
+        //currentpassword
         if (editCurrentPassword.getText().toString().equals("")) {
             data.setPassword("");
         }else{
             data.setPassword(currentPassword);
         }
 
+        //Post new password
         if (editNewPassword.getText().toString().equals("")) {
             data.setNew_password("");
         }else{
             data.setNew_password(newPassword);
         }
 
+        //Post country
         if (editCountry.getText().toString().equals(jsonUserInfo.optString("contact_country"))) {
             data.setCountry(jsonUserInfo.optString("contact_country").toString());
-
-             if(editState.getText().toString().equals(jsonUserInfo.optString("contact_state"))) {
-                 data.setState(jsonUserInfo.optString("contact_state").toString());
-
-                 if(txtRegisterDatePicker.getText().toString().equals(jsonUserInfo.optString("DOB"))) {
-                     data.setDob(jsonUserInfo.optString("DOB").toString());
-
-                 }
-             }else{
-                 data.setCountry(selectedCountryCode);
-                 data.setState(selectedState);
-                 data.setDob(fullDate);
-                 }
-
-        }else if (editState.getText().toString().equals(jsonUserInfo.optString("contact_state").toString())) {
-            data.setState(jsonUserInfo.optString("contact_state").toString());
-
-            if(editCountry.getText().toString().equals(jsonUserInfo.optString("contact_country"))) {
-                data.setCountry(jsonUserInfo.optString("contact_country").toString());
-
-                if(txtRegisterDatePicker.getText().toString().equals(jsonUserInfo.optString("DOB"))) {
-                    data.setDob(jsonUserInfo.optString("DOB").toString());
-
-                }
-            }
-        }else{
+        }else {
             data.setCountry(selectedCountryCode);
+        }
+
+        //Post state
+        if(editState.getText().toString().equals(jsonUserInfo.optString("contact_state"))) {
+            data.setState(jsonUserInfo.optString("contact_state").toString());
+        }else {
             data.setState(selectedState);
+        }
+
+        //Post dob
+        if(txtRegisterDatePicker.getText().toString().equals(jsonUserInfo.optString("DOB"))) {
+            data.setDob(jsonUserInfo.optString("DOB").toString());
+        }else{
             data.setDob(fullDate);
 
-
         }
+             /*}else{
+                 data.setCountry(selectedCountryCode);
+                 data.setState(selectedState);
+                 data.setDob(fullDate);*/
+
+        //Post newsletter
         if (checkSubscribe.isChecked()) {
             pref.setNewsletterStatus("Y");
         }else{
@@ -523,10 +519,15 @@ public class UpdateProfileFragment extends BaseFragment implements
     public void onSuccessUpdate(UpdateProfileReceive obj) {
     //dismissLoading();
        Log.e("Update","success");
-
         if (obj.getStatus().equals("success")) {
             Crouton.makeText(getActivity(), "Profile Successfully Updated", Style.CONFIRM).show();
-            goHomePage();
+            //goHomePage();
+            pref.setLoginStatus("Y");
+            Log.e("X", obj.getUserInfo().getFirst_name());
+            pref.setUsername(obj.getUserInfo().getFirst_name());
+            Gson gsonUserInfo = new Gson();
+            String userInfo = gsonUserInfo.toJson(obj.getUserInfo());
+            pref.setUserInfo(userInfo);
         }
         else if (obj.getStatus().equals("error_validation")) {
             croutonAlert(getActivity(), obj.getMessage());
@@ -553,7 +554,6 @@ public class UpdateProfileFragment extends BaseFragment implements
     @Override
     public void onValidationSucceeded() {
         //requestUpdateProfile();
-        Crouton.makeText(getActivity(), "Profile Successfully Updated", Style.CONFIRM).show();
         Log.e("Validation", "success");
 
     }
@@ -567,13 +567,14 @@ public class UpdateProfileFragment extends BaseFragment implements
             String message = error.getCollatedErrorMessage(getActivity());
             String splitErrorMsg[] = message.split("\\r?\\n");
 
-            // Display error messages
-            if (view instanceof EditText) {
-                ((EditText) view).setError(splitErrorMsg[0]);
-            } else {
-                Crouton.makeText(getActivity(), message, Style.ALERT).show();
-                //croutonAlert(getActivity(), splitErrorMsg[0]);
-            }
+             // Display error messages
+           if (view instanceof EditText) {
+               ((EditText) view).setError(splitErrorMsg[0]);
+           }
+           else if (view instanceof CheckBox){
+               ((CheckBox) view).setError(splitErrorMsg[0]);
+               croutonAlert(getActivity(), splitErrorMsg[0]);
+           }
         }
 
     }

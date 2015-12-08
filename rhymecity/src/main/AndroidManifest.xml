@@ -71,6 +71,9 @@
         <activity
             android:name=".ui.activity.PasswordExpired.ChangePasswordActivity"
             android:label="@string/title_activity_password_expired"></activity>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="6f38953bcf07d7c4f8dd57baf34092f3e0c08720" />
     </application>
 
 </manifest>

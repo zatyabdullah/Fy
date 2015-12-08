@@ -3,10 +3,12 @@ package com.fly.firefly;
 import android.app.Activity;
 import android.content.Context;
 
+import com.crashlytics.android.Crashlytics;
 import com.fly.firefly.api.ApiRequestHandler;
 import com.fly.firefly.api.ApiService;
 import com.squareup.otto.Bus;
 
+import io.fabric.sdk.android.Fabric;
 import javax.inject.Inject;
 
 import dagger.ObjectGraph;
@@ -23,6 +25,7 @@ public class FireFlyApplication extends AnalyticsApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
         buildObjectGraphAndInject();
         createApiRequestHandler();
         //instance = FireFlyApplicationthis;
