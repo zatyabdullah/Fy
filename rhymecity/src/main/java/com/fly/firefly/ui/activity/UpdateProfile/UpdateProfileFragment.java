@@ -525,7 +525,7 @@ public class UpdateProfileFragment extends BaseFragment implements
        Log.e("Update","success");
 
         if (obj.getStatus().equals("success")) {
-            Crouton.makeText(getActivity(), "Success", Style.CONFIRM).show();
+            Crouton.makeText(getActivity(), "Profile Successfully Updated", Style.CONFIRM).show();
             goHomePage();
         }
         else if (obj.getStatus().equals("error_validation")) {
