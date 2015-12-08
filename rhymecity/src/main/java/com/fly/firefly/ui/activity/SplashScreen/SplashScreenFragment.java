@@ -32,6 +32,7 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
     private SharedPrefManager pref;
     private DeviceInformation info;
 
+
     public static SplashScreenFragment newInstance() {
 
         SplashScreenFragment fragment = new SplashScreenFragment();
@@ -84,6 +85,7 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
     @Override
     public void loadingSuccess(DeviceInfoSuccess obj) {
 
+
         String signature = obj.getObj().getSignature();
         String bannerUrl = obj.getObj().getBanner_default();
         String promoBannerUrl = obj.getObj().getBanner_promo();
@@ -128,6 +130,7 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
         super.onResume();
         presenter.onResume();
         sendDeviceInformationToServer(info);
+
 
     }
 

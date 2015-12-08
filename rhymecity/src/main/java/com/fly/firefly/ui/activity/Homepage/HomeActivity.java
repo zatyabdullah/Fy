@@ -2,14 +2,10 @@ package com.fly.firefly.ui.activity.Homepage;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 
-import com.fly.firefly.AnalyticsApplication;
 import com.fly.firefly.MainFragmentActivity;
 import com.fly.firefly.R;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 
 import butterknife.ButterKnife;
 
@@ -20,7 +16,6 @@ public class HomeActivity extends MainFragmentActivity implements FragmentContai
     //implements ToolbarActivity, ProgressIndicatorActivity, FragmentContainerActivity {
     //@InjectView(R.id.main_activity_toolbar) Toolbar toolbar;
     //@InjectView(R.id.main_activity_progress_indicator) ProgressBar progressIndicator;
-    private Tracker mTracker;
     private FragmentManager fragmentManager;
 
     @Override
@@ -33,11 +28,6 @@ public class HomeActivity extends MainFragmentActivity implements FragmentContai
 
         hideTitle();
 
-        // [START shared_tracker]
-        // Obtain the shared Tracker instance.
-        AnalyticsApplication application = (AnalyticsApplication) getApplication();
-        mTracker = application.getDefaultTracker();
-        // [END shared_tracker]
     }
 
    /* private void goToSearchFragment() {
@@ -68,9 +58,6 @@ public class HomeActivity extends MainFragmentActivity implements FragmentContai
     public void onResume() {
         super.onResume();
        // presenter.onResume();
-        Log.i("Page Name", "Setting screen name: " + "homepage");
-        mTracker.setScreenName("Homepage" + "A");
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override

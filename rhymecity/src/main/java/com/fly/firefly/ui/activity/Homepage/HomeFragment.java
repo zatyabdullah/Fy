@@ -25,7 +25,6 @@ import com.fly.firefly.ui.activity.MobileCheckIn.MobileCheckInActivity1;
 import com.fly.firefly.ui.module.HomeModule;
 import com.fly.firefly.ui.presenter.HomePresenter;
 import com.fly.firefly.utils.SharedPrefManager;
-import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
 import java.util.HashMap;
@@ -63,6 +62,7 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
     @InjectView(R.id.bannerImg)
     ImageView bannerImg;
 
+    private static final String SCREEN_LABEL = "Home";
     /* Beacon - Testing Module */
     //private BeaconManager beaconManager;
 
@@ -110,7 +110,7 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
         bookFlight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //goToLoginPage();
+                AnalyticsApplication.sendEvent("Click", "bookflight");
                 goBookingPage();
             }
         });
@@ -119,6 +119,7 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
         mobileCheckIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AnalyticsApplication.sendEvent("Click", "mobileCheckIn");
                 goToMobileCheckIn();
             }
         });
@@ -126,6 +127,7 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
         homeManageFlight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AnalyticsApplication.sendEvent("Click", "homeManageFlight");
                 goToManageFlight();
             }
         });
@@ -141,6 +143,7 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
         homeBeacon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AnalyticsApplication.sendEvent("Click", "homeBeacon");
                 goToBeacon();
             }
         });
@@ -148,6 +151,7 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
         homeMobileBoardingPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AnalyticsApplication.sendEvent("Click", "homeMobileBoardingPass");
                 goToBoardingPass();
             }
         });
@@ -187,10 +191,6 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
        //Intent loginPage = new Intent(getActivity(), Touch.class);
        // Intent loginPage = new Intent(getActivity(), RelativeFragment.class);
         getActivity().startActivity(loginPage);
-        mTracker.send(new HitBuilders.EventBuilder()
-                .setCategory("Action")
-                .setAction("Click Book Flight")
-                .build());
 
     }
 
@@ -225,10 +225,7 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
     {
         Intent loginPage = new Intent(getActivity(), SearchFlightActivity.class);
         getActivity().startActivity(loginPage);
-        mTracker.send(new HitBuilders.EventBuilder()
-                .setCategory("Action")
-                .setAction("Click booking page")
-                .build());
+
         //getActivity().finish();
     }
 
@@ -249,9 +246,8 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
     public void onResume() {
         super.onResume();
         presenter.onResume();
-        Log.i("Page Name", "Setting screen name: " + "homepage");
-        mTracker.setScreenName("Image~" + "A");
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        AnalyticsApplication.sendScreenView(SCREEN_LABEL);
+        Log.e("Tracker", SCREEN_LABEL);
     }
 
     @Override

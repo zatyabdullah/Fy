@@ -13,8 +13,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.daimajia.androidanimations.library.Techniques;
-import com.daimajia.androidanimations.library.YoYo;
 import com.fly.firefly.AnalyticsApplication;
 import com.fly.firefly.FireFlyApplication;
 import com.fly.firefly.R;
@@ -33,7 +31,6 @@ import com.fly.firefly.utils.AESCBC;
 import com.fly.firefly.utils.App;
 import com.fly.firefly.utils.SharedPrefManager;
 import com.fly.firefly.utils.Utils;
-import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.google.gson.Gson;
 import com.mobsandgeeks.saripaar.ValidationError;
@@ -114,15 +111,10 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
 
         pref = new SharedPrefManager(getActivity());
 
-        // [START shared_tracker]
-        // Obtain the shared Tracker instance.
-        AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
-        mTracker = application.getDefaultTracker();
-        // [END shared_tracker]
-
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AnalyticsApplication.sendEvent("Click", "registerButton");
                 goRegisterPage();
             }
         });
@@ -130,11 +122,8 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Validate form
+                AnalyticsApplication.sendEvent("Click", "btnLogin");
                 mValidator.validate();
-                YoYo.with(Techniques.Tada)
-                        .duration(700)
-                        .playOn(edit_area);
                 Utils.hideKeyboard(getActivity(), v);
             }
         });
@@ -142,6 +131,7 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
         txtForgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AnalyticsApplication.sendEvent("Click", "forget password");
                 forgotPassword();
             }
         });
@@ -166,20 +156,14 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
     {
         Intent loginPage = new Intent(getActivity(), RegisterActivity.class);
         getActivity().startActivity(loginPage);
-        mTracker.send(new HitBuilders.EventBuilder()
-                .setCategory("Action")
-                .setAction("Click register page")
-                .build());
+
     }
 
     public void goBookingPage()
     {
         Intent loginPage = new Intent(getActivity(), SearchFlightActivity.class);
         getActivity().startActivity(loginPage);
-        mTracker.send(new HitBuilders.EventBuilder()
-                .setCategory("Action")
-                .setAction("Click booking page")
-                .build());
+
         getActivity().finish();
     }
 
@@ -188,10 +172,7 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
     {
         Intent loginPage = new Intent(getActivity(), ChangePasswordActivity.class);
         getActivity().startActivity(loginPage);
-        mTracker.send(new HitBuilders.EventBuilder()
-                .setCategory("Action")
-                .setAction("Click booking page")
-                .build());
+
         getActivity().finish();
     }
 
@@ -201,10 +182,6 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
     {
         Intent loginPage = new Intent(getActivity(), ChangePasswordActivity.class);
         getActivity().startActivity(loginPage);
-        mTracker.send(new HitBuilders.EventBuilder()
-                .setCategory("Action")
-                .setAction("passwordexpired")
-                .build());
         getActivity().finish();
     }
 

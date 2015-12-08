@@ -33,7 +33,6 @@ import com.fly.firefly.utils.DropDownItem;
 import com.fly.firefly.utils.SharedPrefManager;
 import com.fly.firefly.utils.Utils;
 import com.fourmob.datetimepicker.date.DatePickerDialog;
-import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.google.gson.Gson;
 import com.mobsandgeeks.saripaar.ValidationError;
@@ -82,6 +81,7 @@ public class UpdateProfileFragment extends BaseFragment implements
     public static final String DATEPICKER_TAG = "datepicker";
     private String fullDate;
     private static final String SCREEN_LABEL = "Update Profile";
+
 
     @Inject UpdateProfilePresenter presenter;
 
@@ -207,13 +207,6 @@ public class UpdateProfileFragment extends BaseFragment implements
 
         final Calendar calendar = Calendar.getInstance();
         final DatePickerDialog datePickerDialog = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-
-
-        // [START shared_tracker]
-        // Obtain the shared Tracker instance.
-        AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
-        mTracker = application.getDefaultTracker();
-        // [END shared_tracker]
 
 
         pref = new SharedPrefManager(getActivity());
@@ -355,6 +348,8 @@ public class UpdateProfileFragment extends BaseFragment implements
         btnUpdateProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                AnalyticsApplication.sendEvent("Event", "Click btn update");
                 //Validate form
                 Log.e("Clicked", "Ok");
                 mValidator.validate();
@@ -544,11 +539,8 @@ public class UpdateProfileFragment extends BaseFragment implements
     {
         Intent loginPage = new Intent(getActivity(), HomeActivity.class);
         getActivity().startActivity(loginPage);
-        mTracker.send(new HitBuilders.EventBuilder()
-                .setCategory("Action")
-                .setAction("Click booking page")
-                .build());
         getActivity().finish();
+        AnalyticsApplication.sendEvent("Event", "Go home page");
     }
 
     //Validator Result//
@@ -594,10 +586,6 @@ public class UpdateProfileFragment extends BaseFragment implements
         presenter.onResume();
         AnalyticsApplication.sendScreenView(SCREEN_LABEL);
         Log.e("Tracker", SCREEN_LABEL);
-    /*  //  Log.i("Page Name", "Setting screen name: " + "Update Profile Page");
-        String e = UpdateProfileFragment.class.getSimpleName();
-        mTracker.setScreenName(e);
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());*/
     }
 
     @Override

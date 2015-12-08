@@ -22,7 +22,6 @@ import com.fly.firefly.ui.presenter.ChangePasswordPresenter;
 import com.fly.firefly.utils.AESCBC;
 import com.fly.firefly.utils.App;
 import com.fly.firefly.utils.SharedPrefManager;
-import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
@@ -71,6 +70,7 @@ public class ChangePasswordFragment extends BaseFragment implements ChangePasswo
     @InjectView(R.id.btnchangepassword)
     Button changepasswordButton;
 
+    private static final String SCREEN_LABEL = "Change Password";
 
     public static ChangePasswordFragment newInstance() {
 
@@ -100,15 +100,11 @@ public class ChangePasswordFragment extends BaseFragment implements ChangePasswo
 
         pref = new SharedPrefManager(getActivity());
 
-        // [START shared_tracker]
-        // Obtain the shared Tracker instance.
-        AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
-        mTracker = application.getDefaultTracker();
-        // [END shared_tracker]
 
         changepasswordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AnalyticsApplication.sendEvent("Action", "changepasswordButton");
                 mValidator.validate();
                 requestChangePassword(editTextemail.getText().toString(),
                         AESCBC.encrypt(App.KEY, App.IV, editTextPasswordCurrent.getText().toString()),
@@ -137,10 +133,6 @@ public class ChangePasswordFragment extends BaseFragment implements ChangePasswo
     {
         Intent loginPage = new Intent(getActivity(), HomeActivity.class);
         getActivity().startActivity(loginPage);
-        mTracker.send(new HitBuilders.EventBuilder()
-                .setCategory("Action")
-                .setAction("Click booking page")
-                .build());
         getActivity().finish();
     }
 
@@ -179,7 +171,8 @@ public class ChangePasswordFragment extends BaseFragment implements ChangePasswo
     public void onResume() {
         super.onResume();
         presenter.onResume();
-
+        AnalyticsApplication.sendScreenView(SCREEN_LABEL);
+        Log.e("Tracker", SCREEN_LABEL);
     }
 
     @Override

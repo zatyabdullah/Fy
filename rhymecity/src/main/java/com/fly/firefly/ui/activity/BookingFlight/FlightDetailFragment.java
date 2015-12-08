@@ -2,6 +2,7 @@ package com.fly.firefly.ui.activity.BookingFlight;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.fly.firefly.AnalyticsApplication;
 import com.fly.firefly.FireFlyApplication;
 import com.fly.firefly.R;
 import com.fly.firefly.api.obj.FlightInfo;
@@ -59,6 +61,7 @@ public class FlightDetailFragment extends BaseFragment implements BookingPresent
     private final String RETURN_BASIC = "RETURN_BASIC";
     private final String BASIC = "BASIC";
     private final String PREMIER = "PREMIER";
+    private static final String SCREEN_LABEL = "Flight Detail";
 
     public static FlightDetailFragment newInstance(Bundle bundle) {
 
@@ -140,6 +143,7 @@ public class FlightDetailFragment extends BaseFragment implements BookingPresent
         btnListFlight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AnalyticsApplication.sendEvent("Click", "btnListFlight");
                 goPersonalDetail();
             }
         });
@@ -147,6 +151,7 @@ public class FlightDetailFragment extends BaseFragment implements BookingPresent
         btnBasic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AnalyticsApplication.sendEvent("Click", "btnBasic");
                 switchFare(DEPART_BASIC);
             }
         });
@@ -154,6 +159,7 @@ public class FlightDetailFragment extends BaseFragment implements BookingPresent
         btnPremier.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AnalyticsApplication.sendEvent("Click", "btnPremier");
                 switchFare(DEPART_PREMIER);
             }
         });
@@ -161,6 +167,7 @@ public class FlightDetailFragment extends BaseFragment implements BookingPresent
         btnBasicReturn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AnalyticsApplication.sendEvent("Click", "btnBasicReturn");
                 switchFare(RETURN_BASIC);
             }
         });
@@ -168,6 +175,7 @@ public class FlightDetailFragment extends BaseFragment implements BookingPresent
         btnPremierReturn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AnalyticsApplication.sendEvent("Click", "btnPremierReturn");
                 switchFare(RETURN_PREMIER);
             }
         });
@@ -190,6 +198,7 @@ public class FlightDetailFragment extends BaseFragment implements BookingPresent
     {
         Intent loginPage = new Intent(getActivity(), PersonalDetailActivity.class);
         getActivity().startActivity(loginPage);
+        AnalyticsApplication.sendEvent("StartActivity", "personal detail");
     }
 
     //Switch Flight Type
@@ -231,6 +240,8 @@ public class FlightDetailFragment extends BaseFragment implements BookingPresent
     public void onResume() {
         super.onResume();
         presenter.onResume();
+        AnalyticsApplication.sendScreenView(SCREEN_LABEL);
+        Log.e("Tracker", SCREEN_LABEL);
     }
 
     @Override

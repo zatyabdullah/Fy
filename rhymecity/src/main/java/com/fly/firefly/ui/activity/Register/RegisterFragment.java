@@ -13,6 +13,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.fly.firefly.AnalyticsApplication;
 import com.fly.firefly.FireFlyApplication;
 import com.fly.firefly.R;
 import com.fly.firefly.api.obj.RegisterReceive;
@@ -160,6 +161,7 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
     private String selectedCountryCode;
     public static final String DATEPICKER_TAG = "datepicker";
     private String fullDate;
+    private static final String SCREEN_LABEL = "Register";
 
     public static RegisterFragment newInstance() {
 
@@ -229,6 +231,7 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
         editTextCountry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AnalyticsApplication.sendEvent("Edit", "Country");
                 showCountrySelector(getActivity(),countrys);
             }
         });
@@ -236,6 +239,7 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
         editTextState.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AnalyticsApplication.sendEvent("Edit", "State");
                 showCountrySelector(getActivity(), state);
             }
         });
@@ -243,7 +247,7 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
         txtRegisterDatePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                AnalyticsApplication.sendEvent("Edit", "Date");
                 //datePickerDialog.setVibrate(isVibrate());
                 datePickerDialog.setYearRange(1985, 2028);
                 //datePickerDialog.setCloseOnSingleTapDay(isCloseOnSingleTapDay());
@@ -254,6 +258,7 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
         txtTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AnalyticsApplication.sendEvent("Edit", "Title");
                Log.e("Clicked", "Ok");
                popupSelection(titleList, getActivity(),txtTitle);
             }
@@ -262,7 +267,7 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
         registerContinueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Validate form
+                AnalyticsApplication.sendEvent("Click", "ContinueButton");
                 mValidator.validate();
                 Utils.hideKeyboard(getActivity(), v);
             }
@@ -440,6 +445,8 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
     public void onResume() {
         super.onResume();
         presenter.onResume();
+        AnalyticsApplication.sendScreenView(SCREEN_LABEL);
+        Log.e("Tracker", SCREEN_LABEL);
     }
 
     @Override

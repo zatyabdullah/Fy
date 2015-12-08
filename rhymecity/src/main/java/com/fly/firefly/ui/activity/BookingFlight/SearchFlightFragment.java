@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.fly.firefly.AnalyticsApplication;
 import com.fly.firefly.FireFlyApplication;
 import com.fly.firefly.MainFragmentActivity;
 import com.fly.firefly.R;
@@ -94,6 +95,7 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
     private final String CHILDREN = "CHILDREN";
     private final String INFANT = "INFANT";
     private String flightType = "1";
+    private static final String SCREEN_LABEL = "Search Flight";
 
     private int totalAdult = 1;
     private int totalChildren = 0;
@@ -196,6 +198,7 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
         btnDepartureFlight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AnalyticsApplication.sendEvent("Click", "btnDepartureFlight");
                 popupSelection(dataFlightDeparture, getActivity(), txtDepartureFlight);
                 txtArrivalFlight.setText("ARRIVAL AIRPORT");
             }
@@ -205,6 +208,7 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
         btnArrivalFlight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AnalyticsApplication.sendEvent("Click", "btnArrivalFlight");
                 if(txtDepartureFlight.getTag().toString().equals("NOT SELECTED"))
                 {
                     popupAlert("Select Departure Airport First");
@@ -218,7 +222,7 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
         departureBlock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                AnalyticsApplication.sendEvent("Click", "departureBlock");
                 datePickerDialog.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
                 PICKER = DEPARTURE_DATE_PICKER;
             }
@@ -228,8 +232,8 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
         returnDateBlock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                datePickerDialog.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
+                AnalyticsApplication.sendEvent("Click", "returnDateblock");
+               datePickerDialog.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
                 PICKER = RETURN_DATE_PICKER;
 
             }
@@ -246,6 +250,7 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
         btnReturn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AnalyticsApplication.sendEvent("Click", "btnReturn");
                 switchWay(RETURN);
             }
         });
@@ -254,6 +259,7 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
         btnOneWay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AnalyticsApplication.sendEvent("Click", "btnOneWay");
                 switchWay(ONEWAY);
             }
         });
@@ -262,7 +268,7 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
         btnAdultIncrease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                AnalyticsApplication.sendEvent("Click", "btnAdultIncrease");
                 if(!blockAdult && totalAdult <= 9){
                    totalAdult++;
                    setPassengerTotal(ADULT);
@@ -273,7 +279,7 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
         btnAdultDecrease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                AnalyticsApplication.sendEvent("Click", "btnAdultDecrease");
                 if(totalAdult == 1){
                     blockAdultNumber = true;
                 }
@@ -296,6 +302,7 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
         btnChildIncrease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AnalyticsApplication.sendEvent("Click", "btnChildIncrease");
                 if(!blockChild && totalChildren <= 9){
                     totalChildren++;
                     setPassengerTotal(CHILDREN);
@@ -306,7 +313,7 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
         btnChildDecrease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                AnalyticsApplication.sendEvent("Click", "btnChildDecrease");
 
                 if(totalChildren == 0){
                     blockChildNumber = true;
@@ -333,6 +340,7 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
         btnInfantIncrease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AnalyticsApplication.sendEvent("Click", "btnInfantIncrease");
                 if(!blockInfant && totalInfant <= 9){
                     totalInfant++;
                     setPassengerTotal(INFANT);
@@ -343,7 +351,7 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
         btnInfantDecrease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                AnalyticsApplication.sendEvent("Click", "btnInfantDecrease");
                 if(totalInfant == 0){
                     blockInfantNumber = true;
                 }
@@ -364,7 +372,7 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
         btnSearchFlight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                AnalyticsApplication.sendEvent("Click", "btnSearchFlight");
                 String df = txtDepartureFlight.getTag().toString();
                 String af = txtArrivalFlight.getTag().toString();
                 String d1 = bookFlightDepartureDate.getTag().toString();
@@ -586,7 +594,10 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
     public void onResume() {
         super.onResume();
         presenter.onResume();
-        Log.e("RESUME","TRUE");
+        Log.e("RESUME", "TRUE");
+        AnalyticsApplication.sendScreenView(SCREEN_LABEL);
+        Log.e("Tracker", SCREEN_LABEL);
+
     }
 
     @Override

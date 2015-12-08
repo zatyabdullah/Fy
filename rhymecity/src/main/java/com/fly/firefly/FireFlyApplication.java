@@ -8,10 +8,10 @@ import com.fly.firefly.api.ApiRequestHandler;
 import com.fly.firefly.api.ApiService;
 import com.squareup.otto.Bus;
 
-import io.fabric.sdk.android.Fabric;
 import javax.inject.Inject;
 
 import dagger.ObjectGraph;
+import io.fabric.sdk.android.Fabric;
 import me.mattlogan.rhymecity.Modules;
 
 public class FireFlyApplication extends AnalyticsApplication {
