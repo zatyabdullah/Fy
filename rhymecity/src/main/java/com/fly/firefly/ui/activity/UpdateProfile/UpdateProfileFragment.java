@@ -219,6 +219,7 @@ public class UpdateProfileFragment extends BaseFragment implements
 
         JSONObject jsonUserInfo = getUserInfo(getActivity());
 
+
         String email = jsonUserInfo.optString("username");
         //final String password = jsonUserInfo.optString("password");
         String title = jsonUserInfo.optString("title");
@@ -227,8 +228,8 @@ public class UpdateProfileFragment extends BaseFragment implements
         String addressline1 = jsonUserInfo.optString("contact_address1");
         String addressline2 = jsonUserInfo.optString("contact_address2");
         String addressline3 = jsonUserInfo.optString("contact_address3");
-        String country = jsonUserInfo.optString("contact_country");
-        String stateU = jsonUserInfo.optString("contact_state");
+        String country = jsonUserInfo.optString("contact_country");//code
+        String stateU = jsonUserInfo.optString("contact_state");//code
         String city = jsonUserInfo.optString("contact_city");
         String postcode = jsonUserInfo.optString("contact_postcode");
         String dob = jsonUserInfo.optString("DOB");
@@ -236,8 +237,11 @@ public class UpdateProfileFragment extends BaseFragment implements
         String alternate_phone = jsonUserInfo.optString("contact_alternate_phone");
         String fax = jsonUserInfo.optString("contact_fax");
 
+
+
         HashMap<String, String> userinfo = pref.getUserInfo();
         String username = userinfo.get(SharedPrefManager.USER_EMAIL);
+
 
         editEmail.setText(email);
         editTitle.setText(title, TextView.BufferType.EDITABLE);
@@ -255,7 +259,7 @@ public class UpdateProfileFragment extends BaseFragment implements
         editState.setText(stateU);
         txtRegisterDatePicker.setText(dob);
         editCurrentPassword.setText("",TextView.BufferType.EDITABLE);
-       // editCurrentPassword.setText("");
+
 
 
 
@@ -349,7 +353,7 @@ public class UpdateProfileFragment extends BaseFragment implements
             @Override
             public void onClick(View v) {
 
-                AnalyticsApplication.sendEvent("Event", "Click btn update");
+                AnalyticsApplication.sendEvent("Click", "btnUpdateProfile");
                 //Validate form
                 Log.e("Clicked", "Ok");
                 mValidator.validate();
@@ -429,7 +433,7 @@ public class UpdateProfileFragment extends BaseFragment implements
 
     public void requestUpdateProfile() {
 
-        //initiateLoading(getActivity());
+        initiateLoading(getActivity());
 
         HashMap<String, String> init = pref.getSignatureFromLocalStorage();
         String signatureFromLocal = init.get(SharedPrefManager.SIGNATURE);
@@ -445,8 +449,6 @@ public class UpdateProfileFragment extends BaseFragment implements
         data.setUsername(editEmail.getText().toString());
         data.setFirst_name(editFirstName.getText().toString());
         data.setLast_name(editLastName.getText().toString());
-       // data.setPassword(currentPassword);
-        //data.setNew_password(newPassword);
         data.setTitle(editTitle.getText().toString());
         data.setAddress_1(editAddressLine1.getText().toString());
         data.setAddress_2(editAddressLine2.getText().toString());
@@ -494,10 +496,7 @@ public class UpdateProfileFragment extends BaseFragment implements
             data.setDob(fullDate);
 
         }
-             /*}else{
-                 data.setCountry(selectedCountryCode);
-                 data.setState(selectedState);
-                 data.setDob(fullDate);*/
+
 
         //Post newsletter
         if (checkSubscribe.isChecked()) {
@@ -513,12 +512,12 @@ public class UpdateProfileFragment extends BaseFragment implements
 
    @Override
     public void onSuccessUpdate(UpdateProfileReceive obj) {
-    //dismissLoading();
+       dismissLoading();
        Log.e("Update","success");
         if (obj.getStatus().equals("success")) {
             Crouton.makeText(getActivity(), "Profile Successfully Updated", Style.CONFIRM).show();
             //goHomePage();
-            pref.setLoginStatus("Y");
+           // pref.setLoginStatus("Y");
             Log.e("X", obj.getUserInfo().getFirst_name());
             pref.setUsername(obj.getUserInfo().getFirst_name());
             Gson gsonUserInfo = new Gson();
@@ -540,7 +539,7 @@ public class UpdateProfileFragment extends BaseFragment implements
         Intent loginPage = new Intent(getActivity(), HomeActivity.class);
         getActivity().startActivity(loginPage);
         getActivity().finish();
-        AnalyticsApplication.sendEvent("Event", "Go home page");
+
     }
 
     //Validator Result//
@@ -613,7 +612,7 @@ public class UpdateProfileFragment extends BaseFragment implements
         }
         //fullDate = varDay+""+day+ "-" + varMonth+""+month + "-" + year;
 
-        fullDate = year + "-" + varMonth+""+month+"-"+varDay+""+day;
+        fullDate = year + "-" + varMonth+""+(month+1)+"-"+varDay+""+day;
         Log.e("fullDate", fullDate);
     }
 }
