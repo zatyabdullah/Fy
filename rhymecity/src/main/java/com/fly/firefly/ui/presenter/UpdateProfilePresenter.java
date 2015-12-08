@@ -3,6 +3,7 @@ package com.fly.firefly.ui.presenter;
 import com.fly.firefly.api.obj.UpdateProfileReceive;
 import com.fly.firefly.ui.object.UpdateProfileRequest;
 import com.squareup.otto.Bus;
+import com.squareup.otto.Subscribe;
 
 public class UpdateProfilePresenter {
 
@@ -31,11 +32,11 @@ public class UpdateProfilePresenter {
     }
 
 
-   /* @Subscribe
-    public void onUserSuccessUpdate(UpdateProfileReceive event) {
+   @Subscribe
+    public void onSuccessUpdate(UpdateProfileReceive event) {
 
         //Log.e("Messages", event.getStatus());
-        *//*Save Session And Redirect To Homepage*//*
+        //*Save Session And Redirect To Homepage*//*
         view.onSuccessUpdate(event.getUserObj());
-    }*/
+    }
 }

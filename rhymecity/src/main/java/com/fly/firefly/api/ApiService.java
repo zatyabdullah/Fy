@@ -32,7 +32,7 @@ public interface ApiService {
     void getGoogleSpreedSheetData(Callback<tryObj> callback);
 
     //@FormUrlEncoded
-    @POST("/Login")
+    @POST("/login")
     //void getGoogleSpreedSheetData(@Path("user") String user, Callback<tryObj> callback);
     //void onRequestToLogin(@Field("username") String username, @Field("password") String password,Callback<LoginRequest> callback);
     //void onRequestToLogin(@Field("number") int number, @Field("username") String username, @Field("password") String password,Callback<LoginRequest> callback);
@@ -41,22 +41,22 @@ public interface ApiService {
     // @Body JSONObject searchstring
 
 
-    @POST("/Loading")
+    @POST("/loading")
     void onSendDeviceInfo(@Body DeviceInformation task, Callback<DeviceInfoSuccess> callback);
 
-    @POST("/Register")
+    @POST("/register")
     void onRegisterRequest(@Body RegisterObj obj, Callback<RegisterReceive> callback);
 
-    @POST("/Search")
+    @POST("/search")
     void onSearchFlightRequest(@Body SearchFlightObj obj, Callback<SearchFlightReceive> callback);
 
-    @POST("/ForgotPassword")
+    @POST("/forgotPassword")
     void onRequestPassword(@Body PasswordRequest task, Callback<ForgotPasswordReceive> callback);
 
-    @POST("/ChangePassword")
+    @POST("/changePassword")
     void onRequestChangePassword(@Body ChangePasswordRequest task, Callback<ChangePasswordReceive> callback);
 
-    @POST("/UpdateProfile")
+    @POST("/updateProfile")
     void onUpdateProfileRequest(@Body UpdateProfileRequest task, Callback<UpdateProfileReceive> callback);
 
 }

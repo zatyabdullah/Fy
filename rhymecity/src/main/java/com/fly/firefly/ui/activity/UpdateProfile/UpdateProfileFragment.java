@@ -20,7 +20,7 @@ import com.fly.firefly.R;
 import com.fly.firefly.api.obj.UpdateProfileReceive;
 import com.fly.firefly.base.BaseFragment;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
-import com.fly.firefly.ui.activity.Login.LoginActivity;
+import com.fly.firefly.ui.activity.Homepage.HomeActivity;
 import com.fly.firefly.ui.activity.Picker.CountryListDialogFragment;
 import com.fly.firefly.ui.activity.Picker.DatePickerFragment;
 import com.fly.firefly.ui.module.UpdateProfileModule;
@@ -356,6 +356,7 @@ public class UpdateProfileFragment extends BaseFragment implements
                 //Validate form
                 Log.e("Clicked", "Ok");
                 mValidator.validate();
+                requestUpdateProfile();
                 Utils.hideKeyboard(getActivity(), v);
                 //requestChangePassword(editTextemail.getText().toString(), editTextPasswordCurrent.getText().toString(), editTextPasswordNew.getText().toString());
 
@@ -524,15 +525,10 @@ public class UpdateProfileFragment extends BaseFragment implements
        Log.e("Update","success");
 
         if (obj.getStatus().equals("success")) {
-            Crouton.makeText(getActivity(), obj.getMessage(), Style.CONFIRM).show();
-
-            Intent home = new Intent(getActivity(), LoginActivity.class);
-            home.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            getActivity().startActivity(home);
-            getActivity().finish();
+            Crouton.makeText(getActivity(), "Success", Style.CONFIRM).show();
+            goHomePage();
         }
         else if (obj.getStatus().equals("error_validation")) {
-
             croutonAlert(getActivity(), obj.getMessage());
 
         }else{
@@ -541,10 +537,23 @@ public class UpdateProfileFragment extends BaseFragment implements
         }
     }
 
+
+    public void goHomePage()
+    {
+        Intent loginPage = new Intent(getActivity(), HomeActivity.class);
+        getActivity().startActivity(loginPage);
+        mTracker.send(new HitBuilders.EventBuilder()
+                .setCategory("Action")
+                .setAction("Click booking page")
+                .build());
+        getActivity().finish();
+    }
+
     //Validator Result//
     @Override
     public void onValidationSucceeded() {
-        requestUpdateProfile();
+        //requestUpdateProfile();
+        Crouton.makeText(getActivity(), "Profile Successfully Updated", Style.CONFIRM).show();
         Log.e("Validation", "success");
 
     }

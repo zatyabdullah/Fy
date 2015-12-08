@@ -261,7 +261,9 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
     /* Validation Success - Start send data to server */
     @Override
     public void onValidationSucceeded() {
+
         loginFromFragment(txtLoginEmail.getText().toString(), AESCBC.encrypt(App.KEY, App.IV,txtLoginPassword.getText().toString()));
+
     }
 
     /* Validation Failed - Toast Error */
