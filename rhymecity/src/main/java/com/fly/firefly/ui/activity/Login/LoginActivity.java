@@ -2,13 +2,11 @@ package com.fly.firefly.ui.activity.Login;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 
 import com.fly.firefly.AnalyticsApplication;
 import com.fly.firefly.MainFragmentActivity;
 import com.fly.firefly.R;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
-import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
 import butterknife.ButterKnife;
@@ -42,9 +40,6 @@ public class LoginActivity extends MainFragmentActivity implements FragmentConta
     public void onResume() {
         super.onResume();
         // presenter.onResume();
-        Log.i("Page Name", "Setting screen name: " + "Login Page");
-        mTracker.setScreenName("Login" + "B");
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
 

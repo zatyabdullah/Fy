@@ -56,6 +56,7 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
     // Validator Attributes
     private Validator mValidator;
     private Tracker mTracker;
+    private static final String SCREEN_LABEL = "Login";
 
     @Inject
     LoginPresenter presenter;
@@ -343,9 +344,8 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
     public void onResume() {
         super.onResume();
         presenter.onResume();
-        Log.i("Page Name", "Setting screen name: " + "Login Page");
-        mTracker.setScreenName("Login" + "B");
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        AnalyticsApplication.sendScreenView(SCREEN_LABEL);
+        Log.e("Tracker", SCREEN_LABEL);
     }
 
     @Override

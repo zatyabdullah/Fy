@@ -3,10 +3,11 @@ package com.fly.firefly;
 /**
  * Created by metechuser on 12/11/2015.
  */
+
 import android.app.Application;
 
-import com.fly.firefly.R;
 import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
 /**
@@ -14,8 +15,13 @@ import com.google.android.gms.analytics.Tracker;
  * the {@link Tracker}.
  */
 public class AnalyticsApplication extends Application {
-    private Tracker mTracker;
+    private static Tracker mTracker;
 
+
+    public static void sendScreenView(String screenName) {
+        mTracker.setScreenName(screenName);
+        mTracker.send(new HitBuilders.AppViewBuilder().build());
+    }
     /**
      * Gets the default {@link Tracker} for this {@link Application}.
      * @return tracker

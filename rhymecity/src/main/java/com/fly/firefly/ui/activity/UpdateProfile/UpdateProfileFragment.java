@@ -81,6 +81,7 @@ public class UpdateProfileFragment extends BaseFragment implements
     private int fragmentContainerId;
     public static final String DATEPICKER_TAG = "datepicker";
     private String fullDate;
+    private static final String SCREEN_LABEL = "Update Profile";
 
     @Inject UpdateProfilePresenter presenter;
 
@@ -591,10 +592,12 @@ public class UpdateProfileFragment extends BaseFragment implements
     public void onResume() {
         super.onResume();
         presenter.onResume();
-      //  Log.i("Page Name", "Setting screen name: " + "Update Profile Page");
+        AnalyticsApplication.sendScreenView(SCREEN_LABEL);
+        Log.e("Tracker", SCREEN_LABEL);
+    /*  //  Log.i("Page Name", "Setting screen name: " + "Update Profile Page");
         String e = UpdateProfileFragment.class.getSimpleName();
         mTracker.setScreenName(e);
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());*/
     }
 
     @Override

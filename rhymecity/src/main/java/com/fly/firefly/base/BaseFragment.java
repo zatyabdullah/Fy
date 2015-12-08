@@ -57,7 +57,6 @@ public class BaseFragment extends Fragment {
 
 
 
-
 	/*public void initiateLoading(Activity act){
 
 		ProgressDialog mProgressDialog;
