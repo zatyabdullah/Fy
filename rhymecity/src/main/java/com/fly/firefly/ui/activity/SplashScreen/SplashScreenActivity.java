@@ -18,6 +18,7 @@ public class SplashScreenActivity extends MainFragmentActivity implements Fragme
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         ButterKnife.inject(this);
 
         hideMenuButton();

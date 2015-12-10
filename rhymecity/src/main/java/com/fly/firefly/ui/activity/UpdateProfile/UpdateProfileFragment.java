@@ -81,6 +81,8 @@ public class UpdateProfileFragment extends BaseFragment implements
     public static final String DATEPICKER_TAG = "datepicker";
     private String fullDate;
     private static final String SCREEN_LABEL = "Update Profile";
+    DropDownItem selectedCountry;
+    JSONObject row;
 
 
     @Inject UpdateProfilePresenter presenter;
@@ -255,8 +257,7 @@ public class UpdateProfileFragment extends BaseFragment implements
         editPostcode.setText(postcode, TextView.BufferType.EDITABLE);
         editCity.setText(city, TextView.BufferType.EDITABLE);
         editFax.setText(fax, TextView.BufferType.EDITABLE);
-        editCountry.setText(country);
-        editState.setText(stateU);
+
         txtRegisterDatePicker.setText(dob);
         editCurrentPassword.setText("",TextView.BufferType.EDITABLE);
 
@@ -269,7 +270,7 @@ public class UpdateProfileFragment extends BaseFragment implements
 
         for (int i = 0; i < jsonCountry.length(); i++)
         {
-            JSONObject row = (JSONObject) jsonCountry.opt(i);
+            row = (JSONObject) jsonCountry.opt(i);
 
             DropDownItem itemCountry = new DropDownItem();
             itemCountry.setText(row.optString("country_name"));
@@ -277,26 +278,12 @@ public class UpdateProfileFragment extends BaseFragment implements
             itemCountry.setTag("Country");
             itemCountry.setId(i);
             countrys.add(itemCountry);
-        }
 
 
-        /* Get State From Local String*/
-        state_val = getResources().getStringArray(R.array.state);
-        for(int x = 0 ; x < state_val.length ; x++) {
-
-            /*Split data*/
-            String[] parts = state_val[x].split("-");
-            String state_name = parts[0];
-            String state_code = parts[1];
-
-            DropDownItem itemCountry = new DropDownItem();
-            itemCountry.setText(state_name);
-            itemCountry.setCode(state_code);
-            itemCountry.setTag("State");
-            itemCountry.setId(x);
-            state.add(itemCountry);
-            //titleList.add(itemCountry);
-
+            if(country.equals(row.optString("country_code"))){
+                editCountry.setText(row.optString("country_name"));
+                Log.e("country",row.optString("country_name") );
+            }
         }
 
 
@@ -304,7 +291,7 @@ public class UpdateProfileFragment extends BaseFragment implements
         JSONArray jsonTitle = getTitle(getActivity());
         for (int i = 0; i < jsonTitle.length(); i++)
         {
-            JSONObject row = (JSONObject) jsonTitle.opt(i);
+            row = (JSONObject) jsonTitle.opt(i);
 
             DropDownItem itemTitle = new DropDownItem();
             itemTitle.setText(row.optString("title_name"));
@@ -312,6 +299,26 @@ public class UpdateProfileFragment extends BaseFragment implements
             itemTitle.setTag("Title");
             titleList.add(itemTitle);
         }
+
+
+
+        /* Get State From Local String*/
+
+            JSONArray jsonState = getState(getActivity());
+            for(int x = 0 ; x < jsonState.length() ; x++) {
+
+            row = (JSONObject) jsonState.opt(x);
+
+                if(stateU.equals(row.optString("state_code"))){
+                editState.setText(row.optString("state_name"));
+                    Log.e("state", row.optString("state_name"));
+            }
+
+
+        }
+
+
+
 
         /*Select list*/
         editCountry.setOnClickListener(new View.OnClickListener() {
@@ -398,7 +405,7 @@ public class UpdateProfileFragment extends BaseFragment implements
             return;
         } else {
             if (requestCode == 1) {
-                DropDownItem selectedCountry = data.getParcelableExtra(CountryListDialogFragment.EXTRA_COUNTRY);
+                selectedCountry = data.getParcelableExtra(CountryListDialogFragment.EXTRA_COUNTRY);
 
                 if (selectedCountry.getTag() == "Country") {
                     editCountry.setText(selectedCountry.getText());
@@ -449,7 +456,8 @@ public class UpdateProfileFragment extends BaseFragment implements
         data.setUsername(editEmail.getText().toString());
         data.setFirst_name(editFirstName.getText().toString());
         data.setLast_name(editLastName.getText().toString());
-        data.setTitle(editTitle.getText().toString());
+        data.setTitle("DATN");
+        //data.setTitle(editTitle.getText().toString());
         data.setAddress_1(editAddressLine1.getText().toString());
         data.setAddress_2(editAddressLine2.getText().toString());
         data.setAddress_3(editAddressLine3.getText().toString());
@@ -459,6 +467,13 @@ public class UpdateProfileFragment extends BaseFragment implements
         data.setPostcode(editPostcode.getText().toString());
         data.setFax(editFax.getText().toString());
         data.setSignature(signatureFromLocal);
+
+        //Post newsletter
+        if (checkSubscribe.isChecked()) {
+            pref.setNewsletterStatus("Y");
+        }else{
+            pref.setNewsletterStatus("N");
+        }
         data.setNewsletter(newsletter);
 
         //currentpassword
@@ -476,14 +491,16 @@ public class UpdateProfileFragment extends BaseFragment implements
         }
 
         //Post country
-        if (editCountry.getText().toString().equals(jsonUserInfo.optString("contact_country"))) {
+        if (!editCountry.getText().toString().equals(row.optString("country_name"))) {
+            Log.e("post", (row.optString("country_name")));
             data.setCountry(jsonUserInfo.optString("contact_country").toString());
         }else {
             data.setCountry(selectedCountryCode);
         }
 
         //Post state
-        if(editState.getText().toString().equals(jsonUserInfo.optString("contact_state"))) {
+        if (!editState.getText().toString().equals(row.optString("state_name"))) {
+            Log.e("post",(row.optString("state_name")));
             data.setState(jsonUserInfo.optString("contact_state").toString());
         }else {
             data.setState(selectedState);
@@ -497,13 +514,6 @@ public class UpdateProfileFragment extends BaseFragment implements
 
         }
 
-
-        //Post newsletter
-        if (checkSubscribe.isChecked()) {
-            pref.setNewsletterStatus("Y");
-        }else{
-            pref.setNewsletterStatus("N");
-        }
 
         presenter.onUpdateProfile(data);
 
@@ -526,10 +536,7 @@ public class UpdateProfileFragment extends BaseFragment implements
         }
         else if (obj.getStatus().equals("error_validation")) {
             croutonAlert(getActivity(), obj.getMessage());
-
-        }else{
-            croutonAlert(getActivity(), obj.getMessage());
-
+            Log.e("error validation", obj.getMessage());
         }
     }
 
@@ -604,14 +611,14 @@ public class UpdateProfileFragment extends BaseFragment implements
         String varMonth = "";
         String varDay = "";
 
-        if(month < 10){
+        if(month < 11){
             varMonth = "0";
         }
         if(day < 10){
             varDay = "0";
         }
         //fullDate = varDay+""+day+ "-" + varMonth+""+month + "-" + year;
-
+        //fullDate = year + "-" + varMonth+""+(month+1)+"-"+varDay+""+day;
         fullDate = year + "-" + varMonth+""+(month+1)+"-"+varDay+""+day;
         Log.e("fullDate", fullDate);
     }
