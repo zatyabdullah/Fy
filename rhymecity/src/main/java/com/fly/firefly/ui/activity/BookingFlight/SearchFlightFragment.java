@@ -232,9 +232,9 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
         returnDateBlock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AnalyticsApplication.sendEvent("Click", "returnDateblock");
-               datePickerDialog.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
+                datePickerDialog.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
                 PICKER = RETURN_DATE_PICKER;
+                AnalyticsApplication.sendEvent("Click", "returnDateblock");
 
             }
         });
@@ -579,6 +579,9 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
             Intent flight = new Intent(getActivity(), FlightDetailActivity.class);
             flight.putExtra("FLIGHT_OBJ", (new Gson()).toJson(obj));
             getActivity().startActivity(flight);
+
+        }else if(obj.getStatus().equals("error_validation")){
+            croutonAlert(getActivity(), obj.getMessage());
         }
 
     }
@@ -620,12 +623,13 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
             varDay = "0";
         }
 
+
         if(PICKER.equals(DEPARTURE_DATE_PICKER)) {
             bookFlightDepartureDate.setText(day + " " + getMonthAlphabet(month) + " " + year);
-            bookFlightDepartureDate.setTag(year + "-" + varMonth + "" + month + "-" + varDay + "" + day);
-        }else if(PICKER.equals(DEPARTURE_DATE_PICKER)){
+            bookFlightDepartureDate.setTag(year + "-" + varMonth + "" + (month+1) + "-" + varDay + "" + day);
+        }else if(PICKER.equals(RETURN_DATE_PICKER)){
             bookFlightReturnDate.setText(day + " " + getMonthAlphabet(month) + " " + year);
-            bookFlightReturnDate.setTag(year + "-" + varMonth + "" + month + "-" + varDay + "" + day);
+            bookFlightReturnDate.setTag(year + "-" + varMonth + "" + (month+1) + "-" + varDay + "" + day);
         }else{
             //DeadBlock
         }

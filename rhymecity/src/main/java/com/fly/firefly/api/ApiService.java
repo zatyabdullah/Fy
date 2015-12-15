@@ -47,7 +47,7 @@ public interface ApiService {
     @POST("/register")
     void onRegisterRequest(@Body RegisterObj obj, Callback<RegisterReceive> callback);
 
-    @POST("/search")
+    @POST("/searchFlight")
     void onSearchFlightRequest(@Body SearchFlightObj obj, Callback<SearchFlightReceive> callback);
 
     @POST("/forgotPassword")
