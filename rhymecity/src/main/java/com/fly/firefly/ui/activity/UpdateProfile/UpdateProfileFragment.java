@@ -494,12 +494,11 @@ public class UpdateProfileFragment extends BaseFragment implements
 
 
         //Post title
-            if (editTitle.getText().toString().equals(titleJ.optString("title_name")) ) {
+            if (editTitle.getTag() == null ) {
                 data.setTitle(jsonUserInfo.optString("title"));
             }else{
-                data.setTitle(editTitle.getTag().toString());
+              data.setTitle(editTitle.getTag().toString());
         }
-
 
 
 
