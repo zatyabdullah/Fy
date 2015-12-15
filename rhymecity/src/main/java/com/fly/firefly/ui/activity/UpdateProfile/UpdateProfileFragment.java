@@ -75,15 +75,18 @@ public class UpdateProfileFragment extends BaseFragment implements
     String[] state_val;
     private String selectedState;
     private String selectedCountryCode;
+    private String title;
     private AlertDialog dialog;
     private SharedPrefManager pref;
     private int fragmentContainerId;
     public static final String DATEPICKER_TAG = "datepicker";
     private String fullDate;
     private static final String SCREEN_LABEL = "Update Profile";
-    DropDownItem selectedCountry;
+    DropDownItem selectedCountry,selectTitle_code;
     JSONObject countJ,stateJ,titleJ;
-    String title_code;
+    String selectedTitle_code,selectedTitle_name;
+
+
 
 
     @Inject UpdateProfilePresenter presenter;
@@ -296,10 +299,11 @@ public class UpdateProfileFragment extends BaseFragment implements
             itemTitle.setTag("Title");
             titleList.add(itemTitle);
 
+
             if (title.equals(titleJ.optString("title_code"))) {
-                title_code=titleJ.optString("title_code");
                 editTitle.setText(titleJ.optString("title_name"));
             }
+
 
         }
 
@@ -439,6 +443,7 @@ public class UpdateProfileFragment extends BaseFragment implements
 
     public void requestUpdateProfile() {
 
+
         initiateLoading(getActivity());
 
         HashMap<String, String> init = pref.getSignatureFromLocalStorage();
@@ -489,17 +494,13 @@ public class UpdateProfileFragment extends BaseFragment implements
 
 
         //Post title
-        if (editTitle.getText().toString().equals(jsonUserInfo.optString("title"))) {
-            data.setTitle(jsonUserInfo.optString("title"));
-        } else {
-            data.setTitle(title_code);
+            if (editTitle.getText().toString().equals(titleJ.optString("title_name")) ) {
+                data.setTitle(jsonUserInfo.optString("title"));
+            }else{
+                data.setTitle(editTitle.getTag().toString());
         }
 
-        /*if (selectedTitle==null) {
-            data.setTitle(jsonUserInfo.optString("title"));
-        }else {
-            data.setTitle(editTitle.getText().toString());
-        }*/
+
 
 
         //Post country
