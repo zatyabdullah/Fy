@@ -79,6 +79,12 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
     @Order(2)
     @InjectView(R.id.txtLoginPassword) EditText txtLoginPassword;
 
+    /*@NotEmpty(sequence = 1)
+    @Order(3)
+    @InjectView(R.id.editEmail) EditText editEmail;*/
+
+
+
     private AlertDialog dialog;
     private SharedPrefManager pref;
 
@@ -163,7 +169,6 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
     {
         Intent loginPage = new Intent(getActivity(), SearchFlightActivity.class);
         getActivity().startActivity(loginPage);
-
         getActivity().finish();
     }
 
@@ -172,7 +177,6 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
     {
         Intent loginPage = new Intent(getActivity(), ChangePasswordActivity.class);
         getActivity().startActivity(loginPage);
-
         getActivity().finish();
     }
 
@@ -268,6 +272,7 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
     }
 
     /*Popup Forgot Password*/
+
     public void forgotPassword(){
 
         LayoutInflater li = LayoutInflater.from(getActivity());

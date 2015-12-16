@@ -235,9 +235,9 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
         returnDateBlock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AnalyticsApplication.sendEvent("Click", "returnDateblock");
-               datePickerDialog.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
+                datePickerDialog.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
                 PICKER = RETURN_DATE_PICKER;
+                AnalyticsApplication.sendEvent("Click", "returnDateblock");
 
             }
         });
@@ -602,6 +602,9 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
             flight.putExtra("RETURN_DATE", date );
 
             getActivity().startActivity(flight);
+
+        }else if(obj.getStatus().equals("error_validation")){
+            croutonAlert(getActivity(), obj.getMessage());
         }
 
     }
@@ -642,6 +645,7 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
         if(day < 10){
             varDay = "0";
         }
+
 
         if(PICKER.equals(DEPARTURE_DATE_PICKER)) {
             bookFlightDepartureDate.setText(day + " " + getMonthAlphabet(month) + " " + year);

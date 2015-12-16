@@ -75,7 +75,7 @@ public class NavigationDrawerFragment extends Fragment {
     public ImageLoader imageLoader;
     private SharedPrefManager pref;
     private String userName;
-    private String loginStatus = "N";
+    private String loginStatus;
 
     public NavigationDrawerFragment() {
     }
@@ -152,8 +152,10 @@ public class NavigationDrawerFragment extends Fragment {
         itemList.clear();
         itemList = new ArrayList<DrawerItem>();
 
-        if(loginStatus  != "Y"){
-        //if( loginStatus != "Y"){
+
+       // if(loginStatus.equals("N")){
+       // if( loginStatus != "Y"){
+        if( loginStatus != null && !loginStatus.equals("Y")){
 
             DrawerItem vrsm = new DrawerItem();
             vrsm.setId(0);

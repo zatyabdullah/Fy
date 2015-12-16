@@ -9,6 +9,7 @@ import java.util.List;
 public class SearchFlightReceive{
 
     private String status;
+    private String message;
     private List<JourneyInfo> journeys = new ArrayList<JourneyInfo>();
     private SearchFlightReceive journeyObj;
 
@@ -42,5 +43,9 @@ public class SearchFlightReceive{
     public void setJourneyObj(SearchFlightReceive journeyObj) {
         this.journeyObj = journeyObj;
     }
+
+    public String getMessage() {return message;}
+
+    public void setMessage(String message) {this.message = message;}
 
 }

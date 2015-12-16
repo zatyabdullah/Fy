@@ -26,6 +26,8 @@ import com.fly.firefly.ui.module.RegisterModule;
 import com.fly.firefly.ui.object.DatePickerObj;
 import com.fly.firefly.ui.object.RegisterObj;
 import com.fly.firefly.ui.presenter.RegisterPresenter;
+import com.fly.firefly.utils.AESCBC;
+import com.fly.firefly.utils.App;
 import com.fly.firefly.utils.DropDownItem;
 import com.fly.firefly.utils.SharedPrefManager;
 import com.fly.firefly.utils.Utils;
@@ -353,10 +355,11 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
             String newsletter = initi.get(SharedPrefManager.ISNEWSLETTER);
 
             RegisterObj regObj = new RegisterObj();
+
             regObj.setUsername(txtUsername.getText().toString());
             regObj.setFirst_name(txtFirstName.getText().toString());
             regObj.setLast_name(txtLastName.getText().toString());
-            regObj.setPassword(txtPassword.getText().toString());
+            regObj.setPassword(AESCBC.encrypt(App.KEY, App.IV, txtPassword.getText().toString()));
             regObj.setTitle(txtTitle.getTag().toString());
             regObj.setDob(fullDate);
             regObj.setAddress_1(txtAddressLine1.getText().toString());

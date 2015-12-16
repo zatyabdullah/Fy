@@ -53,15 +53,19 @@ public class UpdateProfileReceive {
         public void setSignature(String signature) {
             this.signature = signature;
         }
+
         public String getUsername() {
             return username;
         }
+
         public void setUsername(String username) {
             this.username = username;
         }
+
         public String getPassword() {
             return password;
         }
+
         public void setPassword(String password) {
             this.password = password;
         }
@@ -110,49 +114,37 @@ public class UpdateProfileReceive {
             return contact_first_name;
         }
 
-        public void setContact_first_name(String contact_first_name) {
-            this.contact_first_name = contact_first_name;
-        }
+        public void setContact_first_name(String contact_first_name) {this.contact_first_name = contact_first_name;}
 
         public String getContact_last_name() {
             return contact_last_name;
         }
 
-        public void setContact_last_name(String contact_last_name) {
-            this.contact_last_name = contact_last_name;
-        }
+        public void setContact_last_name(String contact_last_name) {this.contact_last_name = contact_last_name;}
 
         public String getContact_address1() {
             return contact_address1;
         }
 
-        public void setContact_address1(String contact_address1) {
-            this.contact_address1 = contact_address1;
-        }
+        public void setContact_address1(String contact_address1) {this.contact_address1 = contact_address1;}
 
         public String getContact_address2() {
             return contact_address2;
         }
 
-        public void setContact_address2(String contact_address2) {
-            this.contact_address2 = contact_address2;
-        }
+        public void setContact_address2(String contact_address2) {this.contact_address2 = contact_address2;}
 
         public String getContact_address3() {
             return contact_address3;
         }
 
-        public void setContact_address3(String contact_address3) {
-            this.contact_address3 = contact_address3;
-        }
+        public void setContact_address3(String contact_address3) {this.contact_address3 = contact_address3;}
 
         public String getContact_country() {
             return contact_country;
         }
 
-        public void setContact_country(String contact_country) {
-            this.contact_country = contact_country;
-        }
+        public void setContact_country(String contact_country) {this.contact_country = contact_country;}
 
         public String getContact_city() {
             return contact_city;
@@ -174,9 +166,7 @@ public class UpdateProfileReceive {
             return contact_postcode;
         }
 
-        public void setContact_postcode(String contact_postcode) {
-            this.contact_postcode = contact_postcode;
-        }
+        public void setContact_postcode(String contact_postcode) {this.contact_postcode = contact_postcode;}
 
         public String getContact_mobile_phone() {
             return contact_mobile_phone;
@@ -224,9 +214,7 @@ public class UpdateProfileReceive {
         return status;
     }
 
-    public String getMessage() {
-        return message;
-    }
+    public String getMessage() {return message;}
 
     public void setMessage(String message) {
         this.message = message;
