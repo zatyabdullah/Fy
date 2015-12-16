@@ -24,6 +24,7 @@ public class SharedPrefManager {
     public static final String DEFAULT_BANNER = "DB";
     public static final String USERNAME = "USERNAME";
 
+    public static final String BOOKING_ID = "BOOKING_ID";
     // public static final String SELECTED = "SELECTED";
 
 
@@ -37,6 +38,13 @@ public class SharedPrefManager {
         this._context = context;
         _sharedPrefs = context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
         _prefsEditor = _sharedPrefs.edit();
+    }
+
+    /*Return Booking ID*/
+    public HashMap<String, String> getBookingID() {
+        HashMap<String, String> init = new HashMap<String, String>();
+        init.put(BOOKING_ID, _sharedPrefs.getString(BOOKING_ID, null));
+        return init;
     }
 
     /*Return Login Status*/
@@ -133,6 +141,12 @@ public class SharedPrefManager {
         HashMap<String, String> init = new HashMap<String, String>();
         init.put(USERNAME, _sharedPrefs.getString(USER_EMAIL, null));
         return init;
+    }
+
+    /*Set Booking ID*/
+    public void setBookingID(String id) {
+        _prefsEditor.putString(BOOKING_ID, id);
+        _prefsEditor.apply();
     }
 
     /*Set Username Value*/
@@ -251,6 +265,12 @@ public class SharedPrefManager {
     public void setUserInfo() {
         // Clearing Siganture
         _sharedPrefs.edit().remove(USER_INFO).apply();
+    }
+
+    /*Clear Selected Value*/
+    public void clearBookingID() {
+        // Clearing Selected
+        _sharedPrefs.edit().remove(BOOKING_ID).apply();
     }
 
     /*Clear Selected Value*/

@@ -1,8 +1,8 @@
 package com.fly.firefly.ui.module;
 
 import com.fly.firefly.AppModule;
-import com.fly.firefly.ui.fragment.BookingFlight.PersonalDetailFragment;
-import com.fly.firefly.ui.presenter.BF_PersonalDetailPresenter;
+import com.fly.firefly.ui.activity.BookingFlight.PersonalDetailFragment;
+import com.fly.firefly.ui.presenter.BookingPresenter;
 import com.squareup.otto.Bus;
 
 import javax.inject.Singleton;
@@ -18,15 +18,15 @@ import dagger.Provides;
 
 public class PersonalDetailModule {
 
-    private final BF_PersonalDetailPresenter.PersonalDetailView personalDetailView;
+    private final BookingPresenter.PassengerInfoView personalDetailView;
 
-    public PersonalDetailModule(BF_PersonalDetailPresenter.PersonalDetailView personalDetailView) {
+    public PersonalDetailModule(BookingPresenter.PassengerInfoView personalDetailView) {
         this.personalDetailView = personalDetailView;
     }
 
     @Provides
     @Singleton
-    BF_PersonalDetailPresenter provideFlightDetailPresenter(Bus bus) {
-        return new BF_PersonalDetailPresenter(personalDetailView, bus);
+    BookingPresenter provideFlightDetailPresenter(Bus bus) {
+        return new BookingPresenter(personalDetailView, bus);
     }
 }

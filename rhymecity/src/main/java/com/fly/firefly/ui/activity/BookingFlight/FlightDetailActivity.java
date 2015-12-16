@@ -34,42 +34,12 @@ public class FlightDetailActivity extends MainFragmentActivity implements Fragme
         hideTitle();
     }
 
-   /* private void goToSearchFragment() {
-        fragmentManager.beginTransaction()
-                .add(R.id.main_activity_fragment_container, SearchFragment.newInstance())
-                .commit();
-    }*/
-
-    /*@Override
-    public void onBackPressed() {
-        if (fragmentManager.getBackStackEntryCount() > 0) {
-            fragmentManager.popBackStack();
-        } else {
-            super.onBackPressed();
-        }
-    }*/
-
-    /*@Override
-    public ProgressBar getProgressIndicator() {
-        return progressIndicator;
-    }
-
-    @Override
-    public Toolbar getToolbar() {
-        return toolbar;
-    }*/
-
-
-
     @Override
     public void onResume() {
         super.onResume();
-        // presenter.onResume();
-        Log.i("Page Name", "Setting screen name: " + "Flight Details");
         mTracker.setScreenName("Flight Details" + "A");
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
-
 
     @Override
     public int getFragmentContainerId() {

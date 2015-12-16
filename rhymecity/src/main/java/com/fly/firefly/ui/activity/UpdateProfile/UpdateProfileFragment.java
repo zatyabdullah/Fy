@@ -343,7 +343,7 @@ public class UpdateProfileFragment extends BaseFragment implements
             @Override
             public void onClick(View v) {
                 Log.e("Clicked", "Ok");
-                popupSelection(titleList, getActivity(),editTitle);
+                popupSelection(titleList, getActivity(),editTitle,true);
             }
         });
 

@@ -114,12 +114,11 @@
         <item>Male</item>
         <item>Female</item>
     </string-array>
-    <string-array name="countrytest">
-        <item>Rating</item>
-        <item>Price</item>
-        <item>Comment</item>
-        <item>Newest</item>
-        <item>Oldest</item>
+
+    <string-array name="travel_doc">
+        <item>Malaysia IC-NRIC</item>
+        <item>Passport-P</item>
+        <item>Visa-V</item>
     </string-array>
 
     <!-- Month -->
