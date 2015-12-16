@@ -152,7 +152,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="20 August 2015"
-                                        android:id="@+id/textView78"
+                                        android:id="@+id/flightdate"
                                         android:textSize="16dp"/>
 
                                     <TextView
@@ -160,7 +160,7 @@
                                         android:layout_height="wrap_content"
                                         android:text="FY221"
                                         android:layout_marginTop="10dp"
-                                        android:id="@+id/textView83"
+                                        android:id="@+id/flightnumber"
                                         android:textSize="16dp"/>
 
                                     <TextView
@@ -168,7 +168,7 @@
                                         android:layout_height="wrap_content"
                                         android:text="PEN-SZB"
                                         android:layout_marginTop="10dp"
-                                        android:id="@+id/textView84"
+                                        android:id="@+id/stationcode"
                                         android:textSize="16dp"/>
 
                                     <TextView
@@ -176,7 +176,7 @@
                                         android:layout_height="wrap_content"
                                         android:text="10.00PM"
                                         android:layout_marginTop="10dp"
-                                        android:id="@+id/textView85"
+                                        android:id="@+id/departuretime"
                                         android:textSize="16dp"/>
 
                                 </LinearLayout>
@@ -219,6 +219,66 @@
                             android:textStyle="bold"
                             android:id="@+id/textView90"
                             android:textSize="16dp"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:layout_marginTop="10dp" >
+
+
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.52"
+                            android:layout_height="match_parent"
+                            android:gravity="left|center" >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Passenger Name"
+                                android:id="@+id/passengerName"
+                                android:textSize="16dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.25"
+                            android:layout_height="match_parent"
+                            android:gravity="center" >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Seat"
+                                android:id="@+id/passengerSeat"
+                                android:textSize="16dp" />
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.3"
+                            android:layout_height="match_parent"
+                            android:gravity="center" >
+
+                            <CheckBox
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/checkin_box"
+                                android:layout_weight="0.2"
+                                android:scaleX="1.80"
+                                android:scaleY="1.80"
+                                android:gravity="center"/>
+                        </LinearLayout>
+
                     </LinearLayout>
 
                     <Button

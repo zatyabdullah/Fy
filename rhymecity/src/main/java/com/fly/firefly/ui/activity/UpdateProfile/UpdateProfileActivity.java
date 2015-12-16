@@ -39,7 +39,7 @@ public class UpdateProfileActivity extends MainFragmentActivity implements Fragm
     @Override
     public void onResume() {
         super.onResume();
-        // presenter.onResume();
+       // presenter.onResume();
 
     }
 

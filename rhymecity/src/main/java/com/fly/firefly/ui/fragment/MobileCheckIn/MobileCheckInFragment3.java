@@ -1,24 +1,26 @@
 package com.fly.firefly.ui.fragment.MobileCheckIn;
 
-import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.fly.firefly.FireFlyApplication;
 import com.fly.firefly.R;
+import com.fly.firefly.api.obj.MobileCheckinReceive;
+import com.fly.firefly.base.BaseFragment;
+import com.fly.firefly.ui.activity.BookingFlight.FlightDetailActivity;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
 import com.fly.firefly.ui.module.MobileCheckInModule3;
 import com.fly.firefly.ui.presenter.MobileCheckInPresenter;
+import com.google.gson.Gson;
 
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
-public class MobileCheckInFragment3 extends Fragment implements MobileCheckInPresenter.MobileCheckInView {
+public class MobileCheckInFragment3 extends BaseFragment implements MobileCheckInPresenter.MobileCheckInView {
 
     @Inject
     MobileCheckInPresenter presenter;
@@ -52,10 +54,32 @@ public class MobileCheckInFragment3 extends Fragment implements MobileCheckInPre
 
 
     @Override
+    public void onCheckindataReceive(MobileCheckinReceive obj) {
+
+        dismissLoading();
+
+        Gson gson = new Gson();
+        String countryList = gson.toJson(obj);
+
+        if(obj.getJourneyObj().getStatus().equals("success")){
+
+            MobileCheckinReceive passObj = new MobileCheckinReceive(obj);
+            Intent flight = new Intent(getActivity(), FlightDetailActivity.class);
+            flight.putExtra("FLIGHT_OBJ", (new Gson()).toJson(obj));
+            getActivity().startActivity(flight);
+
+        }else if(obj.getStatus().equals("error_validation")){
+            croutonAlert(getActivity(), obj.getMessage());
+        }
+
+    }
+
+    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         fragmentContainerId = ((FragmentContainerActivity) getActivity()).getFragmentContainerId();
     }
+
 
     @Override
     public void onResume() {

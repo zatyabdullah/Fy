@@ -12,6 +12,7 @@ public class SharedPrefManager {
     public static final String SELECTED = "SELECTED";
     public static final String USER_EMAIL = "USER_EMAIL";
     public static final String USER_INFO = "USER_INFO";
+    public static final String CHECKIN_INFO = "CHECKIN_INFO";
 
     public static final String TITLE = "TITLE";
     public static final String FLIGHT = "FLIGHT";
@@ -135,6 +136,18 @@ public class SharedPrefManager {
         return init;
     }
 
+    /*Return Checkin_info*/
+    public HashMap<String, String> getCheckinInfo() {
+        HashMap<String, String> init = new HashMap<String, String>();
+        init.put(CHECKIN_INFO, _sharedPrefs.getString(CHECKIN_INFO, null));
+        return init;
+    }
+
+    /*Set Checkin Value*/
+    public void setCheckinInfo(String url) {
+        _prefsEditor.putString(CHECKIN_INFO, url);
+        _prefsEditor.apply();
+    }
     /*Set Username Value*/
     public void setUsername(String url) {
         _prefsEditor.putString(USERNAME, url);
@@ -214,6 +227,14 @@ public class SharedPrefManager {
     public void setUserEmail(String url) {
         _prefsEditor.putString(USER_EMAIL, url);
         _prefsEditor.apply();
+    }
+
+    /*Clear Checkin Value*/
+    public void checkinInfoURL() {
+        // Clearing All URL
+        _sharedPrefs.edit().remove(CHECKIN_INFO).apply();
+
+
     }
 
     /*Clear Signature Value*/

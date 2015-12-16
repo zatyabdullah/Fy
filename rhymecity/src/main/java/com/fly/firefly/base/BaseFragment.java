@@ -19,6 +19,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.fly.firefly.ui.activity.BookingFlight.SearchFlightFragment;
+import com.fly.firefly.ui.fragment.MobileCheckIn.MobileCheckInFragment1;
 import com.fly.firefly.ui.object.Country;
 import com.fly.firefly.utils.DropDownItem;
 import com.fly.firefly.utils.DropMenuAdapter;
@@ -129,6 +130,7 @@ public class BaseFragment extends Fragment {
 
                         if(a.get(which).getTag() == "FLIGHT"){
                             SearchFlightFragment.filterArrivalAirport(selectedCode);
+							MobileCheckInFragment1.filterArrivalAirport(selectedCode);
                         }
 
 						indexForState = which;
@@ -277,7 +279,26 @@ public class BaseFragment extends Fragment {
 
 
 
+	/*Get All User Info From OS*/
+	public JSONObject getCheckinInfo(Activity act)
+	{
+		JSONObject json = null;
 
+		prefManager = new SharedPrefManager(act);
+		HashMap<String, String> init = prefManager.getCheckinInfo();
+		String checkinInfo = init.get(SharedPrefManager.CHECKIN_INFO);
+		Log.e("checkin_info", checkinInfo);
+
+		try {
+			json = new JSONObject(checkinInfo);
+			Log.e("json",Integer.toString(json.length()));
+		}catch (JSONException e){
+			e.printStackTrace();
+		}
+
+		return json;
+
+	}
 	/*public static void showConnectionError(String test, Activity activity)
 	{
         if(activity != null) {

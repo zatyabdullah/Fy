@@ -7,6 +7,7 @@ import com.fly.firefly.api.obj.LoginReceive;
 import com.fly.firefly.api.obj.RegisterReceive;
 import com.fly.firefly.api.obj.SearchFlightReceive;
 import com.fly.firefly.api.obj.UpdateProfileReceive;
+import com.fly.firefly.api.obj.MobileCheckinReceive;
 import com.fly.firefly.api.obj.tryObj;
 import com.fly.firefly.ui.object.ChangePasswordRequest;
 import com.fly.firefly.ui.object.DeviceInformation;
@@ -14,6 +15,7 @@ import com.fly.firefly.ui.object.LoginRequest;
 import com.fly.firefly.ui.object.PasswordRequest;
 import com.fly.firefly.ui.object.RegisterObj;
 import com.fly.firefly.ui.object.SearchFlightObj;
+import com.fly.firefly.ui.object.MobileCheckinObj;
 import com.fly.firefly.ui.object.UpdateProfileRequest;
 
 import retrofit.Callback;
@@ -59,5 +61,9 @@ public interface ApiService {
     @POST("/updateProfile")
     void onUpdateProfileRequest(@Body UpdateProfileRequest task, Callback<UpdateProfileReceive> callback);
 
+    @POST("/checkInFlight")
+    void onMobileCheckinRequest(@Body MobileCheckinObj obj, Callback<MobileCheckinReceive> callback);
+
 }
+
 

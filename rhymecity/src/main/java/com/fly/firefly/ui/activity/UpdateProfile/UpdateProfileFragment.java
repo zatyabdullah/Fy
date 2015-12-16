@@ -225,7 +225,6 @@ public class UpdateProfileFragment extends BaseFragment implements
 
         JSONObject jsonUserInfo = getUserInfo(getActivity());
 
-
         String email = jsonUserInfo.optString("username");
         String title = jsonUserInfo.optString("title");
         String first_name = jsonUserInfo.optString("first_name");
