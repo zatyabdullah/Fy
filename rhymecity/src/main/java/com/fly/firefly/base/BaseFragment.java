@@ -287,11 +287,11 @@ public class BaseFragment extends Fragment {
 		prefManager = new SharedPrefManager(act);
 		HashMap<String, String> init = prefManager.getCheckinInfo();
 		String checkinInfo = init.get(SharedPrefManager.CHECKIN_INFO);
-		Log.e("checkin_info", checkinInfo);
+
 
 		try {
 			json = new JSONObject(checkinInfo);
-			Log.e("json",Integer.toString(json.length()));
+
 		}catch (JSONException e){
 			e.printStackTrace();
 		}

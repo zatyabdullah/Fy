@@ -399,7 +399,7 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
 
             croutonAlert(getActivity(), obj.getMessage());
 
-        }else{
+        }else if (obj.getStatus().equals("error_validation")) {
             croutonAlert(getActivity(), obj.getMessage());
            /* Crouton.makeText(getActivity(), obj.getMessage(), Style.ALERT).show();*/
 
@@ -474,7 +474,7 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
             varDay = "0";
         }
 
-        fullDate = year + "-" + varMonth+""+month+"-"+varDay+""+day;
+        fullDate = year + "-" + varMonth+""+(month+1)+"-"+varDay+""+day;
         Log.e("fullDate", fullDate);
         /*fullDate = varDay+""+day+ "-" + varMonth+""+month + "-" + year;
         Log.e("fullDate", fullDate);*/
