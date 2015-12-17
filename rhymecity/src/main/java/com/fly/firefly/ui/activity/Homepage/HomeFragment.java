@@ -21,6 +21,7 @@ import com.fly.firefly.ui.activity.BoardingPass.BoardingPassActivity;
 import com.fly.firefly.ui.activity.BookingFlight.SearchFlightActivity;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
 import com.fly.firefly.ui.activity.Login.LoginActivity;
+import com.fly.firefly.ui.activity.ManageFlight.ManageFlight_Activity;
 import com.fly.firefly.ui.activity.MobileCheckIn.MobileCheckInActivity1;
 import com.fly.firefly.ui.module.HomeModule;
 import com.fly.firefly.ui.presenter.HomePresenter;
@@ -196,8 +197,8 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
 
     public void goToManageFlight()
     {
-        //Intent loginPage = new Intent(getActivity(), ManageFlight_Activity.class);
-        //getActivity().startActivity(loginPage);
+        Intent loginPage = new Intent(getActivity(), ManageFlight_Activity.class);
+        getActivity().startActivity(loginPage);
     }
 
     /*Public-Inner Func*/

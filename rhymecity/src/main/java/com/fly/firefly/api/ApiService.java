@@ -1,20 +1,26 @@
 package com.fly.firefly.api;
 
 import com.fly.firefly.api.obj.ChangePasswordReceive;
+import com.fly.firefly.api.obj.ContactInfoReceive;
 import com.fly.firefly.api.obj.DeviceInfoSuccess;
 import com.fly.firefly.api.obj.ForgotPasswordReceive;
 import com.fly.firefly.api.obj.LoginReceive;
+import com.fly.firefly.api.obj.PassengerInfoReveice;
 import com.fly.firefly.api.obj.RegisterReceive;
 import com.fly.firefly.api.obj.SearchFlightReceive;
+import com.fly.firefly.api.obj.SelectFlightReceive;
 import com.fly.firefly.api.obj.UpdateProfileReceive;
 import com.fly.firefly.api.obj.MobileCheckinReceive;
 import com.fly.firefly.api.obj.tryObj;
 import com.fly.firefly.ui.object.ChangePasswordRequest;
+import com.fly.firefly.ui.object.ContactInfo;
 import com.fly.firefly.ui.object.DeviceInformation;
 import com.fly.firefly.ui.object.LoginRequest;
+import com.fly.firefly.ui.object.Passenger;
 import com.fly.firefly.ui.object.PasswordRequest;
 import com.fly.firefly.ui.object.RegisterObj;
 import com.fly.firefly.ui.object.SearchFlightObj;
+import com.fly.firefly.ui.object.SelectFlight;
 import com.fly.firefly.ui.object.MobileCheckinObj;
 import com.fly.firefly.ui.object.UpdateProfileRequest;
 
@@ -42,7 +48,6 @@ public interface ApiService {
 
     // @Body JSONObject searchstring
 
-
     @POST("/loading")
     void onSendDeviceInfo(@Body DeviceInformation task, Callback<DeviceInfoSuccess> callback);
 
@@ -61,6 +66,14 @@ public interface ApiService {
     @POST("/updateProfile")
     void onUpdateProfileRequest(@Body UpdateProfileRequest task, Callback<UpdateProfileReceive> callback);
 
+    @POST("/selectFlight")
+    void onSelectFlight(@Body SelectFlight task, Callback<SelectFlightReceive> callback);
+
+    @POST("/passengerDetails")
+    void onPassengerInfo(@Body Passenger task, Callback<PassengerInfoReveice> callback);
+
+    @POST("/contactDetails")
+    void onContactInfo(@Body ContactInfo task, Callback<ContactInfoReceive> callback);
     @POST("/checkInFlight")
     void onMobileCheckinRequest(@Body MobileCheckinObj obj, Callback<MobileCheckinReceive> callback);
 

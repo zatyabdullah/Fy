@@ -6,20 +6,26 @@ import android.util.Log;
 
 import com.fly.firefly.MainFragmentActivity;
 import com.fly.firefly.api.obj.ChangePasswordReceive;
+import com.fly.firefly.api.obj.ContactInfoReceive;
 import com.fly.firefly.api.obj.DeviceInfoSuccess;
 import com.fly.firefly.api.obj.FailedConnectToServer;
 import com.fly.firefly.api.obj.ForgotPasswordReceive;
 import com.fly.firefly.api.obj.LoginReceive;
+import com.fly.firefly.api.obj.PassengerInfoReveice;
 import com.fly.firefly.api.obj.RegisterReceive;
 import com.fly.firefly.api.obj.SearchFlightReceive;
+import com.fly.firefly.api.obj.SelectFlightReceive;
 import com.fly.firefly.api.obj.UpdateProfileReceive;
 import com.fly.firefly.api.obj.MobileCheckinReceive;
 import com.fly.firefly.ui.object.ChangePasswordRequest;
+import com.fly.firefly.ui.object.ContactInfo;
 import com.fly.firefly.ui.object.DeviceInformation;
 import com.fly.firefly.ui.object.LoginRequest;
+import com.fly.firefly.ui.object.Passenger;
 import com.fly.firefly.ui.object.PasswordRequest;
 import com.fly.firefly.ui.object.RegisterObj;
 import com.fly.firefly.ui.object.SearchFlightObj;
+import com.fly.firefly.ui.object.SelectFlight;
 import com.fly.firefly.ui.object.UpdateProfileRequest;
 import com.fly.firefly.ui.object.MobileCheckinObj;
 import com.squareup.otto.Bus;
@@ -204,27 +210,18 @@ public class ApiRequestHandler {
     @Subscribe
     public void onDeviceInfo(final DeviceInformation event) {
 
-        Log.e("getDeviceId", event.getDeviceId());
-        Log.e("Password", event.getBrand());
-
-        //initiateLoading();
-        //loading(true);
-
-
         apiService.onSendDeviceInfo(event, new Callback<DeviceInfoSuccess>() {
 
             @Override
             public void success(DeviceInfoSuccess deviceResponse, Response response) {
 
                 bus.post(new DeviceInfoSuccess(deviceResponse));
-                //loading(false);
 
             }
 
             @Override
             public void failure(RetrofitError error) {
 
-                //loading(false);
                 bus.post(new FailedConnectToServer("Unable to connect to server"));
 
             }
@@ -235,10 +232,6 @@ public class ApiRequestHandler {
 
     @Subscribe
     public void onRegisterRequest(final RegisterObj event) {
-
-       // initiateLoading();
-       // loading(true);
-
 
         apiService.onRegisterRequest(event, new Callback<RegisterReceive>() {
 
@@ -254,8 +247,7 @@ public class ApiRequestHandler {
             public void failure(RetrofitError error) {
 
                 Log.e("Failed", "True");
-                //loading(false);
-                //bus.post(new RhymesFailureEvent(rhymesResponse));
+
             }
 
         });
@@ -264,9 +256,6 @@ public class ApiRequestHandler {
 
     @Subscribe
     public void onSearchFlight(final SearchFlightObj event) {
-
-        //initiateLoading();
-        //loading(true);
 
         apiService.onSearchFlightRequest(event, new Callback<SearchFlightReceive>() {
 
@@ -316,8 +305,6 @@ public class ApiRequestHandler {
 
                 Crouton.makeText(MainFragmentActivity.getContext(), "Unable to connect to server", Style.ALERT).show();
                 Log.e("Failed", "True");
-                //bus.post(new FailedConnectToServer("Unable to connect to server"));
-                //loading(false);
 
             }
 
@@ -327,6 +314,73 @@ public class ApiRequestHandler {
 
 
     }
+
+    @Subscribe
+    public void onSearchFlight(final SelectFlight event) {
+
+        apiService.onSelectFlight(event, new Callback<SelectFlightReceive>() {
+
+            @Override
+            public void success(SelectFlightReceive xx, Response response) {
+                bus.post(new SelectFlightReceive(xx));
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Crouton.makeText(MainFragmentActivity.getContext(), "Unable to connect to server", Style.ALERT).show();
+            }
+
+        });
+    }
+
+
+    @Subscribe
+    public void onPassengerInfo(final Passenger event) {
+
+        apiService.onPassengerInfo(event, new Callback<PassengerInfoReveice>() {
+
+            @Override
+            public void success(PassengerInfoReveice responseData, Response response) {
+                Log.e(responseData.getStatus(), "x");
+                bus.post(new PassengerInfoReveice(responseData));
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+                Crouton.makeText(MainFragmentActivity.getContext(), "Unable to connect to server", Style.ALERT).show();
+                Log.e("Failed", "True");
+
+            }
+
+        });
+    }
+
+    @Subscribe
+    public void onPassengerInfo(final ContactInfo event) {
+
+        apiService.onContactInfo(event, new Callback<ContactInfoReceive>() {
+
+            @Override
+            public void success(ContactInfoReceive responseData, Response response) {
+
+                bus.post(new ContactInfoReceive(responseData));
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+                Crouton.makeText(MainFragmentActivity.getContext(), "Unable to connect to server", Style.ALERT).show();
+                Log.e("Failed", "True");
+
+            }
+
+        });
+    }
+
+
 
 
 

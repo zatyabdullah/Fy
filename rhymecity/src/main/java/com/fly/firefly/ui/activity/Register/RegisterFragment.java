@@ -262,7 +262,7 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
             public void onClick(View v) {
                 AnalyticsApplication.sendEvent("Edit", "Title");
                Log.e("Clicked", "Ok");
-               popupSelection(titleList, getActivity(),txtTitle);
+               popupSelection(titleList, getActivity(),txtTitle,true);
             }
         });
 

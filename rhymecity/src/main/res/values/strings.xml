@@ -114,12 +114,17 @@
         <item>Male</item>
         <item>Female</item>
     </string-array>
-    <string-array name="countrytest">
-        <item>Rating</item>
-        <item>Price</item>
-        <item>Comment</item>
-        <item>Newest</item>
-        <item>Oldest</item>
+
+    <string-array name="travel_doc">
+        <item>Malaysia IC-NRIC</item>
+        <item>Passport-P</item>
+        <item>Visa-V</item>
+    </string-array>
+
+    <!-- Travel Purpose -->
+    <string-array name="purpose">
+        <item>Leisure</item>
+        <item>Business</item>
     </string-array>
 
     <!-- Month -->
@@ -137,6 +142,7 @@
         <item>Nov</item>
         <item>Dec</item>
     </string-array>
+
     <string-array name="full_month">
         <item>January</item>
         <item>February</item>

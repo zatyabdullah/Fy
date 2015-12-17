@@ -126,16 +126,15 @@
                                     android:orientation="vertical"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:background="@drawable/block_with_border"
                                     android:layout_marginTop="5dp" >
 
                                     <TextView
-                                        android:layout_width="wrap_content"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="Mr."
                                         android:padding="5dp"
                                         android:textStyle="bold"
-                                        android:id="@+id/textView112" />
+                                        android:background="@drawable/block_with_border"
+                                        android:id="@+id/txtPurpose" />
                                 </LinearLayout>
                             </LinearLayout>
 
@@ -159,16 +158,15 @@
                                     android:orientation="vertical"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:background="@drawable/block_with_border"
                                     android:layout_marginTop="5dp">
 
                                     <TextView
-                                        android:layout_width="wrap_content"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="Mr."
-                                        android:padding="5dp"
+                                        android:padding="6dp"
+                                        android:background="@drawable/block_with_border"
                                         android:textStyle="bold"
-                                        android:id="@+id/textView17" />
+                                        android:id="@+id/txtTitle" />
 
                                 </LinearLayout>
                             </LinearLayout>
@@ -192,15 +190,15 @@
                                     android:orientation="vertical"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:background="@drawable/block_with_border"
                                     android:layout_marginTop="5dp" >
 
                                     <EditText
-                                        android:layout_width="wrap_content"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:padding="5dp"
-                                        android:id="@+id/textView19"
-                                        android:background="@null"/>
+                                        android:id="@+id/txtFirstName"
+                                        android:background="@drawable/block_with_border"
+                                        />
                                 </LinearLayout>
                             </LinearLayout>
 
@@ -223,15 +221,15 @@
                                     android:orientation="vertical"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:background="@drawable/block_with_border"
                                     android:layout_marginTop="5dp" >
 
                                     <EditText
-                                        android:layout_width="wrap_content"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:padding="5dp"
-                                        android:id="@+id/editText2"
-                                        android:background="@null" />
+                                        android:id="@+id/txtLastName"
+                                        android:background="@drawable/block_with_border"
+                                        />
                                 </LinearLayout>
                             </LinearLayout>
 
@@ -254,14 +252,14 @@
                                     android:orientation="vertical"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:background="@drawable/block_with_border"
                                     android:layout_marginTop="5dp" >
 
-                                    <TextView
-                                        android:layout_width="wrap_content"
+                                    <EditText
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:padding="5dp"
-                                        android:id="@+id/textView26" />
+                                        android:background="@drawable/block_with_border"
+                                        android:id="@+id/txtEmailAddress" />
                                 </LinearLayout>
                             </LinearLayout>
 
@@ -269,123 +267,124 @@
                                 android:orientation="vertical"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:layout_marginTop="15dp"
-                                android:paddingBottom="13dp"
-                                android:background="@drawable/drawable_login_bottom_border"
+                                android:id="@+id/companyBlock"
                                 android:visibility="gone">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:id="@+id/txtCompanyNAME"
-                                    android:text="Company Name"
-                                    android:textStyle="bold" />
 
                                 <LinearLayout
                                     android:orientation="vertical"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:background="@drawable/block_with_border"
-                                    android:layout_marginTop="5dp" >
+                                    android:layout_marginTop="15dp"
+                                    android:paddingBottom="13dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
 
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:padding="5dp"
-                                        android:id="@+id/textView155" />
+                                        android:id="@+id/textView152"
+                                        android:text="Company Name"
+                                        android:textStyle="bold" />
+
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:background="@drawable/block_with_border"
+                                        android:layout_marginTop="5dp" >
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:padding="5dp"
+                                            android:id="@+id/textView157" />
+                                    </LinearLayout>
                                 </LinearLayout>
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:orientation="vertical"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_marginTop="15dp"
-                                android:paddingBottom="13dp"
-                                android:background="@drawable/drawable_login_bottom_border"
-                                android:visibility="gone">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:id="@+id/txtCompanyAddress1"
-                                    android:text="Company Address 1"
-                                    android:textStyle="bold" />
 
                                 <LinearLayout
                                     android:orientation="vertical"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:background="@drawable/block_with_border"
-                                    android:layout_marginTop="5dp" >
+                                    android:layout_marginTop="15dp"
+                                    android:paddingBottom="13dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
 
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:padding="5dp"
-                                        android:id="@+id/textView159" />
+                                        android:text="Company Address 1"
+                                        android:textStyle="bold" />
+
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginTop="5dp" >
+
+                                        <EditText
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:padding="5dp"
+                                            android:background="@drawable/block_with_border"
+                                            android:id="@+id/editText13" />
+                                    </LinearLayout>
                                 </LinearLayout>
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:orientation="vertical"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_marginTop="15dp"
-                                android:paddingBottom="13dp"
-                                android:background="@drawable/drawable_login_bottom_border"
-                                android:visibility="gone">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:id="@+id/txtCompanyAddress2"
-                                    android:text="Company Address 2"
-                                    android:textStyle="bold" />
 
                                 <LinearLayout
                                     android:orientation="vertical"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:background="@drawable/block_with_border"
-                                    android:layout_marginTop="5dp" >
+                                    android:layout_marginTop="15dp"
+                                    android:paddingBottom="13dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
 
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:padding="5dp"
-                                        android:id="@+id/textView166" />
+                                        android:text="Company Address 2"
+                                        android:textStyle="bold" />
+
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginTop="5dp" >
+
+                                        <EditText
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:padding="5dp"
+                                            android:background="@drawable/block_with_border"
+                                            android:id="@+id/editText14" />
+                                    </LinearLayout>
                                 </LinearLayout>
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:orientation="vertical"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_marginTop="15dp"
-                                android:paddingBottom="13dp"
-                                android:background="@drawable/drawable_login_bottom_border"
-                                android:visibility="gone">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:id="@+id/txtCompanyAddress3"
-                                    android:text="Company Address 3"
-                                    android:textStyle="bold" />
 
                                 <LinearLayout
                                     android:orientation="vertical"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:background="@drawable/block_with_border"
-                                    android:layout_marginTop="5dp" >
+                                    android:layout_marginTop="15dp"
+                                    android:paddingBottom="13dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
 
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:padding="5dp"
-                                        android:id="@+id/textView172" />
+                                        android:text="Company Address 3"
+                                        android:textStyle="bold" />
+
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginTop="5dp" >
+
+                                        <EditText
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:padding="5dp"
+                                            android:background="@drawable/block_with_border"
+                                            android:id="@+id/editText15" />
+                                    </LinearLayout>
                                 </LinearLayout>
                             </LinearLayout>
 
@@ -400,7 +399,6 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:id="@+id/txtCountry"
                                     android:text="Country"
                                     android:textStyle="bold" />
 
@@ -408,14 +406,14 @@
                                     android:orientation="vertical"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:background="@drawable/block_with_border"
                                     android:layout_marginTop="5dp" >
 
                                     <TextView
-                                        android:layout_width="wrap_content"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:padding="5dp"
-                                        android:id="@+id/textView283" />
+                                        android:background="@drawable/block_with_border"
+                                        android:id="@+id/txtCountry" />
                                 </LinearLayout>
                             </LinearLayout>
 
@@ -430,7 +428,6 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:id="@+id/txtState"
                                     android:text="State"
                                     android:textStyle="bold" />
 
@@ -438,14 +435,14 @@
                                     android:orientation="vertical"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:background="@drawable/block_with_border"
                                     android:layout_marginTop="5dp" >
 
                                     <TextView
-                                        android:layout_width="wrap_content"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:padding="5dp"
-                                        android:id="@+id/textView285" />
+                                        android:background="@drawable/block_with_border"
+                                        android:id="@+id/txtState" />
                                 </LinearLayout>
                             </LinearLayout>
 
@@ -460,7 +457,6 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:id="@+id/txtCity"
                                     android:text="City"
                                     android:textStyle="bold" />
 
@@ -468,14 +464,14 @@
                                     android:orientation="vertical"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:background="@drawable/block_with_border"
                                     android:layout_marginTop="5dp" >
 
-                                    <TextView
-                                        android:layout_width="wrap_content"
+                                    <EditText
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:padding="5dp"
-                                        android:id="@+id/textView287" />
+                                        android:background="@drawable/block_with_border"
+                                        android:id="@+id/txtCity" />
                                 </LinearLayout>
                             </LinearLayout>
 
@@ -490,7 +486,6 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:id="@+id/txtPostCode"
                                     android:text="Post Code"
                                     android:textStyle="bold" />
 
@@ -498,14 +493,14 @@
                                     android:orientation="vertical"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:background="@drawable/block_with_border"
                                     android:layout_marginTop="5dp" >
 
-                                    <TextView
-                                        android:layout_width="wrap_content"
+                                    <EditText
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:padding="5dp"
-                                        android:id="@+id/textView289" />
+                                        android:background="@drawable/block_with_border"
+                                        android:id="@+id/txtPostCode" />
                                 </LinearLayout>
                             </LinearLayout>
 
@@ -528,14 +523,15 @@
                                     android:orientation="vertical"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:background="@drawable/block_with_border"
                                     android:layout_marginTop="5dp" >
 
-                                    <TextView
-                                        android:layout_width="wrap_content"
+                                    <EditText
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:padding="5dp"
-                                        android:id="@+id/textView291" />
+                                        android:background="@drawable/block_with_border"
+                                        android:inputType="phone"
+                                        android:id="@+id/txtPhone" />
                                 </LinearLayout>
                             </LinearLayout>
 
@@ -550,7 +546,6 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:id="@+id/txtAlternatePhone"
                                     android:text="Alternate Phone"
                                     android:textStyle="bold" />
 
@@ -558,14 +553,14 @@
                                     android:orientation="vertical"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:background="@drawable/block_with_border"
                                     android:layout_marginTop="5dp" >
 
-                                    <TextView
-                                        android:layout_width="wrap_content"
+                                    <EditText
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:padding="5dp"
-                                        android:id="@+id/textView293" />
+                                        android:background="@drawable/block_with_border"
+                                        android:id="@+id/txtAlternatePhone" />
                                 </LinearLayout>
                             </LinearLayout>
 
@@ -588,14 +583,14 @@
                                     android:orientation="vertical"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:background="@drawable/block_with_border"
                                     android:layout_marginTop="5dp" >
 
-                                    <TextView
-                                        android:layout_width="wrap_content"
+                                    <EditText
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:padding="5dp"
-                                        android:id="@+id/textView295" />
+                                        android:background="@drawable/block_with_border"
+                                        android:id="@+id/txtInsurance" />
                                 </LinearLayout>
                             </LinearLayout>
 
@@ -618,7 +613,7 @@
                         android:text="@string/general_continue"
                         android:textColor="@color/white"
                         android:textStyle="bold"
-                        android:id="@+id/btnManageFlightContinue"
+                        android:id="@+id/btnContactInfo"
                         android:background="@drawable/login_login_button_clicked"/>
 
                 </LinearLayout>

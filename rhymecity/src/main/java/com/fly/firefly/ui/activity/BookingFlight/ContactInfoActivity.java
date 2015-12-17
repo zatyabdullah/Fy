@@ -14,7 +14,7 @@ import butterknife.ButterKnife;
 
 //import android.view.WindowManager;
 
-public class PersonalDetailActivity extends MainFragmentActivity implements FragmentContainerActivity {
+public class ContactInfoActivity extends MainFragmentActivity implements FragmentContainerActivity {
 
     private Tracker mTracker;
 
@@ -29,7 +29,7 @@ public class PersonalDetailActivity extends MainFragmentActivity implements Frag
         Bundle bundle = getIntent().getExtras();
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.main_content, PersonalDetailFragment.newInstance(bundle)).commit();
+        fragmentManager.beginTransaction().replace(R.id.main_content, ContactInfoFragment.newInstance(bundle)).commit();
         hideTitle();
     }
 

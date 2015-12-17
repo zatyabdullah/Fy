@@ -119,7 +119,7 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
     private String DEPARTURE_FLIGHT = "Please choose your departure airport";
     private String ARRIVAL_FLIGHT = "Please choose your arrival airport";
     private String DEPARTURE_FLIGHT_DATE = "Please choose your departure date.";
-    private String ARRIVAL_FLIGHT_DATE = "Please choose your arrival date.";
+    private String ARRIVAL_FLIGHT_DATE = "Please choose your return date.";
     private String FLIGHT_OBJECT = "FLIGHT_OBJECT";
 
     private String DEPARTURE_DATE_PICKER = "DEPARTURE_DATE_PICKER";
@@ -161,6 +161,9 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
         txtDepartureFlight.setTag(DEPARTURE_FLIGHT);
         txtArrivalFlight.setTag(ARRIVAL_FLIGHT);
 
+        bookFlightDepartureDate.setTag(DEPARTURE_FLIGHT_DATE);
+        bookFlightReturnDate.setTag(ARRIVAL_FLIGHT_DATE);
+
         /*Retrieve All Flight Data From Preference Manager - Display Flight Data*/
         JSONArray jsonFlight = getFlight(getActivity());
         dataFlightDeparture = new ArrayList<>();
@@ -199,7 +202,7 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
             @Override
             public void onClick(View v) {
                 AnalyticsApplication.sendEvent("Click", "btnDepartureFlight");
-                popupSelection(dataFlightDeparture, getActivity(), txtDepartureFlight);
+                popupSelection(dataFlightDeparture, getActivity(), txtDepartureFlight,true);
                 txtArrivalFlight.setText("ARRIVAL AIRPORT");
             }
         });
@@ -213,7 +216,7 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
                 {
                     popupAlert("Select Departure Airport First");
                 }else{
-                    popupSelection(dataFlightArrival, getActivity(), txtArrivalFlight);
+                    popupSelection(dataFlightArrival, getActivity(), txtArrivalFlight,true);
                 }
             }
         });
@@ -375,6 +378,7 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
                 AnalyticsApplication.sendEvent("Click", "btnSearchFlight");
                 String df = txtDepartureFlight.getTag().toString();
                 String af = txtArrivalFlight.getTag().toString();
+
                 String d1 = bookFlightDepartureDate.getTag().toString();
                 String d2 = bookFlightReturnDate.getTag().toString();
 
@@ -382,7 +386,7 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
 
                     popupAlert(DEPARTURE_FLIGHT);
 
-                }else if (af.equals(ARRIVAL_FLIGHT)){
+                }else if (af.equals(ARRIVAL_FLIGHT )){
 
                     popupAlert(ARRIVAL_FLIGHT);
 
@@ -390,7 +394,7 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
 
                     popupAlert(DEPARTURE_FLIGHT_DATE);
 
-                }else if (d2.equals(ARRIVAL_FLIGHT_DATE)){
+                }else if (d2.equals(ARRIVAL_FLIGHT_DATE) && flightType.equals("1")){
 
                     popupAlert(ARRIVAL_FLIGHT_DATE);
 
@@ -422,7 +426,13 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
         flightObj.setArrival_station(txtArrivalFlight.getTag().toString());
 
         /*Return Flight*/
-        String returnDate = flightType.equals("1") ? bookFlightReturnDate.getTag().toString() : "";
+        String returnDate;
+        if(flightType.equals("1")){
+            returnDate = bookFlightReturnDate.getTag().toString();
+        }else{
+            returnDate = "";
+        }
+        //String returnDate = flightType.equals("1") ? bookFlightReturnDate.getTag().toString() : "";
         flightObj.setReturn_date(returnDate);
 
         flightObj.setSignature(signatureFromLocal);
@@ -578,6 +588,19 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
             SearchFlightReceive passObj = new SearchFlightReceive(obj);
             Intent flight = new Intent(getActivity(), FlightDetailActivity.class);
             flight.putExtra("FLIGHT_OBJ", (new Gson()).toJson(obj));
+            flight.putExtra("FLIGHT_TYPE", flightType );
+            flight.putExtra("ADULT", txtAdultTotal.getText().toString() );
+            flight.putExtra("INFANT", txtInfantTotal.getText().toString() );
+            flight.putExtra("DEPARTURE_DATE", bookFlightDepartureDate.getTag().toString() );
+
+            String date;
+            if(flightType.equals("0")){
+                date = "";
+            }else{
+                date = bookFlightReturnDate.getTag().toString();
+            }
+            flight.putExtra("RETURN_DATE", date );
+
             getActivity().startActivity(flight);
 
         }else if(obj.getStatus().equals("error_validation")){

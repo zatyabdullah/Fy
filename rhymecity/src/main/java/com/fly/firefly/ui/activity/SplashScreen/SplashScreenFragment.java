@@ -31,7 +31,7 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
     private int fragmentContainerId;
     private SharedPrefManager pref;
     private DeviceInformation info;
-
+    private Boolean running = false;
 
     public static SplashScreenFragment newInstance() {
 
@@ -71,7 +71,7 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
         info.setUsername("");
         info.setPassword("");
         sendDeviceInformationToServer(info);
-
+        running = true;
         return view;
     }
 
@@ -129,7 +129,9 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
     public void onResume() {
         super.onResume();
         presenter.onResume();
-        sendDeviceInformationToServer(info);
+        if(!running){
+            sendDeviceInformationToServer(info);
+        }
 
 
     }
@@ -138,6 +140,6 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
     public void onPause() {
         super.onPause();
         presenter.onPause();
-
+        running = false;
     }
 }

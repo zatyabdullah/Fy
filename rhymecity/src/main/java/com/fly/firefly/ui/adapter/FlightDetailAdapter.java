@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.fly.firefly.R;
 import com.fly.firefly.api.obj.FlightInfo;
+import com.fly.firefly.ui.activity.BookingFlight.FlightDetailFragment;
 
 import java.util.List;
 
@@ -26,14 +27,18 @@ public class FlightDetailAdapter extends BaseAdapter {
     private String arrivalAirport;
     private String flightClass;
     private Integer selected_position = -1;
+    private FlightDetailFragment fragment;
+    private String flightWay;
+    private Boolean active = false;
 
-
-    public FlightDetailAdapter(Context context, List<FlightInfo> paramObj,String depart, String arrival,String fclass) {
+    public FlightDetailAdapter(Context context, List<FlightInfo> paramObj,String depart, String arrival,String flightClass,String flightWay,FlightDetailFragment frag) {
         this.context = context;
         this.obj = paramObj;
         this.departureAirport = depart;
         this.arrivalAirport = arrival;
-        this.flightClass = fclass;
+        this.flightClass = flightClass;
+        this.fragment = frag;
+        this.flightWay = flightWay;
     }
 
     @Override
@@ -66,6 +71,7 @@ public class FlightDetailAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View view, ViewGroup parent) {
 
+        Log.e("Invalidate","True");
         ViewHolder vh;
         if (view == null) {
             view = LayoutInflater.from(context).inflate(R.layout.flight_detail_list, parent, false);
@@ -80,13 +86,10 @@ public class FlightDetailAdapter extends BaseAdapter {
         if(position==selected_position)
         {
             vh.checkBox.setChecked(true);
-            Log.e("Position: "+ Integer.toString(position),"SelectedPostion: "+ Integer.toString(selected_position));
         }
         else
         {
             vh.checkBox.setChecked(false);
-            Log.e("ELSE: " + Integer.toString(position), "ELSE: " + Integer.toString(selected_position));
-
         }
 
         vh.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -96,16 +99,27 @@ public class FlightDetailAdapter extends BaseAdapter {
 
                 if(isChecked)
                 {
-                    //Log.e("selected_position: "+ Integer.toString(selected_position),"Postion: "+ Integer.toString(position));
-                    Log.e("CHECKED",Integer.toString(position));
-                    selected_position =  position;
+                    //Check Available Or Not
+                    if(flightClass.equals("PREMIER")){
+                        if(obj.get(position).getFlexObj().getStatus().equals("active")){
+                            active = true;
+                            selected_position =  position;
+
+                        }
+                    }else if(flightClass.equals("BASIC")){
+                        if(obj.get(position).getBasicObj().getStatus().equals("active")){
+                            active = true;
+                            selected_position =  position;
+                        }
+                    }
+                    //True
+                    if(active){
+                        fragment.selectedInfo(obj.get(position),flightClass,flightWay);
+                    }else{
+                        fragment.alertNotAvailable();
+                    }
 
                 }
-                //else{
-                //    selected_position = -1;
-                //    Log.e("NOT CHECKED",Integer.toString(position));
-                //
-                //}
                 notifyDataSetChanged();
             }
         });
@@ -128,5 +142,11 @@ public class FlightDetailAdapter extends BaseAdapter {
         vh.txtFarePrice.setText(totalFare);
         return view;
 
+    }
+
+
+    public void invalidateSelected(){
+        selected_position = -1;
+        notifyDataSetChanged();
     }
 }

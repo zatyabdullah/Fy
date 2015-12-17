@@ -16,8 +16,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.fly.firefly.R;
 import com.fly.firefly.ui.activity.BookingFlight.SearchFlightFragment;
 import com.fly.firefly.ui.fragment.MobileCheckIn.MobileCheckInFragment1;
 import com.fly.firefly.ui.object.Country;
@@ -56,7 +58,26 @@ public class BaseFragment extends Fragment {
 				.show();
 	}
 
+	public String getMonthInInteger(String monthAlphabet){
+		Log.e("MONTH",monthAlphabet);
+		int intMonthNo = 0;
+		String stringMonthNo = null;
+		/*Month*/
+		final String[] month = getResources().getStringArray(R.array.month);
+		for(int i = 0;i<month.length; i++)
+		{
+			if(monthAlphabet.equals(month[i])){
+				intMonthNo = i+1;
+			}
+		}
 
+		if(intMonthNo < 10){
+			stringMonthNo = "0"+Integer.toString(intMonthNo);
+		}else{
+			stringMonthNo = Integer.toString(intMonthNo);
+		}
+		return stringMonthNo;
+	}
 
 	/*public void initiateLoading(Activity act){
 
@@ -107,7 +128,7 @@ public class BaseFragment extends Fragment {
 	}
 
 	/*Global PoPup*/
-	public void popupSelection(final ArrayList array,Activity act,final TextView txt){
+	public void popupSelection(final ArrayList array,Activity act,final TextView txt,final Boolean tagStatus){
 
 			prefManager = new SharedPrefManager(act);
 
@@ -126,7 +147,9 @@ public class BaseFragment extends Fragment {
 						String selectedCode = a.get(which).getCode();
 
 						txt.setText(selected);
-						txt.setTag(selectedCode);
+						if(tagStatus){
+							txt.setTag(selectedCode);
+						}
 
                         if(a.get(which).getTag() == "FLIGHT"){
                             SearchFlightFragment.filterArrivalAirport(selectedCode);
@@ -148,6 +171,53 @@ public class BaseFragment extends Fragment {
 				lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
 				lp.height = 600;
 				mDialog.getWindow().setAttributes(lp);
+	}
+
+	/*Global PoPup*/
+	public void popupSelectionExtra(final ArrayList array,Activity act,final TextView txt,final Boolean tagStatus,final LinearLayout txt2,final String indicate){
+
+		prefManager = new SharedPrefManager(act);
+
+		final ArrayList<DropDownItem> a = array;
+		DropMenuAdapter dropState = new DropMenuAdapter(act);
+		dropState.setItems(a);
+
+		AlertDialog.Builder alertStateCode = new AlertDialog.Builder(act);
+
+		alertStateCode.setSingleChoiceItems(dropState, indexForState, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+
+				String selected = a.get(which).getText();
+				String selectedCode = a.get(which).getCode();
+				txt.setText(selected);
+				if(!selected.equals(indicate)){
+					txt2.setVisibility(View.VISIBLE);
+				}else{
+					txt2.setVisibility(View.GONE);
+				}
+				if(tagStatus){
+					txt.setTag(selectedCode);
+					Log.e("PURPOSE TAG",selectedCode);
+				}else{
+					Log.e("PURPOSE TAG","NOT SET");
+				}
+
+				indexForState = which;
+
+				dialog.dismiss();
+			}
+		});
+
+		//Utils.hideKeyboard(getActivity(), v);
+		AlertDialog mDialog = alertStateCode.create();
+		mDialog.show();
+
+		WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+		lp.copyFrom(mDialog.getWindow().getAttributes());
+		lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
+		lp.height = 600;
+		mDialog.getWindow().setAttributes(lp);
 	}
 
 	public String getSelectedPopupSelection(Activity act){
@@ -173,6 +243,79 @@ public class BaseFragment extends Fragment {
 		}
 
 		return json;
+	}
+
+	public String getTitleCode(Activity act,String title){
+
+		String titleCode = null;
+		JSONArray json = null;
+
+		prefManager = new SharedPrefManager(act);
+		HashMap<String, String> init = prefManager.getTitle();
+		String dataTitle = init.get(SharedPrefManager.TITLE);
+
+		try {
+			json = new JSONArray(dataTitle);
+		}catch (JSONException e){
+			e.printStackTrace();
+		}
+
+		for (int i = 0; i < json.length(); i++)
+		{
+			JSONObject row = (JSONObject) json.opt(i);
+
+			if(title.equals(row.optString("title_name"))){
+				titleCode = row.optString("title_code");
+			}
+		}
+
+		return titleCode;
+	}
+
+	public String getTravelDocCode(Activity act,String travelDocData){
+		/*Travel Doc*/
+		String travelDocCode = null;
+		final String[] doc = getResources().getStringArray(R.array.travel_doc);
+		for(int i = 0;i<doc.length; i++)
+		{
+			String travelDoc = doc[i];
+			String[] splitDoc = travelDoc.split("-");
+
+			if(travelDocData.equals(splitDoc[0])){
+				travelDocCode = splitDoc[1];
+			}
+		}
+		Log.e("travelDocData",travelDocData);
+		Log.e("travelDocCode",travelDocCode);
+		return travelDocCode;
+	}
+
+	public String getCountryCode(Activity act,String countryData){
+
+		String countryCode = null;
+		JSONArray json = null;
+
+		prefManager = new SharedPrefManager(act);
+		HashMap<String, String> init = prefManager.getCountry();
+		String dataCountry = init.get(SharedPrefManager.COUNTRY);
+
+		try {
+			json = new JSONArray(dataCountry);
+		}catch (JSONException e){
+			e.printStackTrace();
+		}
+
+		for (int i = 0; i < json.length(); i++)
+		{
+			JSONObject row = (JSONObject) json.opt(i);
+
+			if(countryData.equals(row.optString("country_name"))){
+				countryCode = row.optString("country_code");
+			}
+		}
+
+		return countryCode;
+
 	}
 
 	public JSONArray getState(Activity act){
