@@ -1,6 +1,7 @@
 package com.fly.firefly.api;
 
 import com.fly.firefly.api.obj.ChangePasswordReceive;
+import com.fly.firefly.api.obj.ContactInfoReceive;
 import com.fly.firefly.api.obj.DeviceInfoSuccess;
 import com.fly.firefly.api.obj.ForgotPasswordReceive;
 import com.fly.firefly.api.obj.LoginReceive;
@@ -11,6 +12,7 @@ import com.fly.firefly.api.obj.SelectFlightReceive;
 import com.fly.firefly.api.obj.UpdateProfileReceive;
 import com.fly.firefly.api.obj.tryObj;
 import com.fly.firefly.ui.object.ChangePasswordRequest;
+import com.fly.firefly.ui.object.ContactInfo;
 import com.fly.firefly.ui.object.DeviceInformation;
 import com.fly.firefly.ui.object.LoginRequest;
 import com.fly.firefly.ui.object.Passenger;
@@ -68,5 +70,7 @@ public interface ApiService {
     @POST("/passengerDetails")
     void onPassengerInfo(@Body Passenger task, Callback<PassengerInfoReveice> callback);
 
+    @POST("/contactDetails")
+    void onContactInfo(@Body ContactInfo task, Callback<ContactInfoReceive> callback);
 }
 

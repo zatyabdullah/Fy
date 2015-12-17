@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.fly.firefly.R;
+import com.fly.firefly.base.BaseFragment;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
 import com.fly.firefly.ui.activity.ManageFlight.ManageFlight_ChangeContact;
 import com.fly.firefly.ui.activity.ManageFlight.ManageFlight_ChangeFlight;
@@ -22,7 +23,7 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class ManageFlight_SelectActionFragment extends Fragment {
+public class ManageFlight_SelectActionFragment extends BaseFragment {
 
     @Inject
     LoginPresenter presenter;

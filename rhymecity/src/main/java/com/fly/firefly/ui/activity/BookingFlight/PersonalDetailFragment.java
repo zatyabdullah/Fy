@@ -248,7 +248,7 @@ public class PersonalDetailFragment extends BaseFragment implements DatePickerDi
                 btnTravelDoc.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        popupSelectionExtra(travelDocList, getActivity(), btnTravelDoc, false, txtExpireDateBlock);
+                        popupSelectionExtra(travelDocList, getActivity(), btnTravelDoc, false, txtExpireDateBlock,"Malaysia IC");
                     }
                 });
 
@@ -321,18 +321,43 @@ public class PersonalDetailFragment extends BaseFragment implements DatePickerDi
                     passengerInfo.setTitle(titleCode);
 
                     /*Gender*/
-                    String genderCode = getTitleCode(getActivity(),gender.getText().toString());
-                    passengerInfo.setGender(genderCode);
+                    //String genderCode = (getActivity(),);
+                    passengerInfo.setGender(gender.getText().toString());
 
                     passengerInfo.setFirst_name(firstName.getText().toString());
                     passengerInfo.setLast_name(lastname.getText().toString());
-                    passengerInfo.setDob(dob.getText().toString());
+
+                    /*DOB*/
+                    String fullDOB = dob.getText().toString();
+                    String[] splitDOB = fullDOB.split(" ");
+                    String monthInInteger = getMonthInInteger(splitDOB[1]);
+                    String varDay = null;
+                    if(Integer.parseInt(splitDOB[0]) < 10){
+                        varDay = "0";
+                    }else{
+                        varDay = "";
+                    }
+                    //Log.e("DOB",splitDOB[2]+"-"+splitDOB[1]+"-"+varDay+""+splitDOB[0]);
+                    passengerInfo.setDob(splitDOB[2]+"-"+monthInInteger+"-"+varDay+""+splitDOB[0]);
 
                     /*Travel Doc*/
-                    String travelDocCode = getTravelDocCode(getActivity(),travelDoc.getText().toString());
+                    String travelDocCode = getTravelDocCode(getActivity(), travelDoc.getText().toString());
                     passengerInfo.setTravel_document(travelDocCode);
                     if(!travelDocCode.equals("NRIC")){
-                        passengerInfo.setExpiration_date(expireDate.getText().toString());
+
+                        /*ExpireDate*/
+                        String fullExpireDate = expireDate.getText().toString();
+                        String[] splitExpireDate = fullExpireDate.split(" ");
+                        String expireMonth = getMonthInInteger(splitExpireDate[1]);
+                        String varDay2 = null;
+                        if(Integer.parseInt(splitDOB[0]) < 10){
+                            varDay2 = "0";
+                        }else{
+                            varDay2 = "";
+                        }
+                        passengerInfo.setExpiration_date(splitExpireDate[2] + "-" + expireMonth + "-" + varDay2 + "" + splitExpireDate[0]);
+                    }else{
+                        passengerInfo.setExpiration_date("");
                     }
 
                     /*Issuing Country Code*/
@@ -361,8 +386,7 @@ public class PersonalDetailFragment extends BaseFragment implements DatePickerDi
                     EditText docNo = (EditText) view.findViewWithTag("passenger" + Integer.toString(infantInc+intTotalAdult) + "_doc_no");
 
                     /*Gender*/
-                    String genderCode = getTitleCode(getActivity(),gender.getText().toString());
-                    infantInfo.setGender(genderCode);
+                    infantInfo.setGender(gender.getText().toString());
 
                     /*Travelling With*/
                     String travellingWithPassenger = travellingWith.getText().toString();
@@ -372,13 +396,40 @@ public class PersonalDetailFragment extends BaseFragment implements DatePickerDi
                     infantInfo.setTraveling_with(Integer.toString(travellingWithCode));
                     infantInfo.setFirst_name(firstName.getText().toString());
                     infantInfo.setLast_name(lastname.getText().toString());
-                    infantInfo.setDob(dob.getText().toString());
+
+
+                    /*DOB*/
+                    /*DOB*/
+                    String fullDOB = dob.getText().toString();
+                    String[] splitDOB = fullDOB.split(" ");
+                    String monthInInteger = getMonthInInteger(splitDOB[1]);
+                    String varDay = null;
+                    if(Integer.parseInt(splitDOB[0]) < 10){
+                        varDay = "0";
+                    }else{
+                        varDay = "";
+                    }
+                    //Log.e("DOB", splitDOB[2] + "-" + splitDOB[1] + "-" + varDay + "" + splitDOB[0]);
+                    infantInfo.setDob(splitDOB[2] + "-" + monthInInteger + "-" + varDay + "" + splitDOB[0]);
 
                     /*Travel Doc*/
                     String travelDocCode = getTravelDocCode(getActivity(), travelDoc.getText().toString());
                     infantInfo.setTravel_document(travelDocCode);
                     if(!travelDocCode.equals("NRIC")){
-                        infantInfo.setExpiration_date(expireDate.getText().toString());
+
+
+                        String fullExpireDate = expireDate.getText().toString();
+                        String[] splitExpireDate = fullExpireDate.split(" ");
+                        String expireMonth = getMonthInInteger(splitExpireDate[1]);
+                        String varDay2 = null;
+                        if(Integer.parseInt(splitDOB[0]) < 10){
+                            varDay2 = "0";
+                        }else{
+                            varDay2 = "";
+                        }
+                        infantInfo.setExpiration_date(splitExpireDate[2] + "-" + expireMonth + "-" + varDay2 + "" + splitExpireDate[0]);
+                    }else{
+                        infantInfo.setExpiration_date("");
                     }
 
                     /*Issuing Country Code*/
@@ -396,14 +447,23 @@ public class PersonalDetailFragment extends BaseFragment implements DatePickerDi
                 obj.setPassengers(passengerObj);
                 obj.setInfant(infantObj);
 
-                presenter.passengerInfo(obj);
+                runPassengerInfo(obj);
             }
         });
+
+
+
+
 
 
            // Log.e(".getTitle();",obj.passengerObj.get(0).getFirst_name());
 
         return view;
+    }
+
+    public void runPassengerInfo(Passenger obj){
+        initiateLoading(getActivity());
+        presenter.passengerInfo(obj);
     }
 
     /*Country selector - > need to move to main activity*/
@@ -445,7 +505,12 @@ public class PersonalDetailFragment extends BaseFragment implements DatePickerDi
 
     @Override
     public void onPassengerInfo(PassengerInfoReveice obj) {
-        Log.e("obj", obj.getStatus());
+        Boolean success = true;
+        if(success){
+            dismissLoading();
+            Intent intent = new Intent(getActivity(), ContactInfoActivity.class);
+            getActivity().startActivity(intent);
+        }
     }
 
     @Override

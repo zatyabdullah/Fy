@@ -121,6 +121,12 @@
         <item>Visa-V</item>
     </string-array>
 
+    <!-- Travel Purpose -->
+    <string-array name="purpose">
+        <item>Leisure</item>
+        <item>Business</item>
+    </string-array>
+
     <!-- Month -->
     <string-array name="month">
         <item>Jan</item>
@@ -136,6 +142,7 @@
         <item>Nov</item>
         <item>Dec</item>
     </string-array>
+
     <string-array name="full_month">
         <item>January</item>
         <item>February</item>

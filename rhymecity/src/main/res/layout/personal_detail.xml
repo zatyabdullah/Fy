@@ -323,7 +323,7 @@
                                         android:layout_marginTop="5dp">
 
                                         <LinearLayout
-                                            android:orientation="vertical"
+                                            android:orientation="horizontal"
                                             android:layout_width="0dp"
                                             android:layout_weight="1"
                                             android:layout_height="match_parent"
@@ -338,6 +338,12 @@
                                                 android:padding="3dp"
                                                 android:id="@+id/passenger1_dob"
                                                 android:tag="passenger1_dob"/>
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:id="@+id/passenger1_hidden_dob"
+                                                android:tag="passenger1_hidden_dob"/>
 
                                         </LinearLayout>
 
@@ -394,7 +400,7 @@
                                         android:textStyle="bold"/>
 
                                     <LinearLayout
-                                        android:orientation="vertical"
+                                        android:orientation="horizontal"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:layout_marginTop="5dp" >
@@ -406,6 +412,12 @@
                                             android:background="@drawable/block_with_border"
                                             android:id="@+id/passenger1_expire_date"
                                             android:tag="passenger1_expire_date"/>
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:id="@+id/passenger1_hidden_expire_date"
+                                            android:tag="passenger1_hidden_expire_date"/>
 
                                     </LinearLayout>
 
@@ -736,11 +748,10 @@
                                         android:layout_marginTop="5dp" >
 
                                         <LinearLayout
-                                            android:orientation="vertical"
+                                            android:orientation="horizontal"
                                             android:layout_width="0dp"
                                             android:layout_weight="1"
                                             android:layout_height="match_parent"
-                                            android:background="@drawable/block_with_border"
                                             android:padding="5dp"
                                             android:id="@+id/linearLayout9" >
 
@@ -749,8 +760,16 @@
                                                 android:layout_height="wrap_content"
                                                 android:hint="DOB"
                                                 android:padding="3dp"
+                                                android:background="@drawable/block_with_border"
                                                 android:id="@+id/passenger2_dob"
                                                 android:tag="passenger2_dob"/>
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:id="@+id/passenger2_hidden_dob"
+                                                android:tag="passenger2_hidden_dob"/>
+
                                         </LinearLayout>
                                     </LinearLayout>
                                 </LinearLayout>
@@ -804,7 +823,7 @@
                                         android:textStyle="bold"/>
 
                                     <LinearLayout
-                                        android:orientation="vertical"
+                                        android:orientation="horizontal"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:layout_marginTop="5dp" >
@@ -816,6 +835,12 @@
                                             android:background="@drawable/block_with_border"
                                             android:id="@+id/passenger2_expire_date"
                                             android:tag="passenger2_expire_date"/>
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:id="@+id/passenger2_hidden_expire_date"
+                                            android:tag="passenger2_hidden_expire_date"/>
 
                                     </LinearLayout>
 

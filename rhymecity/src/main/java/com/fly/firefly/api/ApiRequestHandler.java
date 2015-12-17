@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.fly.firefly.MainFragmentActivity;
 import com.fly.firefly.api.obj.ChangePasswordReceive;
+import com.fly.firefly.api.obj.ContactInfoReceive;
 import com.fly.firefly.api.obj.DeviceInfoSuccess;
 import com.fly.firefly.api.obj.FailedConnectToServer;
 import com.fly.firefly.api.obj.ForgotPasswordReceive;
@@ -16,6 +17,7 @@ import com.fly.firefly.api.obj.SearchFlightReceive;
 import com.fly.firefly.api.obj.SelectFlightReceive;
 import com.fly.firefly.api.obj.UpdateProfileReceive;
 import com.fly.firefly.ui.object.ChangePasswordRequest;
+import com.fly.firefly.ui.object.ContactInfo;
 import com.fly.firefly.ui.object.DeviceInformation;
 import com.fly.firefly.ui.object.LoginRequest;
 import com.fly.firefly.ui.object.Passenger;
@@ -314,6 +316,30 @@ public class ApiRequestHandler {
 
         });
     }
+
+    @Subscribe
+    public void onPassengerInfo(final ContactInfo event) {
+
+        apiService.onContactInfo(event, new Callback<ContactInfoReceive>() {
+
+            @Override
+            public void success(ContactInfoReceive responseData, Response response) {
+
+                bus.post(new ContactInfoReceive(responseData));
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+                Crouton.makeText(MainFragmentActivity.getContext(), "Unable to connect to server", Style.ALERT).show();
+                Log.e("Failed", "True");
+
+            }
+
+        });
+    }
+
 
 
 

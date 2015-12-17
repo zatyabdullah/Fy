@@ -57,7 +57,26 @@ public class BaseFragment extends Fragment {
 				.show();
 	}
 
+	public String getMonthInInteger(String monthAlphabet){
+		Log.e("MONTH",monthAlphabet);
+		int intMonthNo = 0;
+		String stringMonthNo = null;
+		/*Month*/
+		final String[] month = getResources().getStringArray(R.array.month);
+		for(int i = 0;i<month.length; i++)
+		{
+			if(monthAlphabet.equals(month[i])){
+				intMonthNo = i+1;
+			}
+		}
 
+		if(intMonthNo < 10){
+			stringMonthNo = "0"+Integer.toString(intMonthNo);
+		}else{
+			stringMonthNo = Integer.toString(intMonthNo);
+		}
+		return stringMonthNo;
+	}
 
 	/*public void initiateLoading(Activity act){
 
@@ -153,7 +172,7 @@ public class BaseFragment extends Fragment {
 	}
 
 	/*Global PoPup*/
-	public void popupSelectionExtra(final ArrayList array,Activity act,final TextView txt,final Boolean tagStatus,final LinearLayout txt2){
+	public void popupSelectionExtra(final ArrayList array,Activity act,final TextView txt,final Boolean tagStatus,final LinearLayout txt2,final String indicate){
 
 		prefManager = new SharedPrefManager(act);
 
@@ -169,15 +188,17 @@ public class BaseFragment extends Fragment {
 
 				String selected = a.get(which).getText();
 				String selectedCode = a.get(which).getCode();
-
 				txt.setText(selected);
-				if(!selected.equals("Malaysia IC")){
+				if(!selected.equals(indicate)){
 					txt2.setVisibility(View.VISIBLE);
 				}else{
 					txt2.setVisibility(View.GONE);
 				}
 				if(tagStatus){
 					txt.setTag(selectedCode);
+					Log.e("PURPOSE TAG",selectedCode);
+				}else{
+					Log.e("PURPOSE TAG","NOT SET");
 				}
 
 				indexForState = which;

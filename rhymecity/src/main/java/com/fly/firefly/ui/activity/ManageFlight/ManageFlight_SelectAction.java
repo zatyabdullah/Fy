@@ -1,7 +1,7 @@
 package com.fly.firefly.ui.activity.ManageFlight;
 
-import android.app.FragmentManager;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 
 import com.fly.firefly.MainFragmentActivity;
 import com.fly.firefly.R;
@@ -21,8 +21,8 @@ public class ManageFlight_SelectAction extends MainFragmentActivity implements F
         super.onCreate(savedInstanceState);
         ButterKnife.inject(this);
 
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().add(R.id.main_activity_fragment_container, ManageFlight_SelectActionFragment.newInstance()).commit();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.main_content, ManageFlight_SelectActionFragment.newInstance()).commit();
 
         hideTitle();
     }
