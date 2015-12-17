@@ -831,6 +831,11 @@
     <string name="update_profile_contactinfo">Contact Information</string>
 
 
+    <!-- Mobile Check in -->
+    <string name="mobile_checkin_check1">Yes, I am aware that the dangerous good above are not permitted in my bag, luggage has been in my possession at all times and i am aware of the contents in my bag.</string>
+    <string name="mobile_checkin_check2">Yes, I have read and agree with the important information.</string>
+    <string name="mobile_checkin_check3">Yes, I have access to a printer and print the mobile check-in boarding pass from my email if my departing station is NOT Subang(SZB), Penang(PEN), Johor Bharu(JHB) or Kota Bharu(KBR).</string>
+
 
 
 </resources>

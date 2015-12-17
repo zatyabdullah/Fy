@@ -16,6 +16,7 @@ import com.fly.firefly.api.obj.RegisterReceive;
 import com.fly.firefly.api.obj.SearchFlightReceive;
 import com.fly.firefly.api.obj.SelectFlightReceive;
 import com.fly.firefly.api.obj.UpdateProfileReceive;
+import com.fly.firefly.api.obj.MobileCheckinReceive;
 import com.fly.firefly.ui.object.ChangePasswordRequest;
 import com.fly.firefly.ui.object.ContactInfo;
 import com.fly.firefly.ui.object.DeviceInformation;
@@ -26,6 +27,7 @@ import com.fly.firefly.ui.object.RegisterObj;
 import com.fly.firefly.ui.object.SearchFlightObj;
 import com.fly.firefly.ui.object.SelectFlight;
 import com.fly.firefly.ui.object.UpdateProfileRequest;
+import com.fly.firefly.ui.object.MobileCheckinObj;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
@@ -261,6 +263,40 @@ public class ApiRequestHandler {
             public void success(SearchFlightReceive rhymesResponse, Response response) {
                 Log.e(rhymesResponse.getStatus(), "x");
                 bus.post(new SearchFlightReceive(rhymesResponse));
+                // loading(false);
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+                Crouton.makeText(MainFragmentActivity.getContext(), "Unable to connect to server", Style.ALERT).show();
+                Log.e("Failed", "True");
+                //bus.post(new FailedConnectToServer("Unable to connect to server"));
+                //loading(false);
+
+            }
+
+        });
+
+
+
+
+    }
+
+    @Subscribe
+    public void onMobileCheckin(final MobileCheckinObj event) {
+
+        //initiateLoading();
+        //loading(true);
+
+        apiService.onMobileCheckinRequest(event, new Callback<MobileCheckinReceive>() {
+
+            @Override
+            public void success(MobileCheckinReceive rhymesResponse, Response response) {
+                Log.e(rhymesResponse.getStatus(),"x");
+                bus.post(new MobileCheckinReceive(rhymesResponse));
+                // loading(false);
 
             }
 
@@ -273,6 +309,10 @@ public class ApiRequestHandler {
             }
 
         });
+
+
+
+
     }
 
     @Subscribe

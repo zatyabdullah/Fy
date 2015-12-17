@@ -59,7 +59,9 @@ public class HomePresenter {
     @Subscribe
     public void onSuccessSendDeviceInformation(DeviceInfoSuccess event) {
         pref = new SharedPrefManager(MainFragmentActivity.getContext());
-        view2.loadingSuccess(event);
+        if (view2!=null){
+            view2.loadingSuccess(event);
+        }
     }
 
 }
