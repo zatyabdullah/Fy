@@ -344,10 +344,18 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
             @Override
             public void onClick(View v) {
                 AnalyticsApplication.sendEvent("Click", "btnInfantIncrease");
-                if(!blockInfant && totalInfant <= 9){
-                    totalInfant++;
-                    setPassengerTotal(INFANT);
+
+                if(totalInfant < totalAdult ){
+                    if(!blockInfant && totalInfant <= 9){
+                        totalInfant++;
+                        setPassengerTotal(INFANT);
+                    }
+                }else{
+                    Utils.toastNotification(getActivity(),"Infant cannot be more than adult");
                 }
+
+
+
             }
         });
 
@@ -645,8 +653,6 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
         if(day < 10){
             varDay = "0";
         }
-
-
         if(PICKER.equals(DEPARTURE_DATE_PICKER)) {
             bookFlightDepartureDate.setText(day + " " + getMonthAlphabet(month) + " " + year);
             bookFlightDepartureDate.setTag(year + "-" + varMonth + "" + (month+1) + "-" + varDay + "" + day);

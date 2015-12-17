@@ -126,7 +126,7 @@ public class MobileCheckInFragment1 extends BaseFragment implements MobileCheckI
             @Override
             public void onClick(View v) {
                 AnalyticsApplication.sendEvent("Click", "txtDeparture");
-                popupSelection(dataFlightDeparture, getActivity(), txtDeparture);
+                popupSelection(dataFlightDeparture, getActivity(), txtDeparture,true);
                 //txtDeparture.setText("ARRIVAL AIRPORT");
             }
         });
@@ -140,7 +140,7 @@ public class MobileCheckInFragment1 extends BaseFragment implements MobileCheckI
                 {
                     popupAlert("Select Departure Airport First");
                 }else{
-                    popupSelection(dataFlightArrival, getActivity(), txtArrive);
+                    popupSelection(dataFlightArrival, getActivity(), txtArrive,true);
                 }
             }
         });
