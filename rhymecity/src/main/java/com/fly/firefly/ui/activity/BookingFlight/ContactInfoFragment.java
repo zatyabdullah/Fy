@@ -20,16 +20,11 @@ import com.fly.firefly.FireFlyApplication;
 import com.fly.firefly.R;
 import com.fly.firefly.api.obj.ContactInfoReceive;
 import com.fly.firefly.api.obj.PassengerInfoReveice;
-import com.fly.firefly.api.obj.SearchFlightReceive;
 import com.fly.firefly.base.BaseFragment;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
 import com.fly.firefly.ui.activity.Picker.CountryListDialogFragment;
 import com.fly.firefly.ui.module.ContactInfoModule;
-import com.fly.firefly.ui.module.PersonalDetailModule;
 import com.fly.firefly.ui.object.ContactInfo;
-import com.fly.firefly.ui.object.InfantInfo;
-import com.fly.firefly.ui.object.Passenger;
-import com.fly.firefly.ui.object.PassengerInfo;
 import com.fly.firefly.ui.presenter.BookingPresenter;
 import com.fly.firefly.utils.DropDownItem;
 import com.fly.firefly.utils.SharedPrefManager;
@@ -45,7 +40,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -113,14 +107,28 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
     @InjectView(R.id.companyBlock)
     LinearLayout companyBlock;
 
-    @InjectView(R.id.txtInsuranceDetail)
-    TextView txtInsuranceDetail;
+    @InjectView(R.id.txtInsurance1)
+    TextView txtInsurance1;
+
+    @InjectView(R.id.txtInsurance2)
+    TextView txtInsurance2;
+
+    @InjectView(R.id.txtInsurance3)
+    TextView txtInsurance3;
+
+    @InjectView(R.id.txtInsurance4)
+    TextView txtInsurance4;
+
+   /* @InjectView(R.id.txtInsuranceDetail)
+    TextView txtInsuranceDetail;*/
 
     @InjectView(R.id.insuranceCheckBox)
     CheckBox insuranceCheckBox;
 
     @InjectView(R.id.insuranceBlock)
     LinearLayout insuranceBlock;
+
+
 
     private int fragmentContainerId;
     private String DATEPICKER_TAG = "DATEPICKER_TAG";
@@ -189,8 +197,22 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
             insuranceTxt3 = obj.getObj().getInsuranceObj().getHtml().get(2).toString();
             insuranceTxt4 = obj.getObj().getInsuranceObj().getHtml().get(3).toString();
 
-            txtInsuranceDetail.setText(Html.fromHtml("<html>Be sure to protect yourself with Firefly Travel Protection!</br></br>You got a good deal on our promo fares - but don't risk unexpected expenses!</br></br> Comprehensive coverage at phenomenal rates</br> Added flexibility via the Trip Cancellation benefit if you are unable to proceed with your travels</br> Medical Coverage includes hospital admission and emergency medical evacuation*</br> 24 Hour Worldwide Travel Assistance by our travel partner, AIG Travel</br></br>* For the full list of benefits, please refer to the <a href='https://www.aig.my/Chartis/internet/Malaysia/English/Firefly%20Travel%20Protection%20Product%20Disclosure%20Sheet_tcm4009-671123.pdf' target='_blank'>Terms and Conditions</a></br></br>The following passenger(s) are eligible for travel insurance:</br><li>Ggjji Gghjj</li></br>Firefly Travel Protection's Promo Plan is only 17.00 MYR MYR (inclusive of GST, when applicable)</br></br>I confirm that I have read, understood and agree with the <a href='https://www.aig.my/Chartis/internet/Malaysia/English/Firefly%20Travel%20Protection%20Declaration%20And%20Authorisation_tcm4009-671126.pdf' target='_blank'>Declarations and Authorisations</a> of the Insurance Application and accept the <a href='https://www.aig.my/Chartis/internet/Malaysia/English/Firefly%20Travel%20Protection%20Policy%20Wording_tcm4009-662187.pdf' target='_blank'>Terms and Conditions</a> of the Policy. I understand that if I do not wish to buy Firefly Travel Protection or receive any updates from AIG Malaysia Insurance Berhad on new products and services, I can click <a>[Remove]</a> to remove it from the itinerary. In addition, I accept that policy may not be changed once issued and is non refundable.</br></br>Firefly Travel Protection is brought to you by AIG Malaysia Insurance Berhad (795492-W)</html>"));
-            txtInsuranceDetail.setMovementMethod(LinkMovementMethod.getInstance());
+
+
+            txtInsurance1.setText(Html.fromHtml(insuranceTxt1));
+            txtInsurance2.setText(Html.fromHtml(insuranceTxt2));
+            txtInsurance2.setMovementMethod(LinkMovementMethod.getInstance());
+
+            txtInsurance3.setText(Html.fromHtml(insuranceTxt3));
+            txtInsurance3.setMovementMethod(LinkMovementMethod.getInstance());
+
+            txtInsurance4.setText(Html.fromHtml(insuranceTxt4));
+
+
+
+
+           //txtInsuranceDetail.setText(Html.fromHtml("<html><b>Be sure to protect yourself with Firefly Travel Protection!</b></br><p></p></br>You got a good deal on our promo fares - but don't risk unexpected expenses!</br><p></p></br>>>Comprehensive coverage at phenomenal rates</br> <p></p>>>Added flexibility via the Trip Cancellation benefit if you are unable to proceed with your travels</br><p></p>>>Medical Coverage includes hospital admission and emergency medical evacuation*</br><p></p>>>24 Hour Worldwide Travel Assistance by our travel partner, AIG Travel</br><p></p><p></p></br>* For the full list of benefits, please refer to the <a href='https://www.aig.my/Chartis/internet/Malaysia/English/Firefly%20Travel%20Protection%20Product%20Disclosure%20Sheet_tcm4009-671123.pdf' target='_blank'>Terms and Conditions</a></br><p></p></br><b>The following passenger(s) are eligible for travel insurance:</b></br><p></p><li>Ggjji Gghjj</li><p></p></br><b>Firefly Travel Protection's Promo Plan is only 17.00 MYR MYR (inclusive of GST, when applicable)</b></br><p></p></br></html>"));
+           // txtInsuranceDetail.setMovementMethod(LinkMovementMethod.getInstance());
         }
 
         /*Booking Id*/

@@ -610,14 +610,72 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Other Detail"
-                                    android:id="@+id/txtInsuranceDetail" />
+                                    android:id="@+id/txtInsurance1"
+                                    android:padding="10dp"/>
 
-                                <CheckBox
+                                <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:textSize="15dp"
-                                    android:text="I confirm that I have read, understood and agree with the Declarations and Authorisations of the Insurance Application and accept the Terms and Conditions of the Policy. I understand that if I do not wish to buy Firefly Travel Protection or receive any updates from AIG Malaysia Insurance Berhad on new products and services, I can click [Remove] to remove it from the itinerary. In addition, I accept that policy may not be changed once issued and is non refundable."
-                                    android:id="@+id/insuranceCheckBox" />
+                                    android:text="Other Detail"
+                                    android:id="@+id/txtInsurance2"
+                                    android:padding="10dp"/>
+
+
+
+
+
+                                <LinearLayout
+                                    android:id="@+id/checkBoxBlock"
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="15dp"
+                                    android:paddingTop="5dp"
+                                    android:paddingBottom="10dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="0dp"
+                                        android:layout_weight="0.25"
+                                        android:layout_height="match_parent"
+                                        android:gravity="center|right"
+                                        android:paddingRight="15dp">
+
+
+                                        <CheckBox
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="45dp"
+                                            android:textSize="15dp"
+                                            android:id="@+id/insuranceCheckBox"
+                                            android:padding="10dp"
+                                            android:gravity="top"
+                                            android:adjustViewBounds="true"
+                                            />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="0dp"
+                                        android:layout_weight="0.75"
+                                        android:layout_height="match_parent"
+                                        android:gravity="center|left">
+
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Checkbox description"
+                                            android:id="@+id/txtInsurance3" />
+
+                                    </LinearLayout>
+                                </LinearLayout>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Other Detail"
+                                    android:id="@+id/txtInsurance4"
+                                    android:padding="10dp"/>
 
                             </LinearLayout>
 
