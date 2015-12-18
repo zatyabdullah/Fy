@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.fly.firefly.FireFlyApplication;
 import com.fly.firefly.R;
+import com.fly.firefly.base.BaseFragment;
 import com.fly.firefly.ui.activity.BookingFlight.PaymentFlightActivity;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
 import com.fly.firefly.ui.activity.Register.RegisterActivity;
@@ -32,7 +33,7 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class SeatSelectionFragment extends Fragment implements SeatSelectionPresenter.SeatSelectionView {
+public class SeatSelectionFragment extends BaseFragment implements SeatSelectionPresenter.SeatSelectionView {
 
     @Inject
     SeatSelectionPresenter presenter;

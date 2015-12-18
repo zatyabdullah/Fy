@@ -564,38 +564,65 @@
                                 </LinearLayout>
                             </LinearLayout>
 
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/insuranceBlock"
+                        android:visibility="visible" >
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:background="@color/actionBarColour_default_theme"
+                            android:id="@+id/linearLayout41" >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Firefly Travel Protection"
+                                android:id="@+id/textView164"
+                                android:textSize="@dimen/font18sp"
+                                android:textColor="@color/white"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:id="@+id/linearLayout59" >
+
                             <LinearLayout
                                 android:orientation="vertical"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_marginTop="15dp"
-                                android:paddingBottom="13dp"
-                                android:background="@drawable/drawable_login_bottom_border" >
+                                android:layout_height="match_parent">
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:id="@+id/textView294"
-                                    android:text="Insurance"
-                                    android:textStyle="bold" />
+                                    android:text="Other Detail"
+                                    android:id="@+id/txtInsuranceDetail" />
 
-                                <LinearLayout
-                                    android:orientation="vertical"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_marginTop="5dp" >
+                                <CheckBox
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="15dp"
+                                    android:text="I confirm that I have read, understood and agree with the Declarations and Authorisations of the Insurance Application and accept the Terms and Conditions of the Policy. I understand that if I do not wish to buy Firefly Travel Protection or receive any updates from AIG Malaysia Insurance Berhad on new products and services, I can click [Remove] to remove it from the itinerary. In addition, I accept that policy may not be changed once issued and is non refundable."
+                                    android:id="@+id/insuranceCheckBox" />
 
-                                    <EditText
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:padding="5dp"
-                                        android:background="@drawable/block_with_border"
-                                        android:id="@+id/txtInsurance" />
-                                </LinearLayout>
                             </LinearLayout>
 
-                        </LinearLayout>
 
+                        </LinearLayout>
                     </LinearLayout>
 
 

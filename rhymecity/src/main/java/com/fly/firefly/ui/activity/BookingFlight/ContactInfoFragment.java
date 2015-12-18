@@ -4,6 +4,8 @@ package com.fly.firefly.ui.activity.BookingFlight;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +20,7 @@ import com.fly.firefly.FireFlyApplication;
 import com.fly.firefly.R;
 import com.fly.firefly.api.obj.ContactInfoReceive;
 import com.fly.firefly.api.obj.PassengerInfoReveice;
+import com.fly.firefly.api.obj.SearchFlightReceive;
 import com.fly.firefly.base.BaseFragment;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
 import com.fly.firefly.ui.activity.Picker.CountryListDialogFragment;
@@ -32,6 +35,7 @@ import com.fly.firefly.utils.DropDownItem;
 import com.fly.firefly.utils.SharedPrefManager;
 import com.fly.firefly.utils.Utils;
 import com.fourmob.datetimepicker.date.DatePickerDialog;
+import com.google.gson.Gson;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
@@ -109,6 +113,14 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
     @InjectView(R.id.companyBlock)
     LinearLayout companyBlock;
 
+    @InjectView(R.id.txtInsuranceDetail)
+    TextView txtInsuranceDetail;
+
+    @InjectView(R.id.insuranceCheckBox)
+    CheckBox insuranceCheckBox;
+
+    @InjectView(R.id.insuranceBlock)
+    LinearLayout insuranceBlock;
 
     private int fragmentContainerId;
     private String DATEPICKER_TAG = "DATEPICKER_TAG";
@@ -133,7 +145,7 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
     private String selectedCountryCode;
     private String selectedState;
     private Validator mValidator;
-
+    private String insuranceTxt1,insuranceTxt2,insuranceTxt3,insuranceTxt4;
     View view;
 
     public static ContactInfoFragment newInstance(Bundle bundle) {
@@ -160,8 +172,28 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
         view = inflater.inflate(R.layout.passenger_contact_info, container, false);
         ButterKnife.inject(this, view);
         pref = new SharedPrefManager(getActivity());
+        Bundle bundle = getArguments();
 
-         /*Booking Id*/
+        String insurance = bundle.getString("INSURANCE_STATUS");
+        Log.e("insurance",insurance);
+
+        Gson gson = new Gson();
+        PassengerInfoReveice obj = gson.fromJson(insurance, PassengerInfoReveice.class);
+
+        String insuranceStatus = obj.getObj().getInsuranceObj().getStatus();
+        if(insuranceStatus.equals("Y")){
+            insuranceBlock.setVisibility(View.VISIBLE);
+
+            insuranceTxt1 = obj.getObj().getInsuranceObj().getHtml().get(0).toString();
+            insuranceTxt2 = obj.getObj().getInsuranceObj().getHtml().get(1).toString();
+            insuranceTxt3 = obj.getObj().getInsuranceObj().getHtml().get(2).toString();
+            insuranceTxt4 = obj.getObj().getInsuranceObj().getHtml().get(3).toString();
+
+            txtInsuranceDetail.setText(Html.fromHtml("<html>Be sure to protect yourself with Firefly Travel Protection!</br></br>You got a good deal on our promo fares - but don't risk unexpected expenses!</br></br> Comprehensive coverage at phenomenal rates</br> Added flexibility via the Trip Cancellation benefit if you are unable to proceed with your travels</br> Medical Coverage includes hospital admission and emergency medical evacuation*</br> 24 Hour Worldwide Travel Assistance by our travel partner, AIG Travel</br></br>* For the full list of benefits, please refer to the <a href='https://www.aig.my/Chartis/internet/Malaysia/English/Firefly%20Travel%20Protection%20Product%20Disclosure%20Sheet_tcm4009-671123.pdf' target='_blank'>Terms and Conditions</a></br></br>The following passenger(s) are eligible for travel insurance:</br><li>Ggjji Gghjj</li></br>Firefly Travel Protection's Promo Plan is only 17.00 MYR MYR (inclusive of GST, when applicable)</br></br>I confirm that I have read, understood and agree with the <a href='https://www.aig.my/Chartis/internet/Malaysia/English/Firefly%20Travel%20Protection%20Declaration%20And%20Authorisation_tcm4009-671126.pdf' target='_blank'>Declarations and Authorisations</a> of the Insurance Application and accept the <a href='https://www.aig.my/Chartis/internet/Malaysia/English/Firefly%20Travel%20Protection%20Policy%20Wording_tcm4009-662187.pdf' target='_blank'>Terms and Conditions</a> of the Policy. I understand that if I do not wish to buy Firefly Travel Protection or receive any updates from AIG Malaysia Insurance Berhad on new products and services, I can click <a>[Remove]</a> to remove it from the itinerary. In addition, I accept that policy may not be changed once issued and is non refundable.</br></br>Firefly Travel Protection is brought to you by AIG Malaysia Insurance Berhad (795492-W)</html>"));
+            txtInsuranceDetail.setMovementMethod(LinkMovementMethod.getInstance());
+        }
+
+        /*Booking Id*/
         HashMap<String, String> initBookingID = pref.getBookingID();
         bookingID = initBookingID.get(SharedPrefManager.BOOKING_ID);
 
@@ -310,7 +342,13 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
 
     @Override
     public void onContactInfo(ContactInfoReceive obj){
-        Log.e("Status",obj.getObj().getStatus());
+        dismissLoading();
+        String status = obj.getObj().getStatus();
+        if(status.equals("success")){
+            Intent intent = new Intent(getActivity(), SeatSelectionActivity.class);
+            intent.putExtra("SEAT_INFORMATION", (new Gson()).toJson(obj));
+            getActivity().startActivity(intent);
+        }
     }
 
     @Override
@@ -363,6 +401,7 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
 
     public void requestContacInfo(){
 
+        initiateLoading(getActivity());
         ContactInfo obj = new ContactInfo();
         obj.setBooking_id(bookingID);
         obj.setSignature(signature);
@@ -381,16 +420,17 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
 
         }
 
-
+        if(insuranceCheckBox.isChecked()){
+            obj.setInsurance("1");
+        }else{
+            obj.setInsurance("0");
+        }
         obj.setContact_country(selectedCountryCode);
-        //obj.setContact_country(txtCountry.getTag().toString());
-        //obj.setContact_state(txtState.getTag().toString());
         obj.setContact_state(selectedState);
         obj.setContact_city(txtCity.getText().toString());
         obj.setContact_postcode(txtPostCode.getText().toString());
         obj.setContact_mobile_phone(txtPhone.getText().toString());
         obj.setContact_alternate_phone(txtAlternatePhone.getText().toString());
-        obj.setInsurance("0");
 
         presenter.contactInfo(obj);
 

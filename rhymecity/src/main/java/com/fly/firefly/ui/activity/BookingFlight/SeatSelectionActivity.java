@@ -1,7 +1,7 @@
 package com.fly.firefly.ui.activity.BookingFlight;
 
-import android.app.FragmentManager;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 
 import com.fly.firefly.MainFragmentActivity;
 import com.fly.firefly.R;
@@ -14,27 +14,18 @@ import butterknife.ButterKnife;
 
 public class SeatSelectionActivity extends MainFragmentActivity implements FragmentContainerActivity {
 
-    FragmentManager fragmentManager = getFragmentManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.inject(this);
 
-        fragmentManager.beginTransaction().add(R.id.main_activity_fragment_container, SeatSelectionFragment.newInstance()).commit();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.main_content, SeatSelectionFragment.newInstance()).commit();
 
         hideTitle();
     }
 
-
-    @Override
-    public void onBackPressed() {
-        if (fragmentManager.getBackStackEntryCount() > 0) {
-            fragmentManager.popBackStack();
-        } else {
-            super.onBackPressed();
-        }
-    }
 
     @Override
     public int getFragmentContainerId() {

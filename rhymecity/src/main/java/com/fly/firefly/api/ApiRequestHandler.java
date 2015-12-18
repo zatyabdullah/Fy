@@ -341,7 +341,6 @@ public class ApiRequestHandler {
 
             @Override
             public void success(PassengerInfoReveice responseData, Response response) {
-                Log.e(responseData.getStatus(), "x");
                 bus.post(new PassengerInfoReveice(responseData));
 
             }
@@ -349,8 +348,8 @@ public class ApiRequestHandler {
             @Override
             public void failure(RetrofitError error) {
 
-                Crouton.makeText(MainFragmentActivity.getContext(), "Unable to connect to server", Style.ALERT).show();
-                Log.e("Failed", "True");
+                //Crouton.makeText(MainFragmentActivity.getContext(), "Unable to connect to server", Style.ALERT).show();
+                Log.e("Failed", error.getMessage());
 
             }
 

@@ -26,7 +26,9 @@ import com.fly.firefly.ui.object.PassengerInfo;
 import com.fly.firefly.ui.presenter.BookingPresenter;
 import com.fly.firefly.utils.DropDownItem;
 import com.fly.firefly.utils.SharedPrefManager;
+import com.fly.firefly.utils.Utils;
 import com.fourmob.datetimepicker.date.DatePickerDialog;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -34,6 +36,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -298,162 +303,161 @@ public class PersonalDetailFragment extends BaseFragment implements DatePickerDi
             public void onClick(View v) {
 
                 /*GET ADULT PASSENGER INFO*/
-                int intTotalAdult = 0;
-                for (int adultInc = 1; adultInc < Integer.parseInt(adult) + 1; adultInc++) {
+                    int intTotalAdult = 0;
+                    for (int adultInc = 1; adultInc < Integer.parseInt(adult) + 1; adultInc++) {
 
-                    PassengerInfo passengerInfo = new PassengerInfo();
+                        PassengerInfo passengerInfo = new PassengerInfo();
 
-                    intTotalAdult++;
-                    TextView title = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_title");
-                    TextView gender = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_gender");
-                    EditText firstName = (EditText) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_first_name");
-                    EditText lastname = (EditText) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_last_name");
-                    TextView dob = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_dob");
-                    TextView travelDoc = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_travel_doc");
-                    TextView expireDate = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_expire_date");
+                        intTotalAdult++;
+                        TextView title = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_title");
+                        TextView gender = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_gender");
+                        EditText firstName = (EditText) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_first_name");
+                        EditText lastname = (EditText) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_last_name");
+                        TextView dob = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_dob");
+                        TextView travelDoc = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_travel_doc");
+                        TextView expireDate = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_expire_date");
 
-                    TextView issuingCountry = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_issuing_country");
-                    EditText docNo = (EditText) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_doc_no");
-                    EditText enrich = (EditText) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_enrich");
+                        TextView issuingCountry = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_issuing_country");
+                        EditText docNo = (EditText) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_doc_no");
+                        EditText enrich = (EditText) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_enrich");
 
                     /*TITLE*/
-                    String titleCode = getTitleCode(getActivity(),title.getText().toString());
-                    passengerInfo.setTitle(titleCode);
+                        String titleCode = getTitleCode(getActivity(), title.getText().toString());
+                        passengerInfo.setTitle(titleCode);
 
                     /*Gender*/
-                    //String genderCode = (getActivity(),);
-                    passengerInfo.setGender(gender.getText().toString());
+                        //String genderCode = (getActivity(),);
+                        passengerInfo.setGender(gender.getText().toString());
 
-                    passengerInfo.setFirst_name(firstName.getText().toString());
-                    passengerInfo.setLast_name(lastname.getText().toString());
+                        passengerInfo.setFirst_name(firstName.getText().toString());
+                        passengerInfo.setLast_name(lastname.getText().toString());
 
                     /*DOB*/
-                    String fullDOB = dob.getText().toString();
-                    String[] splitDOB = fullDOB.split(" ");
-                    String monthInInteger = getMonthInInteger(splitDOB[1]);
-                    String varDay = null;
-                    if(Integer.parseInt(splitDOB[0]) < 10){
-                        varDay = "0";
-                    }else{
-                        varDay = "";
-                    }
-                    //Log.e("DOB",splitDOB[2]+"-"+splitDOB[1]+"-"+varDay+""+splitDOB[0]);
-                    passengerInfo.setDob(splitDOB[2]+"-"+monthInInteger+"-"+varDay+""+splitDOB[0]);
+                        String fullDOB = dob.getText().toString();
+                        String[] splitDOB = fullDOB.split(" ");
+                        String monthInInteger = getMonthInInteger(splitDOB[1]);
+                        String varDay = null;
+                        if (Integer.parseInt(splitDOB[0]) < 10) {
+                            varDay = "0";
+                        } else {
+                            varDay = "";
+                        }
+                        //Log.e("DOB",splitDOB[2]+"-"+splitDOB[1]+"-"+varDay+""+splitDOB[0]);
+                        passengerInfo.setDob(splitDOB[2] + "-" + monthInInteger + "-" + varDay + "" + splitDOB[0]);
 
                     /*Travel Doc*/
-                    String travelDocCode = getTravelDocCode(getActivity(), travelDoc.getText().toString());
-                    passengerInfo.setTravel_document(travelDocCode);
-                    if(!travelDocCode.equals("NRIC")){
+                        String travelDocCode = getTravelDocCode(getActivity(), travelDoc.getText().toString());
+                        passengerInfo.setTravel_document(travelDocCode);
+                        if (!travelDocCode.equals("NRIC")) {
 
                         /*ExpireDate*/
-                        String fullExpireDate = expireDate.getText().toString();
-                        String[] splitExpireDate = fullExpireDate.split(" ");
-                        String expireMonth = getMonthInInteger(splitExpireDate[1]);
-                        String varDay2 = null;
-                        if(Integer.parseInt(splitDOB[0]) < 10){
-                            varDay2 = "0";
-                        }else{
-                            varDay2 = "";
+                            String fullExpireDate = expireDate.getText().toString();
+                            String[] splitExpireDate = fullExpireDate.split(" ");
+                            String expireMonth = getMonthInInteger(splitExpireDate[1]);
+                            String varDay2 = null;
+                            if (Integer.parseInt(splitDOB[0]) < 10) {
+                                varDay2 = "0";
+                            } else {
+                                varDay2 = "";
+                            }
+                            passengerInfo.setExpiration_date(splitExpireDate[2] + "-" + expireMonth + "-" + varDay2 + "" + splitExpireDate[0]);
+                        } else {
+                            passengerInfo.setExpiration_date("");
                         }
-                        passengerInfo.setExpiration_date(splitExpireDate[2] + "-" + expireMonth + "-" + varDay2 + "" + splitExpireDate[0]);
-                    }else{
-                        passengerInfo.setExpiration_date("");
-                    }
 
                     /*Issuing Country Code*/
-                    String countryCode = getCountryCode(getActivity(), issuingCountry.getText().toString());
-                    passengerInfo.setIssuing_country(countryCode);
+                        String countryCode = getCountryCode(getActivity(), issuingCountry.getText().toString());
+                        passengerInfo.setIssuing_country(countryCode);
 
-                    passengerInfo.setDocument_number(docNo.getText().toString());
-                    passengerInfo.setEnrich_loyalty_number(enrich.getText().toString());
+                        passengerInfo.setDocument_number(docNo.getText().toString());
+                        passengerInfo.setEnrich_loyalty_number(enrich.getText().toString());
 
-                    passengerObj.add(passengerInfo);
-                }
+                        passengerObj.add(passengerInfo);
+                    }
 
-                for(int infantInc = 1 ; infantInc < Integer.parseInt(infant) + 1 ; infantInc++){
+                    for (int infantInc = 1; infantInc < Integer.parseInt(infant) + 1; infantInc++) {
 
-                    InfantInfo infantInfo = new InfantInfo();
+                        InfantInfo infantInfo = new InfantInfo();
 
-                    TextView travellingWith = (TextView) view.findViewWithTag("passenger" + Integer.toString(infantInc+intTotalAdult) + "_travelling_with");
-                    TextView gender = (TextView) view.findViewWithTag("passenger" + Integer.toString(infantInc+intTotalAdult) + "_gender");
-                    EditText firstName = (EditText) view.findViewWithTag("passenger" + Integer.toString(infantInc+intTotalAdult) + "_first_name");
-                    EditText lastname = (EditText) view.findViewWithTag("passenger" + Integer.toString(infantInc+intTotalAdult) + "_last_name");
-                    TextView dob = (TextView) view.findViewWithTag("passenger" + Integer.toString(infantInc+intTotalAdult) + "_dob");
-                    TextView travelDoc = (TextView) view.findViewWithTag("passenger" + Integer.toString(infantInc+intTotalAdult) + "_travel_doc");
-                    TextView expireDate = (TextView) view.findViewWithTag("passenger" + Integer.toString(infantInc+intTotalAdult) + "_expire_date");
+                        TextView travellingWith = (TextView) view.findViewWithTag("passenger" + Integer.toString(infantInc + intTotalAdult) + "_travelling_with");
+                        TextView gender = (TextView) view.findViewWithTag("passenger" + Integer.toString(infantInc + intTotalAdult) + "_gender");
+                        EditText firstName = (EditText) view.findViewWithTag("passenger" + Integer.toString(infantInc + intTotalAdult) + "_first_name");
+                        EditText lastname = (EditText) view.findViewWithTag("passenger" + Integer.toString(infantInc + intTotalAdult) + "_last_name");
+                        TextView dob = (TextView) view.findViewWithTag("passenger" + Integer.toString(infantInc + intTotalAdult) + "_dob");
+                        TextView travelDoc = (TextView) view.findViewWithTag("passenger" + Integer.toString(infantInc + intTotalAdult) + "_travel_doc");
+                        TextView expireDate = (TextView) view.findViewWithTag("passenger" + Integer.toString(infantInc + intTotalAdult) + "_expire_date");
 
-                    TextView issuingCountry = (TextView) view.findViewWithTag("passenger" + Integer.toString(infantInc+intTotalAdult) + "_issuing_country");
-                    EditText docNo = (EditText) view.findViewWithTag("passenger" + Integer.toString(infantInc+intTotalAdult) + "_doc_no");
+                        TextView issuingCountry = (TextView) view.findViewWithTag("passenger" + Integer.toString(infantInc + intTotalAdult) + "_issuing_country");
+                        EditText docNo = (EditText) view.findViewWithTag("passenger" + Integer.toString(infantInc + intTotalAdult) + "_doc_no");
 
                     /*Gender*/
-                    infantInfo.setGender(gender.getText().toString());
+                        infantInfo.setGender(gender.getText().toString());
 
                     /*Travelling With*/
-                    String travellingWithPassenger = travellingWith.getText().toString();
-                    String[] splitTravelling = travellingWithPassenger.split(" ");
-                    int travellingWithCode = Integer.parseInt(splitTravelling[1])-1;
+                        String travellingWithPassenger = travellingWith.getText().toString();
+                        String[] splitTravelling = travellingWithPassenger.split(" ");
+                        int travellingWithCode = Integer.parseInt(splitTravelling[1]) - 1;
 
-                    infantInfo.setTraveling_with(Integer.toString(travellingWithCode));
-                    infantInfo.setFirst_name(firstName.getText().toString());
-                    infantInfo.setLast_name(lastname.getText().toString());
+                        Log.e("firstName",firstName.getText().toString());
+                        Log.e(travellingWithPassenger,splitTravelling[1]);
+
+                        infantInfo.setTraveling_with(Integer.toString(travellingWithCode));
+                        infantInfo.setFirst_name(firstName.getText().toString());
+                        infantInfo.setLast_name(lastname.getText().toString());
 
 
                     /*DOB*/
                     /*DOB*/
-                    String fullDOB = dob.getText().toString();
-                    String[] splitDOB = fullDOB.split(" ");
-                    String monthInInteger = getMonthInInteger(splitDOB[1]);
-                    String varDay = null;
-                    if(Integer.parseInt(splitDOB[0]) < 10){
-                        varDay = "0";
-                    }else{
-                        varDay = "";
-                    }
-                    //Log.e("DOB", splitDOB[2] + "-" + splitDOB[1] + "-" + varDay + "" + splitDOB[0]);
-                    infantInfo.setDob(splitDOB[2] + "-" + monthInInteger + "-" + varDay + "" + splitDOB[0]);
+                        String fullDOB = dob.getText().toString();
+                        String[] splitDOB = fullDOB.split(" ");
+                        String monthInInteger = getMonthInInteger(splitDOB[1]);
+                        String varDay = null;
+                        if (Integer.parseInt(splitDOB[0]) < 10) {
+                            varDay = "0";
+                        } else {
+                            varDay = "";
+                        }
+                        //Log.e("DOB", splitDOB[2] + "-" + splitDOB[1] + "-" + varDay + "" + splitDOB[0]);
+                        infantInfo.setDob(splitDOB[2] + "-" + monthInInteger + "-" + varDay + "" + splitDOB[0]);
 
                     /*Travel Doc*/
-                    String travelDocCode = getTravelDocCode(getActivity(), travelDoc.getText().toString());
-                    infantInfo.setTravel_document(travelDocCode);
-                    if(!travelDocCode.equals("NRIC")){
+                        String travelDocCode = getTravelDocCode(getActivity(), travelDoc.getText().toString());
+                        infantInfo.setTravel_document(travelDocCode);
+                        if (!travelDocCode.equals("NRIC")) {
 
-
-                        String fullExpireDate = expireDate.getText().toString();
-                        String[] splitExpireDate = fullExpireDate.split(" ");
-                        String expireMonth = getMonthInInteger(splitExpireDate[1]);
-                        String varDay2 = null;
-                        if(Integer.parseInt(splitDOB[0]) < 10){
-                            varDay2 = "0";
-                        }else{
-                            varDay2 = "";
+                            String fullExpireDate = expireDate.getText().toString();
+                            String[] splitExpireDate = fullExpireDate.split(" ");
+                            String expireMonth = getMonthInInteger(splitExpireDate[1]);
+                            String varDay2 = null;
+                            if (Integer.parseInt(splitDOB[0]) < 10) {
+                                varDay2 = "0";
+                            } else {
+                                varDay2 = "";
+                            }
+                            infantInfo.setExpiration_date(splitExpireDate[2] + "-" + expireMonth + "-" + varDay2 + "" + splitExpireDate[0]);
+                        } else {
+                            infantInfo.setExpiration_date("");
                         }
-                        infantInfo.setExpiration_date(splitExpireDate[2] + "-" + expireMonth + "-" + varDay2 + "" + splitExpireDate[0]);
-                    }else{
-                        infantInfo.setExpiration_date("");
-                    }
 
                     /*Issuing Country Code*/
-                    String countryCode = getCountryCode(getActivity(), issuingCountry.getText().toString());
-                    infantInfo.setIssuing_country(countryCode);
-                    infantInfo.setDocument_number(docNo.getText().toString());
+                        String countryCode = getCountryCode(getActivity(), issuingCountry.getText().toString());
+                        infantInfo.setIssuing_country(countryCode);
+                        infantInfo.setDocument_number(docNo.getText().toString());
 
-                    infantObj.add(infantInfo);
+                        infantObj.add(infantInfo);
 
-                }
+                    }
 
-                Passenger obj = new Passenger();
-                obj.setSignature(signature);
-                obj.setBooking_id(bookingID);
-                obj.setPassengers(passengerObj);
-                obj.setInfant(infantObj);
+                    Passenger obj = new Passenger();
+                    obj.setSignature(signature);
+                    obj.setBooking_id(bookingID);
+                    obj.setPassengers(passengerObj);
+                    obj.setInfant(infantObj);
 
-                runPassengerInfo(obj);
+                    runPassengerInfo(obj);
+
             }
         });
-
-
-
-
 
 
            // Log.e(".getTitle();",obj.passengerObj.get(0).getFirst_name());
@@ -462,10 +466,55 @@ public class PersonalDetailFragment extends BaseFragment implements DatePickerDi
     }
 
     public void runPassengerInfo(Passenger obj){
-        initiateLoading(getActivity());
-        presenter.passengerInfo(obj);
+
+        if(infant.equals("0")){
+            initiateLoading(getActivity());
+            presenter.passengerInfo(obj);
+        }else{
+            if(manualValidation()){
+                initiateLoading(getActivity());
+                presenter.passengerInfo(obj);
+            }else{
+                croutonAlert(getActivity(), "One infant per adult only");
+                dismissLoading();
+            }
+        }
     }
 
+    /*Validate if many infant assign to one adult - return error*/
+    public boolean manualValidation() {
+        boolean manualValidationStatus = true;
+        int totalPassenger = Integer.parseInt(adult) + Integer.parseInt(infant) + 1;
+        Log.e("totalPassenger",Integer.toString(totalPassenger));
+        ArrayList<String> passengerArray = new ArrayList<String>();
+        List<String> usedNames = new ArrayList<String>();
+        for (int adultInc = totalPassenger-Integer.parseInt(adult); adultInc < totalPassenger; adultInc++) {
+                TextView btnTravellingWith = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_travelling_with");
+                String passengerID = btnTravellingWith.getText().toString();
+                Log.e("passengerID", passengerID);
+                passengerArray.add(passengerID);
+        }
+            //check duplicate
+        Log.e("Size", Integer.toString(passengerArray.size()));
+        Log.e("First Passenger", passengerArray.get(0));
+        Log.e("First Passenger", passengerArray.get(1));
+
+        for(int x = 0 ; x < passengerArray.size() ;x++){
+
+            Log.e("Passenger"+Integer.toString(x),passengerArray.get(x));
+            if (usedNames.contains(passengerArray.get(x))){
+                 manualValidationStatus = false;
+                    Log.e("FALSE","FALSE");
+              }else {
+                    Log.e("TRUE","TRUE");
+                usedNames.add(passengerArray.get(x));
+              }
+              Log.e("Names",usedNames.toString());
+        }
+
+
+        return manualValidationStatus;
+    }
     /*Country selector - > need to move to main activity*/
     public void showCountrySelector(Activity act,ArrayList constParam)
     {
@@ -505,10 +554,24 @@ public class PersonalDetailFragment extends BaseFragment implements DatePickerDi
 
     @Override
     public void onPassengerInfo(PassengerInfoReveice obj) {
-        Boolean success = true;
-        if(success){
+        String status = obj.getObj().getStatus();
+        try{
+            Log.e("a",obj.getObj().getInsuranceObj().getCode());
+
+        }catch(Exception e){
+
+        }
+        try{
+            Log.e("b", obj.getObj().getInsuranceObj().toString());
+
+        }catch(Exception e){
+
+        }
+
+        if(status.equals("success")){
             dismissLoading();
             Intent intent = new Intent(getActivity(), ContactInfoActivity.class);
+            intent.putExtra("INSURANCE_STATUS", (new Gson()).toJson(obj));
             getActivity().startActivity(intent);
         }
     }
