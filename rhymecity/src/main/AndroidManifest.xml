@@ -14,6 +14,7 @@
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
         android:name=".FireFlyApplication"
         android:allowBackup="true"
@@ -25,14 +26,8 @@
         <!-- android:name="com.fly.firefly.ui.activity.MainActivity" -->
         <activity
             android:name=".ui.activity.Homepage.HomeActivity"
-                       android:label="@string/app_name" >
-
-
-            </activity>
-        <activity android:name=".ui.activity.BookingFlight.ContactInfoActivity" >
-
-        </activity>
-
+            android:label="@string/app_name" />
+        <activity android:name=".ui.activity.BookingFlight.ContactInfoActivity" />
         <activity android:name=".ui.activity.Login.LoginActivity" />
         <activity android:name=".ui.activity.Register.RegisterActivity" />
         <activity android:name=".ui.activity.BookingFlight.SearchFlightActivity" />
@@ -65,7 +60,6 @@
 
         <!-- SPLASH SCREEN -->
         <activity android:name=".ui.activity.SplashScreen.SplashScreenActivity">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -74,34 +68,46 @@
         </activity>
         <activity
             android:name=".ui.activity.PasswordExpired.ChangePasswordActivity"
-            android:label="@string/title_activity_password_expired"></activity>
+            android:label="@string/title_activity_password_expired" />
 
-        <!-- Optionally, register AnalyticsReceiver and AnalyticsService to support background
-          dispatching on non-Google Play devices -->
-        <receiver android:name="com.google.android.gms.analytics.AnalyticsReceiver"
+        <!--
+          Optionally, register AnalyticsReceiver and AnalyticsService to support background
+          dispatching on non-Google Play devices
+        -->
+        <receiver
+            android:name="com.google.android.gms.analytics.AnalyticsReceiver"
             android:enabled="true">
             <intent-filter>
                 <action android:name="com.google.android.gms.analytics.ANALYTICS_DISPATCH" />
             </intent-filter>
         </receiver>
-        <service android:name="com.google.android.gms.analytics.AnalyticsService"
-            android:enabled="true"
-            android:exported="false"/>
 
-        <!-- Optionally, register CampaignTrackingReceiver and CampaignTrackingService to enable
-             installation campaign reporting -->
-        <receiver android:name="com.google.android.gms.analytics.CampaignTrackingReceiver"
+        <service
+            android:name="com.google.android.gms.analytics.AnalyticsService"
+            android:enabled="true"
+            android:exported="false" />
+
+        <!--
+             Optionally, register CampaignTrackingReceiver and CampaignTrackingService to enable
+             installation campaign reporting
+        -->
+        <receiver
+            android:name="com.google.android.gms.analytics.CampaignTrackingReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="com.android.vending.INSTALL_REFERRER" />
             </intent-filter>
         </receiver>
-        <service android:name="com.google.android.gms.analytics.CampaignTrackingService" />
 
+        <service android:name="com.google.android.gms.analytics.CampaignTrackingService" />
 
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="6f38953bcf07d7c4f8dd57baf34092f3e0c08720" />
+
+        <activity
+            android:name=".ui.activity.Terms.Terms"
+            android:label="@string/title_activity_terms"></activity>
     </application>
 
 </manifest>

@@ -13,7 +13,7 @@ public class SharedPrefManager {
     public static final String USER_EMAIL = "USER_EMAIL";
     public static final String USER_INFO = "USER_INFO";
     public static final String CHECKIN_INFO = "CHECKIN_INFO";
-
+    public static final String TERM_INFO = "TERM_INFO";
     public static final String TITLE = "TITLE";
     public static final String FLIGHT = "FLIGHT";
     public static final String COUNTRY = "COUNTRY";
