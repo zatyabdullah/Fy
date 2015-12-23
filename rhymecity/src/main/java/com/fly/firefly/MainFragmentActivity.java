@@ -149,12 +149,15 @@ public class MainFragmentActivity extends BaseFragmentActivity implements Naviga
         {
             if (item.getTag().equals("Home"))
             {
+                item.setBackgroundColor(getResources().getColor(R.color.white));
                 Intent homepage = new Intent(this, HomeActivity.class);
                 homepage.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
                 startActivity(homepage);
             }
             else if (item.getTag().equals("Login"))
             {
+
                 Intent login = new Intent(this, LoginActivity.class);
                 login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(login);
@@ -168,6 +171,7 @@ public class MainFragmentActivity extends BaseFragmentActivity implements Naviga
             }
             else if (item.getTag().equals("Register"))
             {
+                item.setBackgroundColor(getResources().getColor(R.color.white));
                 Intent register = new Intent(this, RegisterActivity.class);
                 register.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(register);

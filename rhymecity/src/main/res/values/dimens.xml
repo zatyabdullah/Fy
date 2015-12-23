@@ -8,6 +8,7 @@
     <dimen name="font21sp">21dp</dimen>
 
     <dimen name="font20sp">20dp</dimen>
+    <dimen name="font15sp">15dp</dimen>
     <dimen name="font18sp">18dp</dimen>
     <dimen name="font17sp">17dp</dimen>
     <dimen name="font16sp">16dp</dimen>

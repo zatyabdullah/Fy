@@ -25,8 +25,6 @@ import com.google.gson.Gson;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 
-import org.json.JSONObject;
-
 import java.util.List;
 
 import javax.inject.Inject;
@@ -91,25 +89,21 @@ public class TermsFragment extends BaseFragment implements TermsPresenter.TermsV
         ButterKnife.inject(this, view);
 
 
-        /*Display Existing User Data*/
 
-        JSONObject jsonUserInfo = getUserInfo(getActivity());
+        /*Display Data*/
+      /*  JSONArray jsonTerm = getTerm(getActivity());
+        //JSONArray jTerm_content = jsonTerm.getJSONArray();
 
-        String email = jsonUserInfo.optString("username");
-        String title = jsonUserInfo.optString("title");
-        String first_name = jsonUserInfo.optString("first_name");
-        String last_name = jsonUserInfo.optString("last_name");
-        String addressline1 = jsonUserInfo.optString("contact_address1");
-        String addressline2 = jsonUserInfo.optString("contact_address2");
-        String addressline3 = jsonUserInfo.optString("contact_address3");
-        String country = jsonUserInfo.optString("contact_country");//code
-        String stateU = jsonUserInfo.optString("contact_state");//code
-        String city = jsonUserInfo.optString("contact_city");
-        String postcode = jsonUserInfo.optString("contact_postcode");
-        String dob = jsonUserInfo.optString("DOB");
-        String mobile_phone = jsonUserInfo.optString("contact_mobile_phone");
-        String alternate_phone = jsonUserInfo.optString("contact_alternate_phone");
-        String fax = jsonUserInfo.optString("contact_fax");
+        for (int i = 0; i < jsonTerm.length(); i++)
+        {
+            JSONObject term = (JSONObject) jsonTerm.opt(i);
+
+            String term_title = term.optString("Term");
+            String content = term.optString("terms");
+
+            terms1.setText(term_title);
+        }
+*/
 
 
 
@@ -126,7 +120,7 @@ public class TermsFragment extends BaseFragment implements TermsPresenter.TermsV
 
             Gson gsonUserInfo = new Gson();
             String termsInfo = gsonUserInfo.toJson(obj.getTermInfo());
-             //pref.setTermInfo(termsInfo);
+             pref.setTermInfo(termsInfo);
         }
         else if (obj.getStatus().equals("error_validation")) {
             croutonAlert(getActivity(), obj.getMessage());

@@ -442,6 +442,26 @@ public class BaseFragment extends Fragment {
 		return json;
 
 	}
+
+
+	/*Get All Country From OS*/
+	public JSONArray getTerm(Activity act) {
+		JSONArray json = null;
+
+		prefManager = new SharedPrefManager(act);
+		HashMap<String, String> init = prefManager.getTermInfo();
+		String dataTerm = init.get(SharedPrefManager.TERM_INFO);
+		Log.e("dataTerm", dataTerm);
+
+		try {
+			json = new JSONArray(dataTerm);
+			Log.e("json", Integer.toString(json.length()));
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+		return json;
+	}
 	/*public static void showConnectionError(String test, Activity activity)
 	{
         if(activity != null) {
