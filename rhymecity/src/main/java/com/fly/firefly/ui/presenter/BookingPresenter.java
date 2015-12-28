@@ -12,6 +12,8 @@ import com.fly.firefly.rhymes.RhymesRequestedEvent;
 import com.fly.firefly.ui.object.ContactInfo;
 import com.fly.firefly.ui.object.Passenger;
 import com.fly.firefly.ui.object.SearchFlightObj;
+import com.fly.firefly.ui.object.SeatSelect;
+import com.fly.firefly.ui.object.SeatSelection;
 import com.fly.firefly.ui.object.SelectFlight;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
@@ -34,10 +36,16 @@ public class BookingPresenter {
     public interface ContactInfoView{
         void onContactInfo(ContactInfoReceive obj);
     }
+
+    public interface SeatSelectionView{
+        void onSeatSelect();
+
+    }
     private SearchFlightView view;
     private ListFlightView view2;
     private PassengerInfoView view3;
     private ContactInfoView view4;
+    private SeatSelectionView view5;
 
     private final Bus bus;
 
@@ -61,6 +69,11 @@ public class BookingPresenter {
         this.bus = bus;
     }
 
+    public BookingPresenter(SeatSelectionView view, Bus bus) {
+        this.view5 = view;
+        this.bus = bus;
+    }
+
     /*User Search FLight*/
     public void searchFlight(SearchFlightObj flightObj) {
         bus.post(new SearchFlightObj(flightObj));
@@ -79,6 +92,11 @@ public class BookingPresenter {
     /*User Input Passenger Info*/
     public void contactInfo(ContactInfo obj) {
         bus.post(new ContactInfo(obj));
+    }
+
+    /*User Input Passenger Info*/
+    public void seatSelect(SeatSelection obj) {
+        bus.post(new SeatSelection(obj));
     }
 
 

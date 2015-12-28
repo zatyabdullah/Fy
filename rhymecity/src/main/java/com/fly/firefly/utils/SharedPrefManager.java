@@ -27,6 +27,8 @@ public class SharedPrefManager {
 
     public static final String BOOKING_ID = "BOOKING_ID";
     // public static final String SELECTED = "SELECTED";
+    public static final String SEAT = "SEAT";
+
 
 
 
@@ -39,6 +41,15 @@ public class SharedPrefManager {
         this._context = context;
         _sharedPrefs = context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
         _prefsEditor = _sharedPrefs.edit();
+    }
+
+
+
+    /*SEAT*/
+    public HashMap<String, String> getSeat() {
+        HashMap<String, String> init = new HashMap<String, String>();
+        init.put(SEAT, _sharedPrefs.getString(SEAT, null));
+        return init;
     }
 
     /*Return Booking ID*/
@@ -144,6 +155,12 @@ public class SharedPrefManager {
         return init;
     }
 
+    /*Set SEAT*/
+    public void setSeat(String seat) {
+        _prefsEditor.putString(SEAT, seat);
+        _prefsEditor.apply();
+    }
+
     /*Set Booking ID*/
     public void setBookingID(String id) {
         _prefsEditor.putString(BOOKING_ID, id);
@@ -241,6 +258,14 @@ public class SharedPrefManager {
     public void setUserEmail(String url) {
         _prefsEditor.putString(USER_EMAIL, url);
         _prefsEditor.apply();
+    }
+
+    /*Clear Checkin Value*/
+    public void removeSeat() {
+        // Clearing All URL
+        _sharedPrefs.edit().remove(SEAT).apply();
+
+
     }
 
     /*Clear Checkin Value*/

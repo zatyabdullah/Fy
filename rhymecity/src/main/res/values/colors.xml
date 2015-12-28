@@ -44,6 +44,12 @@
     <color name="light_grey">#7A7A7A</color>
 
 
+    <!-- SEAT -->
+
+    <color name="seat_standard">#ff9933</color>
+    <color name="seat_preferred">#ffff00</color>
+    <color name="seat_desired">#71db71</color>
+
 
 
     <!-- HomePage Firefly UI -->

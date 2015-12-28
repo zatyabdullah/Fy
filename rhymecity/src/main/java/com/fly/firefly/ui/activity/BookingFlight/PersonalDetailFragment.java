@@ -50,9 +50,6 @@ public class PersonalDetailFragment extends BaseFragment implements DatePickerDi
     @Inject
     BookingPresenter presenter;
 
-    @InjectView(R.id.ctnSeatSelection) Button btnSeatSelection;
-    //@InjectView(R.id.txtDOB)TextView txtDOB;
-
     @InjectView(R.id.btnDOB)
     LinearLayout btnDOB;
 
@@ -81,8 +78,8 @@ public class PersonalDetailFragment extends BaseFragment implements DatePickerDi
     @InjectView(R.id.passengerBlock9)
     LinearLayout passengerBlock9;
 
-    @InjectView(R.id.ctnWithoutSeat)
-    Button ctnWithoutSeat;
+    @InjectView(R.id.btnPersonalInfo)
+    Button btnPersonalInfo;
 
 
     private int fragmentContainerId;
@@ -291,14 +288,7 @@ public class PersonalDetailFragment extends BaseFragment implements DatePickerDi
         }
 
 
-        btnSeatSelection.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goSeatSelectionPage();
-            }
-        });
-
-        ctnWithoutSeat.setOnClickListener(new View.OnClickListener() {
+        btnPersonalInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -487,18 +477,15 @@ public class PersonalDetailFragment extends BaseFragment implements DatePickerDi
         int totalPassenger = Integer.parseInt(adult) + Integer.parseInt(infant) + 1;
         Log.e("totalPassenger",Integer.toString(totalPassenger));
         ArrayList<String> passengerArray = new ArrayList<String>();
-        List<String> usedNames = new ArrayList<String>();
         for (int adultInc = totalPassenger-Integer.parseInt(adult); adultInc < totalPassenger; adultInc++) {
                 TextView btnTravellingWith = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_travelling_with");
                 String passengerID = btnTravellingWith.getText().toString();
                 Log.e("passengerID", passengerID);
                 passengerArray.add(passengerID);
         }
-            //check duplicate
-        Log.e("Size", Integer.toString(passengerArray.size()));
-        Log.e("First Passenger", passengerArray.get(0));
-        Log.e("First Passenger", passengerArray.get(1));
 
+        //check duplicate
+        List<String> usedNames = new ArrayList<String>();
         for(int x = 0 ; x < passengerArray.size() ;x++){
 
             Log.e("Passenger"+Integer.toString(x),passengerArray.get(x));

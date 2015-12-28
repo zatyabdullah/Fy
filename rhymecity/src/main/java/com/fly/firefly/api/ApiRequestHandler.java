@@ -14,6 +14,7 @@ import com.fly.firefly.api.obj.LoginReceive;
 import com.fly.firefly.api.obj.PassengerInfoReveice;
 import com.fly.firefly.api.obj.RegisterReceive;
 import com.fly.firefly.api.obj.SearchFlightReceive;
+import com.fly.firefly.api.obj.SeatSelectionReveice;
 import com.fly.firefly.api.obj.SelectFlightReceive;
 import com.fly.firefly.api.obj.UpdateProfileReceive;
 import com.fly.firefly.api.obj.MobileCheckinReceive;
@@ -25,6 +26,8 @@ import com.fly.firefly.ui.object.Passenger;
 import com.fly.firefly.ui.object.PasswordRequest;
 import com.fly.firefly.ui.object.RegisterObj;
 import com.fly.firefly.ui.object.SearchFlightObj;
+import com.fly.firefly.ui.object.SeatInfo;
+import com.fly.firefly.ui.object.SeatSelection;
 import com.fly.firefly.ui.object.SelectFlight;
 import com.fly.firefly.ui.object.UpdateProfileRequest;
 import com.fly.firefly.ui.object.MobileCheckinObj;
@@ -294,7 +297,7 @@ public class ApiRequestHandler {
 
             @Override
             public void success(MobileCheckinReceive rhymesResponse, Response response) {
-                Log.e(rhymesResponse.getStatus(),"x");
+                Log.e(rhymesResponse.getStatus(), "x");
                 bus.post(new MobileCheckinReceive(rhymesResponse));
                 // loading(false);
 
@@ -372,7 +375,7 @@ public class ApiRequestHandler {
             public void failure(RetrofitError error) {
 
                 Crouton.makeText(MainFragmentActivity.getContext(), "Unable to connect to server", Style.ALERT).show();
-                Log.e("Failed", "True");
+                Log.e("Failed", error.getMessage());
 
             }
 
@@ -381,7 +384,28 @@ public class ApiRequestHandler {
 
 
 
+    @Subscribe
+    public void onSeatSelection(final SeatSelection event) {
 
+        apiService.onSeatSelection(event, new Callback<SeatSelectionReveice>() {
+
+            @Override
+            public void success(SeatSelectionReveice responseData, Response response) {
+
+                bus.post(new SeatSelectionReveice(responseData));
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+                Crouton.makeText(MainFragmentActivity.getContext(), "Unable to connect to server", Style.ALERT).show();
+                Log.e("Failed", error.getMessage());
+
+            }
+
+        });
+    }
 
 
 

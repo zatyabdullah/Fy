@@ -6,6 +6,7 @@ package com.fly.firefly.ui.object;
 public class ContactInfo {
 
     private String booking_id;
+    private String seat_selection_status;
     private String contact_travel_purpose;
     private String contact_title;
     private String contact_first_name;
@@ -31,6 +32,7 @@ public class ContactInfo {
     public ContactInfo(ContactInfo data){
 
         booking_id = data.getBooking_id();
+        seat_selection_status = data.getSeat_selection_status();
         signature = data.getSignature();
         contact_travel_purpose = data.getContact_travel_purpose();
         contact_title = data.getContact_title();
@@ -51,6 +53,13 @@ public class ContactInfo {
 
     }
 
+    public String getSeat_selection_status() {
+        return seat_selection_status;
+    }
+
+    public void setSeat_selection_status(String seat_selection_status) {
+        this.seat_selection_status = seat_selection_status;
+    }
 
     public String getBooking_id() {
         return booking_id;

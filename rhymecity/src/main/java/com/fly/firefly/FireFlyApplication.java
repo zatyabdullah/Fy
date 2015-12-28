@@ -3,7 +3,7 @@ package com.fly.firefly;
 import android.app.Activity;
 import android.content.Context;
 
-import com.crashlytics.android.Crashlytics;
+//import com.crashlytics.android.Crashlytics;
 import com.fly.firefly.api.ApiRequestHandler;
 import com.fly.firefly.api.ApiService;
 import com.squareup.otto.Bus;
@@ -11,7 +11,7 @@ import com.squareup.otto.Bus;
 import javax.inject.Inject;
 
 import dagger.ObjectGraph;
-import io.fabric.sdk.android.Fabric;
+//import io.fabric.sdk.android.Fabric;
 import me.mattlogan.rhymecity.Modules;
 
 public class FireFlyApplication extends AnalyticsApplication {
@@ -26,8 +26,8 @@ public class FireFlyApplication extends AnalyticsApplication {
     public void onCreate() {
         super.onCreate();
 
-        Crashlytics crashlytics = new Crashlytics.Builder().disabled(BuildConfig.DEBUG).build();
-        Fabric.with(this, crashlytics);
+       // Crashlytics crashlytics = new Crashlytics.Builder().disabled(BuildConfig.DEBUG).build();
+       // Fabric.with(this, crashlytics);
        // Fabric.with(this, new Crashlytics());
         buildObjectGraphAndInject();
         createApiRequestHandler();

@@ -3810,11 +3810,9 @@
                     android:orientation="horizontal"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
                     android:gravity="center"
                     android:weightSum="1"
-                    android:layout_marginBottom="10dp" >
+                    android:layout_marginBottom="5dp" >
 
                     <LinearLayout
                         android:orientation="vertical"
@@ -3828,26 +3826,17 @@
                         android:orientation="vertical"
                         android:layout_width="0dp"
                         android:layout_weight="0.9"
-                        android:layout_height="match_parent">
+                        android:layout_height="wrap_content">
 
                         <Button
-                            android:layout_width="match_parent"
+                            android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
-                            android:text="Continue without seat selection"
-                            android:id="@+id/ctnWithoutSeat"
+                            android:text="@string/general_continue"
                             android:textColor="@color/white"
                             android:textStyle="bold"
-                            android:background="@drawable/login_login_button_clicked"
-                            android:layout_marginBottom="10dp"/>
+                            android:id="@+id/btnPersonalInfo"
+                            android:background="@drawable/login_login_button_clicked"/>
 
-                        <Button
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Choose seat selection"
-                            android:id="@+id/ctnSeatSelection"
-                            android:textColor="@color/orange_firefly"
-                            android:textStyle="bold"
-                            android:background="@drawable/login_register_button_clicked"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -3865,20 +3854,6 @@
 
         </LinearLayout>
     </LinearLayout>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 </ScrollView>

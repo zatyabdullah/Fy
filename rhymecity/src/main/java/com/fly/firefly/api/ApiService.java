@@ -8,6 +8,7 @@ import com.fly.firefly.api.obj.LoginReceive;
 import com.fly.firefly.api.obj.PassengerInfoReveice;
 import com.fly.firefly.api.obj.RegisterReceive;
 import com.fly.firefly.api.obj.SearchFlightReceive;
+import com.fly.firefly.api.obj.SeatSelectionReveice;
 import com.fly.firefly.api.obj.SelectFlightReceive;
 import com.fly.firefly.api.obj.UpdateProfileReceive;
 import com.fly.firefly.api.obj.MobileCheckinReceive;
@@ -20,6 +21,7 @@ import com.fly.firefly.ui.object.Passenger;
 import com.fly.firefly.ui.object.PasswordRequest;
 import com.fly.firefly.ui.object.RegisterObj;
 import com.fly.firefly.ui.object.SearchFlightObj;
+import com.fly.firefly.ui.object.SeatSelection;
 import com.fly.firefly.ui.object.SelectFlight;
 import com.fly.firefly.ui.object.MobileCheckinObj;
 import com.fly.firefly.ui.object.UpdateProfileRequest;
@@ -74,8 +76,12 @@ public interface ApiService {
 
     @POST("/contactDetails")
     void onContactInfo(@Body ContactInfo task, Callback<ContactInfoReceive> callback);
-    @POST("/checkInFlight")
+      @POST("/checkInFlight")
     void onMobileCheckinRequest(@Body MobileCheckinObj obj, Callback<MobileCheckinReceive> callback);
+
+    @POST("/seatMap")
+    void onSeatSelection(@Body SeatSelection obj, Callback<SeatSelectionReveice> callback);
+
 
 }
 

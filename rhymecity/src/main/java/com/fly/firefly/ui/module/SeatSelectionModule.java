@@ -1,7 +1,8 @@
 package com.fly.firefly.ui.module;
 
 import com.fly.firefly.AppModule;
-import com.fly.firefly.ui.fragment.BookingFlight.SeatSelectionFragment;
+import com.fly.firefly.ui.activity.BookingFlight.SeatSelectionFragment;
+import com.fly.firefly.ui.presenter.BookingPresenter;
 import com.fly.firefly.ui.presenter.SeatSelectionPresenter;
 import com.squareup.otto.Bus;
 
@@ -17,15 +18,15 @@ import dagger.Provides;
 )
 public class SeatSelectionModule {
 
-    private final SeatSelectionPresenter.SeatSelectionView seatSelectionView;
+    private final BookingPresenter.SeatSelectionView seatSelectionView;
 
-    public SeatSelectionModule(SeatSelectionPresenter.SeatSelectionView seatSelectionView) {
+    public SeatSelectionModule(BookingPresenter.SeatSelectionView seatSelectionView) {
         this.seatSelectionView = seatSelectionView;
     }
 
     @Provides
     @Singleton
-    SeatSelectionPresenter provideSearchFlightPresenter(Bus bus) {
-        return new SeatSelectionPresenter(seatSelectionView, bus);
+    BookingPresenter provideSearchFlightPresenter(Bus bus) {
+        return new BookingPresenter(seatSelectionView, bus);
     }
 }

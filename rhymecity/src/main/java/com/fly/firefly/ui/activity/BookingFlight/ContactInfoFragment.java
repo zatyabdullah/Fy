@@ -78,8 +78,11 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
     @InjectView(R.id.txtTitle)
     TextView txtTitle;
 
-    @InjectView(R.id.btnContactInfo)
-    Button btnContactInfo;
+    @InjectView(R.id.btnSeatSelection)
+    Button btnSeatSelection;
+
+    @InjectView(R.id.btnWithoutSeatSelection)
+    Button btnWithoutSeatSelection;
 
     @NotEmpty(sequence = 1)
     @Order(1)
@@ -146,6 +149,7 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
     private String selectedState;
     private Validator mValidator;
     private String insuranceTxt1,insuranceTxt2,insuranceTxt3,insuranceTxt4;
+    private boolean withSeat = false;
     View view;
 
     public static ContactInfoFragment newInstance(Bundle bundle) {
@@ -189,8 +193,6 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
             insuranceTxt3 = obj.getObj().getInsuranceObj().getHtml().get(2).toString();
             insuranceTxt4 = obj.getObj().getInsuranceObj().getHtml().get(3).toString();
 
-            txtInsuranceDetail.setText(Html.fromHtml("<html>Be sure to protect yourself with Firefly Travel Protection!</br></br>You got a good deal on our promo fares - but don't risk unexpected expenses!</br></br> Comprehensive coverage at phenomenal rates</br> Added flexibility via the Trip Cancellation benefit if you are unable to proceed with your travels</br> Medical Coverage includes hospital admission and emergency medical evacuation*</br> 24 Hour Worldwide Travel Assistance by our travel partner, AIG Travel</br></br>* For the full list of benefits, please refer to the <a href='https://www.aig.my/Chartis/internet/Malaysia/English/Firefly%20Travel%20Protection%20Product%20Disclosure%20Sheet_tcm4009-671123.pdf' target='_blank'>Terms and Conditions</a></br></br>The following passenger(s) are eligible for travel insurance:</br><li>Ggjji Gghjj</li></br>Firefly Travel Protection's Promo Plan is only 17.00 MYR MYR (inclusive of GST, when applicable)</br></br>I confirm that I have read, understood and agree with the <a href='https://www.aig.my/Chartis/internet/Malaysia/English/Firefly%20Travel%20Protection%20Declaration%20And%20Authorisation_tcm4009-671126.pdf' target='_blank'>Declarations and Authorisations</a> of the Insurance Application and accept the <a href='https://www.aig.my/Chartis/internet/Malaysia/English/Firefly%20Travel%20Protection%20Policy%20Wording_tcm4009-662187.pdf' target='_blank'>Terms and Conditions</a> of the Policy. I understand that if I do not wish to buy Firefly Travel Protection or receive any updates from AIG Malaysia Insurance Berhad on new products and services, I can click <a>[Remove]</a> to remove it from the itinerary. In addition, I accept that policy may not be changed once issued and is non refundable.</br></br>Firefly Travel Protection is brought to you by AIG Malaysia Insurance Berhad (795492-W)</html>"));
-            txtInsuranceDetail.setMovementMethod(LinkMovementMethod.getInstance());
         }
 
         /*Booking Id*/
@@ -259,7 +261,7 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
         txtPurpose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                popupSelectionExtra(purposeList, getActivity(), txtPurpose, true, companyBlock,"Leisure");
+                popupSelectionExtra(purposeList, getActivity(), txtPurpose, true, companyBlock, "Leisure");
             }
         });
 
@@ -272,14 +274,24 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
         });
 
          /*Onclick Continue*/
-        btnContactInfo.setOnClickListener(new View.OnClickListener() {
+        btnSeatSelection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                withSeat = true;
                 mValidator.validate();
                 Utils.hideKeyboard(getActivity(), v);
             }
         });
 
+         /*Onclick Continue*/
+        btnWithoutSeatSelection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                withSeat = false;
+                mValidator.validate();
+                Utils.hideKeyboard(getActivity(), v);
+            }
+        });
 
 
         return view;
@@ -345,6 +357,11 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
         dismissLoading();
         String status = obj.getObj().getStatus();
         if(status.equals("success")){
+
+            Gson gsonFlight = new Gson();
+            String seat = gsonFlight.toJson(obj);
+            pref.setSeat(seat);
+
             Intent intent = new Intent(getActivity(), SeatSelectionActivity.class);
             intent.putExtra("SEAT_INFORMATION", (new Gson()).toJson(obj));
             getActivity().startActivity(intent);
@@ -369,7 +386,8 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
 
     @Override
     public void onValidationSucceeded() {
-        requestContacInfo();
+
+          requestContacInfo();
         Log.e("Success", "True");
     }
 
@@ -401,9 +419,19 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
 
     public void requestContacInfo(){
 
+        String seatSelectionStatus;
+
         initiateLoading(getActivity());
         ContactInfo obj = new ContactInfo();
+
+        if(withSeat){
+            seatSelectionStatus = "Y";
+        }else{
+            seatSelectionStatus = "N";
+        }
+        Log.e("Seat Selection",seatSelectionStatus);
         obj.setBooking_id(bookingID);
+        obj.setSeat_selection_status(seatSelectionStatus);
         obj.setSignature(signature);
         obj.setContact_travel_purpose(txtPurpose.getTag().toString());
         obj.setContact_title(txtTitle.getTag().toString());
