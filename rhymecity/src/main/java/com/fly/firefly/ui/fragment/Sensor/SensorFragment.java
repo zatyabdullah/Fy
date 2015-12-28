@@ -23,7 +23,7 @@ import android.widget.TextView;
 import com.fly.firefly.R;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
 import com.fly.firefly.ui.presenter.LoginPresenter;
-import com.google.android.gms.location.LocationListener;
+//import com.google.android.gms.location.LocationListener;
 
 import javax.inject.Inject;
 
@@ -116,7 +116,7 @@ public class SensorFragment extends Fragment implements SensorEventListener {
 
        // if ( LocationObj == null ) return;
 
-        final LocationListener locationListener = new LocationListener() {
+      /*  final LocationListener locationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
                 loc = location;
                 geoField = new GeomagneticField(
@@ -126,7 +126,7 @@ public class SensorFragment extends Fragment implements SensorEventListener {
                     System.currentTimeMillis()
              );
             }
-        };
+        };*/
 
         azimuth -= geoField.getDeclination(); // converts magnetic north into true north
 

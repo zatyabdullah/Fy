@@ -5,10 +5,10 @@
         android:drawable="@drawable/common_signin_btn_icon_normal_dark" />
 
     <item android:state_checked="false" android:state_focused="true"
-        android:drawable="@drawable/abc_btn_radio_material" />
+        android:drawable="@drawable/down_arrow" />
 
     <item android:state_checked="false"
-        android:drawable="@drawable/abc_btn_check_material" />
+        android:drawable="@drawable/down_arrow" />
 
     <item android:state_checked="true"
         android:drawable="@drawable/common_signin_btn_icon_normal_dark" />

@@ -4,7 +4,7 @@
     <!-- Latest Theme -->
     <style name="MyCustomTheme" parent="@android:style/Theme.Holo.Light">
         <item name="android:actionBarStyle">@style/MyActionBarTheme</item>
-        <item name="colorAccent">@color/bright_green</item>
+        <!--<item name="colorAccent">@color/bright_green</item>-->
     </style>
 
     <style name="MyActionBarTheme" parent="@android:style/Widget.Holo.Light.ActionBar">
@@ -17,7 +17,7 @@
     <style name="Theme1" parent="android:Theme.Holo.Light">
         <item name="android:actionBarStyle">@style/Theme1.ActionBar</item>
        <!-- <item name="homeAsUpIndicator">@drawable/vrsm__ic_back</item>-->
-        <item name="windowActionBar">false</item>
+        <!--<item name="windowActionBar">false</item>-->
     </style>
     <style name="Theme1.ActionBar">
         <item name="android:background">@color/actionBarColour_default_theme</item>
@@ -38,12 +38,12 @@
     </style>
 
 
-    <style name="CustomDialog" parent="android:Theme.DeviceDefault.Dialog">
+    <!--<style name="CustomDialog" parent="android:Theme.DeviceDefault.Dialog">
         <item name="DialogTitleAppearance">@android:style/TextAppearance.Medium</item>
         <item name="DialogTitleText">Updating…</item>
         <item name="DialogSpotColor">@android:color/holo_orange_dark</item>
         <item name="DialogSpotCount">4</item>
-    </style>
+    </style>-->
 
 
 
