@@ -101,5 +101,6 @@ dependencies {
         transitive = true;
     }*/
 
-
+     //animation
+    compile 'com.github.d-max:spots-dialog:0.4@aar'
 }

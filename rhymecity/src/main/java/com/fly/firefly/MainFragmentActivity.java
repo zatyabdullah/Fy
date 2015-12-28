@@ -21,6 +21,7 @@ import com.fly.firefly.drawer.NavigationDrawerFragment;
 import com.fly.firefly.ui.activity.Homepage.HomeActivity;
 import com.fly.firefly.ui.activity.Login.LoginActivity;
 import com.fly.firefly.ui.activity.Register.RegisterActivity;
+import com.fly.firefly.ui.activity.Terms.Terms;
 import com.fly.firefly.ui.activity.UpdateProfile.UpdateProfileActivity;
 import com.fly.firefly.utils.SharedPrefManager;
 
@@ -148,12 +149,15 @@ public class MainFragmentActivity extends BaseFragmentActivity implements Naviga
         {
             if (item.getTag().equals("Home"))
             {
+                item.setBackgroundColor(getResources().getColor(R.color.white));
                 Intent homepage = new Intent(this, HomeActivity.class);
                 homepage.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
                 startActivity(homepage);
             }
             else if (item.getTag().equals("Login"))
             {
+
                 Intent login = new Intent(this, LoginActivity.class);
                 login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(login);
@@ -167,6 +171,7 @@ public class MainFragmentActivity extends BaseFragmentActivity implements Naviga
             }
             else if (item.getTag().equals("Register"))
             {
+                item.setBackgroundColor(getResources().getColor(R.color.white));
                 Intent register = new Intent(this, RegisterActivity.class);
                 register.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(register);
@@ -176,6 +181,12 @@ public class MainFragmentActivity extends BaseFragmentActivity implements Naviga
                 Intent register = new Intent(this, UpdateProfileActivity.class);
                 register.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(register);
+            }
+            else if (item.getTag().equals("Terms"))
+            {
+                Intent terms = new Intent(this, Terms.class);
+                terms.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(terms);
             }
             else if (item.getTag().equals("HEADER"))
             {

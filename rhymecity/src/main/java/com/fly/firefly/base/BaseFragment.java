@@ -2,7 +2,6 @@ package com.fly.firefly.base;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -38,6 +37,7 @@ import java.util.HashMap;
 import de.keyboardsurfer.android.widget.crouton.Configuration;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
+import dmax.dialog.SpotsDialog;
 
 
 public class BaseFragment extends Fragment {
@@ -48,7 +48,7 @@ public class BaseFragment extends Fragment {
 	private String selected;
 	private static SharedPrefManager prefManager;
 	private static Country obj = new Country();
-	private static ProgressDialog mProgressDialog;
+	private static SpotsDialog mProgressDialog;
 
 
 	public void croutonAlert(Activity act,String msg){
@@ -91,8 +91,9 @@ public class BaseFragment extends Fragment {
 
 	public static void initiateLoading(Activity act){
 
-		mProgressDialog = new ProgressDialog(act);
-		mProgressDialog.setIndeterminate(false);
+
+		mProgressDialog = new SpotsDialog(act,R.style.CustomDialog);
+		//mProgressDialog.setIndeterminate(false);
 		mProgressDialog.setCancelable(true);
 		mProgressDialog.setMessage("Loading...");
 
@@ -441,6 +442,26 @@ public class BaseFragment extends Fragment {
 
 		return json;
 
+	}
+
+
+	/*Get All Country From OS*/
+	public JSONArray getTerm(Activity act) {
+		JSONArray json = null;
+
+		prefManager = new SharedPrefManager(act);
+		HashMap<String, String> init = prefManager.getTermInfo();
+		String dataTerm = init.get(SharedPrefManager.TERM_INFO);
+		Log.e("dataTerm", dataTerm);
+
+		try {
+			json = new JSONArray(dataTerm);
+			Log.e("json", Integer.toString(json.length()));
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+		return json;
 	}
 	/*public static void showConnectionError(String test, Activity activity)
 	{

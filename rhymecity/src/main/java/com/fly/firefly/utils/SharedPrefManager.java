@@ -13,7 +13,7 @@ public class SharedPrefManager {
     public static final String USER_EMAIL = "USER_EMAIL";
     public static final String USER_INFO = "USER_INFO";
     public static final String CHECKIN_INFO = "CHECKIN_INFO";
-
+    public static final String TERM_INFO = "TERM_INFO";
     public static final String TITLE = "TITLE";
     public static final String FLIGHT = "FLIGHT";
     public static final String COUNTRY = "COUNTRY";
@@ -147,6 +147,20 @@ public class SharedPrefManager {
     }
 
 
+    /*Return Checkin_info*/
+    public HashMap<String, String> getCheckinInfo() {
+        HashMap<String, String> init = new HashMap<String, String>();
+        init.put(CHECKIN_INFO, _sharedPrefs.getString(CHECKIN_INFO, null));
+        return init;
+    }
+
+
+    /*Return Term_info*/
+    public HashMap<String, String> getTermInfo() {
+        HashMap<String, String> init = new HashMap<String, String>();
+        init.put(TERM_INFO, _sharedPrefs.getString(TERM_INFO, null));
+        return init;
+    }
 
     /*Return User_info*/
     public HashMap<String, String> getUserEmail() {
@@ -167,16 +181,17 @@ public class SharedPrefManager {
         _prefsEditor.apply();
     }
 
-    /*Return Checkin_info*/
-    public HashMap<String, String> getCheckinInfo() {
-        HashMap<String, String> init = new HashMap<String, String>();
-        init.put(CHECKIN_INFO, _sharedPrefs.getString(CHECKIN_INFO, null));
-        return init;
-    }
 
     /*Set Checkin Value*/
     public void setCheckinInfo(String url) {
         _prefsEditor.putString(CHECKIN_INFO, url);
+        _prefsEditor.apply();
+    }
+
+
+    /*Set Checkin Value*/
+    public void setTermInfo(String url) {
+        _prefsEditor.putString(TERM_INFO, url);
         _prefsEditor.apply();
     }
     /*Set Username Value*/
@@ -272,6 +287,14 @@ public class SharedPrefManager {
     public void checkinInfoURL() {
         // Clearing All URL
         _sharedPrefs.edit().remove(CHECKIN_INFO).apply();
+
+
+    }
+
+    /*Clear TermValue*/
+    public void termInfoURL() {
+        // Clearing All URL
+        _sharedPrefs.edit().remove(TERM_INFO).apply();
 
 
     }

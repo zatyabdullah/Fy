@@ -15,8 +15,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
 
-import com.fly.firefly.utils.LazyList.ImageLoader;
-
 public class NavigationDrawerAdapter extends BaseBaseAdapter<DrawerItem>
 {
 

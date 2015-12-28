@@ -169,8 +169,17 @@ public class NavigationDrawerFragment extends Fragment {
             sbb.setId(2);
             sbb.setTag("Login");
             sbb.setTitle("Login");
-            sbb.setLayoutId(DrawerViewType.MENU);
+            sbb.setLayoutId(DrawerViewType.STATIC_MENU);
+            sbb.setIconId(R.drawable.side_login_s);
             itemList.add(sbb);
+
+            DrawerItem register = new DrawerItem();
+            register.setId(3);
+            register.setTag("Register");
+            register.setTitle("Register");
+            register.setLayoutId(DrawerViewType.STATIC_MENU);
+            register.setIconId(R.drawable.side_register_s);
+            itemList.add(register);
         }
         else{
             DrawerItem vrsm = new DrawerItem();
@@ -182,17 +191,19 @@ public class NavigationDrawerFragment extends Fragment {
             itemList.add(vrsm);
 
             DrawerItem sbb = new DrawerItem();
-            sbb.setId(2);
+            sbb.setId(3);
             sbb.setTag("Logout");
             sbb.setTitle("Logout");
-            sbb.setLayoutId(DrawerViewType.MENU);
+            sbb.setLayoutId(DrawerViewType.STATIC_MENU);
+            sbb.setIconId(R.drawable.side_logout_s);
             itemList.add(sbb);
 
             DrawerItem profile = new DrawerItem();
-            profile.setId(3);
+            profile.setId(4);
+            profile.setIconId(R.drawable.side_profile_s);
             profile.setTag("Profile");
             profile.setTitle("Profile");
-            profile.setLayoutId(DrawerViewType.MENU);
+            profile.setLayoutId(DrawerViewType.STATIC_MENU);
             itemList.add(profile);
 
         }
@@ -202,22 +213,33 @@ public class NavigationDrawerFragment extends Fragment {
         home.setId(1);
         home.setTag("Home");
         home.setTitle("Home");
-        home.setLayoutId(DrawerViewType.MENU);
+        home.setLayoutId(DrawerViewType.STATIC_MENU);
+        home.setIconId(R.drawable.side_home_s);
         itemList.add(home);
 
         DrawerItem about = new DrawerItem();
-        about.setId(4);
+        about.setId(5);
         about.setTag("About");
         about.setTitle("About");
-        about.setLayoutId(DrawerViewType.MENU);
+        about.setLayoutId(DrawerViewType.STATIC_MENU);
+        about.setIconId(R.drawable.side_about_s);
         itemList.add(about);
 
-        DrawerItem faq = new DrawerItem();
+        /*DrawerItem faq = new DrawerItem();
         faq.setId(5);
         faq.setTag("Faq");
         faq.setTitle("Faq");
         faq.setLayoutId(DrawerViewType.MENU);
-        itemList.add(faq);
+        faq.setIconId(R.drawable.side_faq_s);
+        itemList.add(faq);*/
+
+        DrawerItem terms = new DrawerItem();
+        terms.setId(5);
+        terms.setTag("Terms");
+        terms.setTitle("Terms");
+        terms.setLayoutId(DrawerViewType.STATIC_MENU);
+        terms.setIconId(R.drawable.side_faq_s);
+        itemList.add(terms);
 
     }
 

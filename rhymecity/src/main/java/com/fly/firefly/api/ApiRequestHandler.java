@@ -11,17 +11,19 @@ import com.fly.firefly.api.obj.DeviceInfoSuccess;
 import com.fly.firefly.api.obj.FailedConnectToServer;
 import com.fly.firefly.api.obj.ForgotPasswordReceive;
 import com.fly.firefly.api.obj.LoginReceive;
+import com.fly.firefly.api.obj.MobileCheckinReceive;
 import com.fly.firefly.api.obj.PassengerInfoReveice;
 import com.fly.firefly.api.obj.RegisterReceive;
 import com.fly.firefly.api.obj.SearchFlightReceive;
 import com.fly.firefly.api.obj.SeatSelectionReveice;
 import com.fly.firefly.api.obj.SelectFlightReceive;
+import com.fly.firefly.api.obj.TermsReceive;
 import com.fly.firefly.api.obj.UpdateProfileReceive;
-import com.fly.firefly.api.obj.MobileCheckinReceive;
 import com.fly.firefly.ui.object.ChangePasswordRequest;
 import com.fly.firefly.ui.object.ContactInfo;
 import com.fly.firefly.ui.object.DeviceInformation;
 import com.fly.firefly.ui.object.LoginRequest;
+import com.fly.firefly.ui.object.MobileCheckinObj;
 import com.fly.firefly.ui.object.Passenger;
 import com.fly.firefly.ui.object.PasswordRequest;
 import com.fly.firefly.ui.object.RegisterObj;
@@ -29,8 +31,8 @@ import com.fly.firefly.ui.object.SearchFlightObj;
 import com.fly.firefly.ui.object.SeatInfo;
 import com.fly.firefly.ui.object.SeatSelection;
 import com.fly.firefly.ui.object.SelectFlight;
+import com.fly.firefly.ui.object.TermsRequest;
 import com.fly.firefly.ui.object.UpdateProfileRequest;
-import com.fly.firefly.ui.object.MobileCheckinObj;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
@@ -382,6 +384,34 @@ public class ApiRequestHandler {
         });
     }
 
+
+    @Subscribe
+    public void onTermsRequest(final TermsRequest data) {
+
+        // initiateLoading();
+        // loading(true);
+
+
+        apiService.onTermsRequest(data, new Callback<TermsReceive>() {
+
+            @Override
+            public void success(TermsReceive rhymesResponse, Response response) {
+
+                Log.e("success", "True");
+                bus.post(new TermsReceive(rhymesResponse));
+                // loading(false);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+                Log.e("Failed", "True");
+                //loading(false);
+                //bus.post(new RhymesFailureEvent(rhymesResponse));
+            }
+
+        });
+    }
 
 
     @Subscribe

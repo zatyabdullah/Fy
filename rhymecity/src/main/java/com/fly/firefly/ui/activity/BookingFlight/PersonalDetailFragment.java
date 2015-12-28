@@ -26,7 +26,6 @@ import com.fly.firefly.ui.object.PassengerInfo;
 import com.fly.firefly.ui.presenter.BookingPresenter;
 import com.fly.firefly.utils.DropDownItem;
 import com.fly.firefly.utils.SharedPrefManager;
-import com.fly.firefly.utils.Utils;
 import com.fourmob.datetimepicker.date.DatePickerDialog;
 import com.google.gson.Gson;
 
@@ -36,9 +35,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.inject.Inject;
 
