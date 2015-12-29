@@ -25,7 +25,6 @@ import com.fly.firefly.ui.object.RegisterObj;
 import com.fly.firefly.ui.object.SearchFlightObj;
 import com.fly.firefly.ui.object.SeatSelection;
 import com.fly.firefly.ui.object.SelectFlight;
-import com.fly.firefly.ui.object.TermsRequest;
 import com.fly.firefly.ui.object.UpdateProfileRequest;
 
 import retrofit.Callback;
@@ -86,7 +85,7 @@ public interface ApiService {
     void onSeatSelection(@Body SeatSelection obj, Callback<SeatSelectionReveice> callback);
 
     @POST("/terms")
-    void onTermsRequest(@Body TermsRequest obj, Callback<TermsReceive> callback);
+    void onTermsRequest(Callback<TermsReceive> callback);
 }
 
 

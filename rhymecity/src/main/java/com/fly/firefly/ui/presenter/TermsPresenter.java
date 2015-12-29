@@ -1,5 +1,7 @@
 package com.fly.firefly.ui.presenter;
 
+import android.util.Log;
+
 import com.fly.firefly.api.obj.TermsReceive;
 import com.fly.firefly.ui.object.TermsRequest;
 import com.squareup.otto.Bus;
@@ -27,16 +29,21 @@ public class TermsPresenter {
         bus.unregister(this);
     }
 
-    public void onUpdateTerms(TermsRequest data) {
-        bus.post(new TermsRequest(data));
+    public void onUpdateTerms() {
+        bus.post(new TermsRequest());
     }
 
 
    @Subscribe
     public void onSuccessUpdate(TermsReceive event) {
 
-        //Log.e("Messages", event.getStatus());
-        //*Save Session And Redirect To Homepage*//*
-        view.onSuccessUpdate(event.getTermObj());
+       try{
+           Log.e("Term", event.getTermObj().getTerm().get(0).getTitle());
+
+       }catch (Exception e){
+           Log.e("E2","E2");
+       }
+
+      view.onSuccessUpdate(event.getTermObj());
     }
 }

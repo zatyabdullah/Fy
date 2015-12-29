@@ -47,7 +47,7 @@ public class SeatSelectionFragment extends BaseFragment implements BookingPresen
     @InjectView(R.id.btnSeat) Button btnSeat ;
     @InjectView(R.id.seatList) LinearLayout seatList ;
 
-    @InjectView(R.id.listPassenger)ExpandAbleGridView listPassengerDepart;
+    @InjectView(R.id.listPassengerDepart)ExpandAbleGridView listPassengerDepart;
 
     private SharedPrefManager pref;
     private PassengerSeatAdapter passengerSeatList;

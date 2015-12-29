@@ -102,7 +102,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Hand and Checked Baggage"
+                                android:text="t1"
                                 android:id="@+id/terms1"
                                 android:textSize="@dimen/font15sp"
                                 android:textColor="@color/white"
@@ -126,7 +126,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Pursuant to the above mentioned sub-clause 8.9, passengers who are found to have carried with them hand baggage (unchecked baggage) exceeding the allowed piece, dimension and/or weight, shall be imposed a charge (please refer to the Fees Schedule) and the excess hand baggage will be checked-in prior to boarding of the aircraft. Payment for such charge shall be made in cash."
+                                    android:text="t1_body"
                                     android:id="@+id/terms_1"
                                     android:textStyle="bold" />
 
@@ -146,7 +146,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Terms and Conditions for Online Seat Selection"
+                                android:text="t2"
                                 android:id="@+id/terms2"
                                 android:textSize="@dimen/font15sp"
                                 android:textColor="@color/white"
@@ -171,7 +171,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Passenger can book preferred seats with travel companions;"
+                                    android:text="t2_body"
                                     android:id="@+id/terms_2"
                                     android:textStyle="bold" />
                             </LinearLayout>
@@ -188,7 +188,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Terms and Conditions for In-flight Products"
+                                android:text="t3"
                                 android:id="@+id/terms3"
                                 android:textSize="@dimen/font15sp"
                                 android:textColor="@color/white"
@@ -376,47 +376,6 @@
                                     android:layout_height="wrap_content"
                                     android:text="These terms and conditions (“Terms and Conditions”), as may be amended from time to time, apply to our meal booking service made available online, through any mobile device, by email or by telephone. By accessing, browsing and using our website or any of our applications through whatever platform and/or by completing a booking, you acknowledge that you have read, understood and hereby agree to the Terms and Conditions as set out below.\r\n\r\n“Passenger”, “you”, “your” and “yourself” means any person, booking/purchasing the meal through www.fireflyz.com.my.\r\n“We”, “our”, “ourselves”, and “us” means FlyFirefly Sdn Bhd."
                                     android:id="@+id/terms_7"
-                                    android:textStyle="bold" />
-                            </LinearLayout>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:orientation="vertical"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:padding="5dp"
-                            android:background="@color/actionBarColour_default_theme" >
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Terms and Conditions on Emergency Exit Row Seats"
-                                android:id="@+id/terms8"
-                                android:textSize="@dimen/font15sp"
-                                android:textColor="@color/white"
-                                android:textStyle="bold"
-                                android:gravity="center_horizontal" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:orientation="vertical"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:padding="5dp" >
-
-                            <LinearLayout
-                                android:orientation="vertical"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_marginTop="15dp"
-                                android:paddingBottom="15dp" >
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Passenger must not be elderly."
-                                    android:id="@+id/terms_8"
                                     android:textStyle="bold" />
                             </LinearLayout>
                         </LinearLayout>

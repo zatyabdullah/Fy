@@ -28,7 +28,6 @@ import com.fly.firefly.ui.object.Passenger;
 import com.fly.firefly.ui.object.PasswordRequest;
 import com.fly.firefly.ui.object.RegisterObj;
 import com.fly.firefly.ui.object.SearchFlightObj;
-import com.fly.firefly.ui.object.SeatInfo;
 import com.fly.firefly.ui.object.SeatSelection;
 import com.fly.firefly.ui.object.SelectFlight;
 import com.fly.firefly.ui.object.TermsRequest;
@@ -392,7 +391,7 @@ public class ApiRequestHandler {
         // loading(true);
 
 
-        apiService.onTermsRequest(data, new Callback<TermsReceive>() {
+        apiService.onTermsRequest(new Callback<TermsReceive>() {
 
             @Override
             public void success(TermsReceive rhymesResponse, Response response) {

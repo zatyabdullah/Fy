@@ -2,7 +2,6 @@ package com.fly.firefly.base;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -110,6 +109,7 @@ public class BaseFragment extends Fragment {
 	}
 
 	public static void dismissLoading(){
+
 		if(mProgressDialog.isShowing()){
 			mProgressDialog.dismiss();
 		}
@@ -446,18 +446,18 @@ public class BaseFragment extends Fragment {
 	}
 
 
-	/*Get All Country From OS*/
-	public JSONArray getTerm(Activity act) {
+	/*Get From OS*/
+	public JSONArray getTermInfo(Activity act) {
 		JSONArray json = null;
 
 		prefManager = new SharedPrefManager(act);
 		HashMap<String, String> init = prefManager.getTermInfo();
 		String dataTerm = init.get(SharedPrefManager.TERM_INFO);
-		Log.e("dataTerm", dataTerm);
+		//Log.e("dataTerm", dataTerm);
 
 		try {
 			json = new JSONArray(dataTerm);
-			Log.e("json", Integer.toString(json.length()));
+			//Log.e("json", Integer.toString(json.length()));
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}

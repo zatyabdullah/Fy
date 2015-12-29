@@ -2,6 +2,8 @@ package com.fly.firefly.ui.activity.Terms;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +23,6 @@ import com.fly.firefly.ui.module.TermsModule;
 import com.fly.firefly.ui.presenter.TermsPresenter;
 import com.fly.firefly.utils.SharedPrefManager;
 import com.google.android.gms.analytics.Tracker;
-import com.google.gson.Gson;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 
@@ -50,7 +51,7 @@ public class TermsFragment extends BaseFragment implements TermsPresenter.TermsV
     @InjectView(R.id.terms5) TextView terms5;
     @InjectView(R.id.terms6) TextView terms6;
     @InjectView(R.id.terms7) TextView terms7;
-    @InjectView(R.id.terms8) TextView terms8;
+    //@InjectView(R.id.terms8) TextView terms8;
 
 
     @InjectView(R.id.terms_1) TextView terms_1;
@@ -60,7 +61,7 @@ public class TermsFragment extends BaseFragment implements TermsPresenter.TermsV
     @InjectView(R.id.terms_5) TextView terms_5;
     @InjectView(R.id.terms_6) TextView terms_6;
     @InjectView(R.id.terms_7) TextView terms_7;
-    @InjectView(R.id.terms_8) TextView terms_8;
+  //  @InjectView(R.id.terms_8) TextView terms_8;
 
     public static TermsFragment newInstance() {
 
@@ -88,24 +89,29 @@ public class TermsFragment extends BaseFragment implements TermsPresenter.TermsV
         View view = inflater.inflate(R.layout.terms, container, false);
         ButterKnife.inject(this, view);
 
+        presenter.onUpdateTerms();
+       // pref = new SharedPrefManager(getActivity());
+
+
+
 
 
         /*Display Data*/
-      /*  JSONArray jsonTerm = getTerm(getActivity());
+    /* JSONArray jsonTerm = getTermInfo(getActivity());
+
         //JSONArray jTerm_content = jsonTerm.getJSONArray();
 
-        for (int i = 0; i < jsonTerm.length(); i++)
-        {
-            JSONObject term = (JSONObject) jsonTerm.opt(i);
+       // for (int i = 0; i < jsonTerm.length(); i++)
+       // {
+            JSONObject term = (JSONObject) jsonTerm.opt(0);
 
-            String term_title = term.optString("Term");
-            String content = term.optString("terms");
+            String id = term.optString("id");
+            String term_title = term.optString("title");
+            String content = term.optString("body");
 
             terms1.setText(term_title);
-        }
-*/
-
-
+            terms_1.setText(Html.fromHtml(content));*/
+        //}
 
         return view;
     }
@@ -114,13 +120,38 @@ public class TermsFragment extends BaseFragment implements TermsPresenter.TermsV
 
 
     public void onSuccessUpdate(TermsReceive obj) {
-        dismissLoading();
+
         Log.e("Update", "success");
         if (obj.getStatus().equals("success")) {
 
-            Gson gsonUserInfo = new Gson();
-            String termsInfo = gsonUserInfo.toJson(obj.getTermInfo());
-             pref.setTermInfo(termsInfo);
+            /*Gson termInfo= new Gson();
+            String terms=termInfo.toJson(obj.getTermObj());*/
+
+
+            terms1.setText(obj.getTerm().get(0).getTitle());
+            terms2.setText(obj.getTerm().get(1).getTitle());
+            terms3.setText(obj.getTerm().get(2).getTitle());
+            terms4.setText(obj.getTerm().get(3).getTitle());
+            terms5.setText(obj.getTerm().get(4).getTitle());
+            terms6.setText(obj.getTerm().get(5).getTitle());
+            terms7.setText(obj.getTerm().get(6).getTitle());
+
+
+            terms_1.setText(Html.fromHtml(obj.getTerm().get(0).getBody()));
+            terms_2.setText(Html.fromHtml(obj.getTerm().get(1).getBody()));
+            terms_3.setText(Html.fromHtml(obj.getTerm().get(2).getBody()));
+
+            terms_4.setText(Html.fromHtml(obj.getTerm().get(3).getBody()));
+            terms_4.setMovementMethod(LinkMovementMethod.getInstance());
+
+            terms_5.setText(Html.fromHtml(obj.getTerm().get(4).getBody()));
+            terms_5.setMovementMethod(LinkMovementMethod.getInstance());
+
+            terms_6.setText(Html.fromHtml(obj.getTerm().get(5).getBody()));
+            terms_6.setMovementMethod(LinkMovementMethod.getInstance());
+
+            terms_7.setText(Html.fromHtml(obj.getTerm().get(6).getBody()));
+
         }
         else if (obj.getStatus().equals("error_validation")) {
             croutonAlert(getActivity(), obj.getMessage());

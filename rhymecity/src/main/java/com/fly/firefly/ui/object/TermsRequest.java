@@ -23,11 +23,6 @@ public class TermsRequest {
         id          = data.getId();
         title       = data.getTitle();
         body        = data.getBody();
-        created_at  = data.getCreated_at();
-        updated_at  = data.getUpdated_at();
-        content     = data.getContent();
-        display_order= data.getDisplay_order();
-        parent_id   = data.getParent_id();
 
     }
 
