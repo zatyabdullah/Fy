@@ -124,9 +124,6 @@ public class TermsFragment extends BaseFragment implements TermsPresenter.TermsV
         Log.e("Update", "success");
         if (obj.getStatus().equals("success")) {
 
-            /*Gson termInfo= new Gson();
-            String terms=termInfo.toJson(obj.getTermObj());*/
-
 
             terms1.setText(obj.getTerm().get(0).getTitle());
             terms2.setText(obj.getTerm().get(1).getTitle());
@@ -149,7 +146,6 @@ public class TermsFragment extends BaseFragment implements TermsPresenter.TermsV
 
             terms_6.setText(Html.fromHtml(obj.getTerm().get(5).getBody()));
             terms_6.setMovementMethod(LinkMovementMethod.getInstance());
-
             terms_7.setText(Html.fromHtml(obj.getTerm().get(6).getBody()));
 
         }
@@ -171,7 +167,6 @@ public class TermsFragment extends BaseFragment implements TermsPresenter.TermsV
     //Validator Result//
     @Override
     public void onValidationSucceeded() {
-        //requestUpdateProfile();
         Log.e("Validation", "success");
 
     }
