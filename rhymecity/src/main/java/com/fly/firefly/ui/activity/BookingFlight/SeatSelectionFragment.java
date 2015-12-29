@@ -1,7 +1,6 @@
 package com.fly.firefly.ui.activity.BookingFlight;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -17,18 +16,16 @@ import com.fly.firefly.FireFlyApplication;
 import com.fly.firefly.MainFragmentActivity;
 import com.fly.firefly.R;
 import com.fly.firefly.api.obj.ContactInfoReceive;
+import com.fly.firefly.api.obj.SeatSelectionReveice;
 import com.fly.firefly.base.BaseFragment;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
-import com.fly.firefly.ui.adapter.FlightDetailAdapter;
 import com.fly.firefly.ui.adapter.PassengerSeatAdapter;
 import com.fly.firefly.ui.module.SeatSelectionModule;
-import com.fly.firefly.ui.object.ContactInfo;
 import com.fly.firefly.ui.object.SeatInfo;
 import com.fly.firefly.ui.object.SeatSelect;
 import com.fly.firefly.ui.object.SeatSelection;
 import com.fly.firefly.ui.object.SeatSetup;
 import com.fly.firefly.ui.presenter.BookingPresenter;
-import com.fly.firefly.ui.presenter.SeatSelectionPresenter;
 import com.fly.firefly.utils.ExpandAbleGridView;
 import com.fly.firefly.utils.SharedPrefManager;
 import com.google.gson.Gson;
@@ -50,7 +47,7 @@ public class SeatSelectionFragment extends BaseFragment implements BookingPresen
     @InjectView(R.id.btnSeat) Button btnSeat ;
     @InjectView(R.id.seatList) LinearLayout seatList ;
 
-    @InjectView(R.id.listPassenger)ExpandAbleGridView listPassenger;
+    @InjectView(R.id.listPassenger)ExpandAbleGridView listPassengerDepart;
 
     private SharedPrefManager pref;
     private PassengerSeatAdapter passengerSeatList;
@@ -85,32 +82,99 @@ public class SeatSelectionFragment extends BaseFragment implements BookingPresen
 
         /*Preference Manager*/
         pref = new SharedPrefManager(MainFragmentActivity.getContext());
-        HashMap<String, String> init = pref.getSeat();
-        String seatHash = init.get(SharedPrefManager.SEAT);
+        //HashMap<String, String> init = pref.getSeat();
+        //String seatHash = init.get(SharedPrefManager.SEAT);
 
-           /*Booking Id*/
+        /*Booking Id*/
         HashMap<String, String> initBookingID = pref.getBookingID();
         bookingID = initBookingID.get(SharedPrefManager.BOOKING_ID);
 
         HashMap<String, String> initSignature = pref.getSignatureFromLocalStorage();
         signature = initSignature.get(SharedPrefManager.SIGNATURE);
 
+        Bundle bundle = getArguments();
+        String seatGSON = bundle.getString("SEAT_INFORMATION");
 
-        //Bundle bundle = getArguments();
-        //String seatGSON = bundle.getString("SEAT_INFORMATION");
-
+        /*Initiate Seat Row*/
         Gson gson = new Gson();
-        ContactInfoReceive obj = gson.fromJson(seatHash, ContactInfoReceive.class);
-        List<SeatInfo> seatInfo = obj.getObj().getJourneys().get(0).getSeat_info();
-        int seatSize = seatInfo.size();
+        ContactInfoReceive obj = gson.fromJson(seatGSON, ContactInfoReceive.class);
+        List<SeatInfo> seatInfoDepart = obj.getObj().getJourneys().get(0).getSeat_info();
+        List<ContactInfoReceive.Journeys> journeys = obj.getObj().getJourneys();
 
+        /*Set Passenger to adapter*/
         final List<ContactInfoReceive.PasssengerInfo> passengers = obj.getObj().getPassengers();
+        setSeat(seatInfoDepart);
+
+        setPassenger(passengers,journeys.get(0).getDeparture_station(),journeys.get(0).getArrival_station());
+        if(journeys.size() > 1){
+
+            List<SeatInfo> seatInfoReturn = obj.getObj().getJourneys().get(1).getSeat_info();
+            setPassenger(passengers,journeys.get(1).getDeparture_station(),journeys.get(1).getArrival_station());
+            setSeat(seatInfoReturn);
+
+        }
+
+
+        listPassengerDepart.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> myAdapter, View myView, int myItemInt, long mylng) {
+                ContactInfoReceive.PasssengerInfo selectedFromList = (ContactInfoReceive.PasssengerInfo) (listPassengerDepart.getItemAtPosition(myItemInt));
+
+                //Clear Previous
+                passengerSeatList.clearSelected();
+                seatTag = new ArrayList<>(1);
+
+                passengerNo = myItemInt;
+                //Set selected
+                LinearLayout clickedPassenger = (LinearLayout) myView.findViewById(R.id.passengerLinearLayout);
+                clickedPassenger.setBackgroundColor(getResources().getColor(R.color.blue));
+                selectedFromList.setSelected(true);
+
+                Log.e("Selected Passenger", selectedFromList.getFirst_name());
+
+            }
+        });
+
+
+        btnSeat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                ArrayList<SeatSelect> goingSeat = new ArrayList<SeatSelect>();
+                ArrayList<SeatSelect> returnSeat = new ArrayList<SeatSelect>();
+
+                for(int x = 0 ; x < passengers.size() ; x++){
+                    SeatSelect obj = new SeatSelect();
+                    obj.setCompartment_designator(passengers.get(x).getCompartment());
+                    obj.setSeat_number(passengers.get(x).getSeat());
+                    goingSeat.add(obj);
+                }
+
+                //Validate
+                SeatSelection seatObj = new SeatSelection();
+                seatObj.setBooking_id(bookingID);
+                seatObj.setSignature(signature);
+                seatObj.setGoing(goingSeat);
+                seatObj.setReturnFlight(returnSeat);
+
+                Log.e("SEND", seatObj.getGoing().get(0).getSeat_number());
+                seatSelect(seatObj);
+            }
+        });
+
+        return view;
+    }
+
+    public void setPassenger(List<ContactInfoReceive.PasssengerInfo> passengers,String depart,String arrival){
+
         passengers.get(0).setSelected(true);
-
         passengerSeatList = new PassengerSeatAdapter(getActivity(),passengers,this);
-        listPassenger.setAdapter(passengerSeatList);
+        listPassengerDepart.setAdapter(passengerSeatList);
 
-        Log.e("Total Seat Row", Integer.toString(seatInfo.size()));
+    }
+
+    public void setSeat(List<SeatInfo> seatInfo){
+
+        int seatSize = seatInfo.size();
         int seatCount = 0;
         /*Set Seat Row*/
         List<String> tempSeatStorage = new ArrayList<String>();
@@ -217,7 +281,7 @@ public class SeatSelectionFragment extends BaseFragment implements BookingPresen
 
                             passengerSeatList.setSelectedPasssengerSeat(txtDetailList.getText().toString());
                             passengerSeatList.setSelectedCompartmentSeat(compartment);
-                            //passengerSeatList.setSelectedSeatCompartment(passengerSeatList.getSelected(passengerNo));
+                            //passengerSeatListDepart.setSelectedSeatCompartment(passengerSeatListDepart.getSelected(passengerNo));
                             //selectedSeatTag.add(txtDetailList.getText().toString());
 
                         } else {
@@ -243,7 +307,7 @@ public class SeatSelectionFragment extends BaseFragment implements BookingPresen
 
 
                 //"seat_type":"standard",
-               //Set color and clickable
+                //Set color and clickable
 
                 if(seatType.equals("standard")){
                     txtDetailList.setClickable(true);
@@ -286,57 +350,7 @@ public class SeatSelectionFragment extends BaseFragment implements BookingPresen
             seatList.addView(seatRow);
 
         }
-
-        listPassenger.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> myAdapter, View myView, int myItemInt, long mylng) {
-                ContactInfoReceive.PasssengerInfo selectedFromList =(ContactInfoReceive.PasssengerInfo) (listPassenger.getItemAtPosition(myItemInt));
-
-                //Clear Previous
-                passengerSeatList.clearSelected();
-                seatTag = new ArrayList<>(1);
-
-                passengerNo = myItemInt;
-                //Set selected
-                LinearLayout clickedPassenger = (LinearLayout) myView.findViewById(R.id.passengerLinearLayout);
-                clickedPassenger.setBackgroundColor(getResources().getColor(R.color.blue));
-                selectedFromList.setSelected(true);
-
-                Log.e("Selected Passenger", selectedFromList.getFirst_name());
-
-            }
-        });
-
-
-        btnSeat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                ArrayList<SeatSelect> goingSeat = new ArrayList<SeatSelect>();
-                ArrayList<SeatSelect> returnSeat = new ArrayList<SeatSelect>();
-
-                for(int x = 0 ; x < passengers.size() ; x++){
-                    SeatSelect obj = new SeatSelect();
-                    obj.setCompartment_designator(passengers.get(x).getCompartment());
-                    obj.setSeat_number(passengers.get(x).getSeat());
-                    goingSeat.add(obj);
-                }
-
-                //Validate
-                SeatSelection seatObj = new SeatSelection();
-                seatObj.setBooking_id(bookingID);
-                seatObj.setSignature(signature);
-                seatObj.setGoing(goingSeat);
-                seatObj.setReturnFlight(returnSeat);
-
-                Log.e("SEND", seatObj.getGoing().get(0).getSeat_number());
-                seatSelect(seatObj);
-            }
-        });
-
-        return view;
     }
-
-
 
     public void clearSelectedOnFragment(String seat){
 
@@ -361,9 +375,15 @@ public class SeatSelectionFragment extends BaseFragment implements BookingPresen
     }
 
     @Override
-    public void onSeatSelect() {
+    public void onSeatSelect(SeatSelectionReveice obj){
         dismissLoading();
-        Log.e("Success","true");
+        String status = obj.getObj().getStatus();
+        if(status.equals("success")){
+
+           Intent intent = new Intent(getActivity(), ItinenaryActivity.class);
+           intent.putExtra("ITINENARY_INFORMATION", (new Gson()).toJson(obj));
+           getActivity().startActivity(intent);
+       }
     }
 
     @Override

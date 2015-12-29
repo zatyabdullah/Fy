@@ -7,6 +7,7 @@ import com.fly.firefly.api.obj.FailedConnectToServer;
 import com.fly.firefly.api.obj.FlightInfo;
 import com.fly.firefly.api.obj.PassengerInfoReveice;
 import com.fly.firefly.api.obj.SearchFlightReceive;
+import com.fly.firefly.api.obj.SeatSelectionReveice;
 import com.fly.firefly.api.obj.SelectFlightReceive;
 import com.fly.firefly.rhymes.RhymesRequestedEvent;
 import com.fly.firefly.ui.object.ContactInfo;
@@ -38,14 +39,22 @@ public class BookingPresenter {
     }
 
     public interface SeatSelectionView{
-        void onSeatSelect();
+        void onSeatSelect(SeatSelectionReveice obj);
 
     }
+
+    public interface ItinenaryView{
+        //void onSeatSelect();
+    }
+
+
     private SearchFlightView view;
     private ListFlightView view2;
     private PassengerInfoView view3;
     private ContactInfoView view4;
     private SeatSelectionView view5;
+    private ItinenaryView view6;
+
 
     private final Bus bus;
 
@@ -73,6 +82,12 @@ public class BookingPresenter {
         this.view5 = view;
         this.bus = bus;
     }
+
+    public BookingPresenter(ItinenaryView view, Bus bus) {
+        this.view6 = view;
+        this.bus = bus;
+    }
+
 
     /*User Search FLight*/
     public void searchFlight(SearchFlightObj flightObj) {
@@ -119,6 +134,11 @@ public class BookingPresenter {
     @Subscribe
     public void onContactInfoReceive(ContactInfoReceive event) {
         view4.onContactInfo(event);
+    }
+
+    @Subscribe
+    public void onSeatReceive(SeatSelectionReveice event) {
+        view5.onSeatSelect(event);
     }
 
 

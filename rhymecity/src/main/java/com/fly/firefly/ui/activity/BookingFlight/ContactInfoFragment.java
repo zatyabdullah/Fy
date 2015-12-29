@@ -380,13 +380,22 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
         String status = obj.getObj().getStatus();
         if(status.equals("success")){
 
-            Gson gsonFlight = new Gson();
-            String seat = gsonFlight.toJson(obj);
-            pref.setSeat(seat);
+            if(withSeat){
+                Gson gsonFlight = new Gson();
+                String seat = gsonFlight.toJson(obj);
+                pref.setSeat(seat);
 
-            Intent intent = new Intent(getActivity(), SeatSelectionActivity.class);
-            intent.putExtra("SEAT_INFORMATION", (new Gson()).toJson(obj));
-            getActivity().startActivity(intent);
+                Intent intent = new Intent(getActivity(), SeatSelectionActivity.class);
+                intent.putExtra("SEAT_INFORMATION", (new Gson()).toJson(obj));
+                getActivity().startActivity(intent);
+            }else{
+
+                Intent intent = new Intent(getActivity(), ItinenaryActivity.class);
+                intent.putExtra("ITINENARY_INFORMATION", (new Gson()).toJson(obj));
+                getActivity().startActivity(intent);
+            }
+
+
         }
     }
 

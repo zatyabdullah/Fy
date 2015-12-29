@@ -38,7 +38,7 @@ import java.util.HashMap;
 import de.keyboardsurfer.android.widget.crouton.Configuration;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
-//import dmax.dialog.SpotsDialog;
+import dmax.dialog.SpotsDialog;
 
 
 public class BaseFragment extends Fragment {
@@ -49,7 +49,7 @@ public class BaseFragment extends Fragment {
 	private String selected;
 	private static SharedPrefManager prefManager;
 	private static Country obj = new Country();
-	private static Dialog mProgressDialog;
+	private static SpotsDialog mProgressDialog;
 
 
 	public void croutonAlert(Activity act,String msg){
@@ -93,10 +93,10 @@ public class BaseFragment extends Fragment {
 	public static void initiateLoading(Activity act){
 
 
-		mProgressDialog = new Dialog(act);
+		mProgressDialog = new SpotsDialog(act,R.style.SpotsDialogDefault);
 		//mProgressDialog.setIndeterminate(false);
 		mProgressDialog.setCancelable(true);
-		//mProgressDialog.setMessage("Loading...");
+		mProgressDialog.setMessage("Loading...");
 
 		WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
 		//lp.copyFrom(mProgressDialog.getWindow().getAttributes());

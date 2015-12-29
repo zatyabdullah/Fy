@@ -147,5 +147,5 @@ dependencies {
      }*/
 
     //animation
-    //compile 'com.github.d-max:spots-dialog:0.4@aar'
+    compile 'com.github.d-max:spots-dialog:0.4@aar'
 }

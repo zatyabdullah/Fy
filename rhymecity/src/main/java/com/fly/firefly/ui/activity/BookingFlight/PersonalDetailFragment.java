@@ -322,7 +322,10 @@ public class PersonalDetailFragment extends BaseFragment implements DatePickerDi
                     /*DOB*/
                         String fullDOB = dob.getText().toString();
                         String[] splitDOB = fullDOB.split(" ");
-                        String monthInInteger = getMonthInInteger(splitDOB[1]);
+                        Log.e(splitDOB[1],splitDOB[2]);
+                        Log.e(fullDOB, splitDOB[0]);
+
+                        /*String monthInInteger = getMonthInInteger(splitDOB[1]);
                         String varDay = null;
                         if (Integer.parseInt(splitDOB[0]) < 10) {
                             varDay = "0";
@@ -331,6 +334,8 @@ public class PersonalDetailFragment extends BaseFragment implements DatePickerDi
                         }
                         //Log.e("DOB",splitDOB[2]+"-"+splitDOB[1]+"-"+varDay+""+splitDOB[0]);
                         passengerInfo.setDob(splitDOB[2] + "-" + monthInInteger + "-" + varDay + "" + splitDOB[0]);
+                    */
+                        passengerInfo.setDob("1990-07-03");
 
                     /*Travel Doc*/
                         String travelDocCode = getTravelDocCode(getActivity(), travelDoc.getText().toString());
