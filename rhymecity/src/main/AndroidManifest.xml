@@ -37,7 +37,13 @@
         <activity android:name=".ui.activity.BookingFlight.SearchFlightActivity" />
         <activity android:name=".ui.activity.BookingFlight.FlightDetailActivity" />
         <activity android:name=".ui.activity.BookingFlight.PersonalDetailActivity" />
-        <activity android:name=".ui.activity.BookingFlight.SeatSelectionActivity" />
+        <activity android:name=".ui.activity.BookingFlight.SeatSelectionActivity" >
+
+        </activity>
+
+
+
+
         <activity android:name=".ui.activity.BookingFlight.ItinenaryActivity" />
         <activity android:name=".ui.activity.BookingFlight.PaymentFlightActivity" />
         <activity android:name=".ui.activity.MobileCheckIn.MobileCheckInActivity1" />
@@ -65,12 +71,12 @@
 
         <!-- SPLASH SCREEN -->
         <activity android:name=".ui.activity.SplashScreen.SplashScreenActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".ui.activity.PasswordExpired.ChangePasswordActivity"
