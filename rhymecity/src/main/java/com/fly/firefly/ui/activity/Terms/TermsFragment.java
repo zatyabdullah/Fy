@@ -1,6 +1,5 @@
 package com.fly.firefly.ui.activity.Terms;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
@@ -8,8 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.fly.firefly.AnalyticsApplication;
@@ -18,22 +15,18 @@ import com.fly.firefly.R;
 import com.fly.firefly.api.obj.TermsReceive;
 import com.fly.firefly.base.BaseFragment;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
-import com.fly.firefly.ui.activity.Homepage.HomeActivity;
 import com.fly.firefly.ui.module.TermsModule;
 import com.fly.firefly.ui.presenter.TermsPresenter;
 import com.fly.firefly.utils.SharedPrefManager;
 import com.google.android.gms.analytics.Tracker;
-import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class TermsFragment extends BaseFragment implements TermsPresenter.TermsView,Validator.ValidationListener  {
+public class TermsFragment extends BaseFragment implements TermsPresenter.TermsView {
 
     // Validator Attributes
     private Validator mValidator;
@@ -76,10 +69,7 @@ public class TermsFragment extends BaseFragment implements TermsPresenter.TermsV
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FireFlyApplication.get(getActivity()).createScopedGraph(new TermsModule(this)).inject(this);
-        // Validator
-        mValidator = new Validator(this);
-        mValidator.setValidationListener(this);
-        mValidator.setValidationMode(Validator.Mode.BURST);
+
 
     }
 
@@ -90,28 +80,6 @@ public class TermsFragment extends BaseFragment implements TermsPresenter.TermsV
         ButterKnife.inject(this, view);
 
         presenter.onUpdateTerms();
-       // pref = new SharedPrefManager(getActivity());
-
-
-
-
-
-        /*Display Data*/
-    /* JSONArray jsonTerm = getTermInfo(getActivity());
-
-        //JSONArray jTerm_content = jsonTerm.getJSONArray();
-
-       // for (int i = 0; i < jsonTerm.length(); i++)
-       // {
-            JSONObject term = (JSONObject) jsonTerm.opt(0);
-
-            String id = term.optString("id");
-            String term_title = term.optString("title");
-            String content = term.optString("body");
-
-            terms1.setText(term_title);
-            terms_1.setText(Html.fromHtml(content));*/
-        //}
 
         return view;
     }
@@ -134,63 +102,28 @@ public class TermsFragment extends BaseFragment implements TermsPresenter.TermsV
             terms7.setText(obj.getTerm().get(6).getTitle());
 
 
-            terms_1.setText(Html.fromHtml(obj.getTerm().get(0).getBody()));
-            terms_2.setText(Html.fromHtml(obj.getTerm().get(1).getBody()));
-            terms_3.setText(Html.fromHtml(obj.getTerm().get(2).getBody()));
 
-            terms_4.setText(Html.fromHtml(obj.getTerm().get(3).getBody()));
+            terms_1.setText(Html.fromHtml(obj.getTerm().get(0).getBody().replaceAll("<li>", "<p><br>&#149;")));
+            terms_2.setText(Html.fromHtml(obj.getTerm().get(1).getBody().replaceAll("<li>", "<p><br>&#149;")));
+            terms_3.setText(Html.fromHtml(obj.getTerm().get(2).getBody().replaceAll("<li>", "<p><br>&#149;")));
+
+            terms_4.setText(Html.fromHtml(obj.getTerm().get(3).getBody().replaceAll("<li>", "<p><br>&#149;")));
             terms_4.setMovementMethod(LinkMovementMethod.getInstance());
 
-            terms_5.setText(Html.fromHtml(obj.getTerm().get(4).getBody()));
+            terms_5.setText(Html.fromHtml(obj.getTerm().get(4).getBody().replaceAll("<li>", "<p><br>&#149;")));
             terms_5.setMovementMethod(LinkMovementMethod.getInstance());
 
-            terms_6.setText(Html.fromHtml(obj.getTerm().get(5).getBody()));
+            terms_6.setText(Html.fromHtml(obj.getTerm().get(5).getBody().replaceAll("<li>", "<p><br>&#149;")));
             terms_6.setMovementMethod(LinkMovementMethod.getInstance());
-            terms_7.setText(Html.fromHtml(obj.getTerm().get(6).getBody()));
+            terms_7.setText(Html.fromHtml(obj.getTerm().get(6).getBody().replaceAll("<li>","<p><br>&#149;")));
 
         }
-        else if (obj.getStatus().equals("error_validation")) {
-            croutonAlert(getActivity(), obj.getMessage());
-            Log.e("error validation", obj.getMessage());
-        }
-    }
-
-
-    public void goHomePage()
-    {
-        Intent loginPage = new Intent(getActivity(), HomeActivity.class);
-        getActivity().startActivity(loginPage);
-        getActivity().finish();
 
     }
 
-    //Validator Result//
-    @Override
-    public void onValidationSucceeded() {
-        Log.e("Validation", "success");
 
-    }
 
-    @Override
-    public void onValidationFailed(List<ValidationError> errors) {
-        Log.e("Validation","fail");
-        for (ValidationError error : errors) {
-            View view = error.getView();
 
-            String message = error.getCollatedErrorMessage(getActivity());
-            String splitErrorMsg[] = message.split("\\r?\\n");
-
-            // Display error messages
-            if (view instanceof EditText) {
-                ((EditText) view).setError(splitErrorMsg[0]);
-            }
-            else if (view instanceof CheckBox){
-                ((CheckBox) view).setError(splitErrorMsg[0]);
-                croutonAlert(getActivity(), splitErrorMsg[0]);
-            }
-        }
-
-    }
 
 
 

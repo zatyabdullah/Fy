@@ -1,19 +1,13 @@
 package com.fly.firefly.ui.presenter;
 
-import android.util.Log;
-
 import com.fly.firefly.api.obj.ContactInfoReceive;
-import com.fly.firefly.api.obj.FailedConnectToServer;
-import com.fly.firefly.api.obj.FlightInfo;
 import com.fly.firefly.api.obj.PassengerInfoReveice;
 import com.fly.firefly.api.obj.SearchFlightReceive;
 import com.fly.firefly.api.obj.SeatSelectionReveice;
 import com.fly.firefly.api.obj.SelectFlightReceive;
-import com.fly.firefly.rhymes.RhymesRequestedEvent;
 import com.fly.firefly.ui.object.ContactInfo;
 import com.fly.firefly.ui.object.Passenger;
 import com.fly.firefly.ui.object.SearchFlightObj;
-import com.fly.firefly.ui.object.SeatSelect;
 import com.fly.firefly.ui.object.SeatSelection;
 import com.fly.firefly.ui.object.SelectFlight;
 import com.squareup.otto.Bus;
@@ -44,6 +38,7 @@ public class BookingPresenter {
     }
 
     public interface ItinenaryView{
+        void onContactInfo(ContactInfoReceive obj);
         //void onSeatSelect();
     }
 
@@ -115,6 +110,7 @@ public class BookingPresenter {
     }
 
 
+
     @Subscribe
     public void onSearchFlight(SearchFlightReceive event) {
         /*Save Session And Redirect To Homepage*/
@@ -141,6 +137,8 @@ public class BookingPresenter {
         view5.onSeatSelect(event);
     }
 
+   //@Subscribe
+   // public void onItineraryReceive(ContactInfoReceive event) {view6.onItineraryInfo(event);}
 
     public void onResume() {
         bus.register(this);
