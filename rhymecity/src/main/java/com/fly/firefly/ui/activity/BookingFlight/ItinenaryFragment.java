@@ -134,6 +134,16 @@ public class ItinenaryFragment extends BaseFragment implements BookingPresenter.
         String flightType_return = obj.getObj().getFlight_details().get(1).getType();
 
 
+        /*String go_guest_price = obj.getObj().getPrice_details().get(0).getTotal_guest();
+        String go_tax_price = obj.getObj().getPrice_details().get(0).getTaxes_or_fees().getTotal();
+
+        String ret_guest_price = obj.getObj().getPrice_details().get(1).getTotal_guest();
+        String ret_tax_price = obj.getObj().getPrice_details().get(1).getTaxes_or_fees().getTotal();
+
+        String num = go_guest_price.replaceAll(".*?(\\d+).*", "");
+        int total = Integer.parseInt(num);*/
+
+
         if (flightType_go.equals("Going Out")) {
             oneWayBlock.setVisibility(View.VISIBLE);
           //  returnblock.setVisibility(View.GONE);
@@ -151,7 +161,7 @@ public class ItinenaryFragment extends BaseFragment implements BookingPresenter.
             return_guest_price.setText((obj.getObj().getPrice_details().get(1).getTotal_guest()));
             return_tax_price.setText(obj.getObj().getPrice_details().get(1).getTaxes_or_fees().getTotal());
 
-           // sumtotalPrice.setText(total_all);
+          // sumtotalPrice.setText(Integer.toString(total));
         }
          // returnblock.setVisibility(View.GONE);
 

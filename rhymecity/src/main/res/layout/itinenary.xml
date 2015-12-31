@@ -150,7 +150,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="Guest @ MYR"
                                     android:id="@+id/oneway_guest"
-                                    android:textSize="16dp"/>
+                                    android:textSize="14dp"/>
 
                             </LinearLayout>
 
@@ -167,7 +167,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="0.00MYR"
                                     android:id="@+id/oneway_guest_price"
-                                    android:textSize="16dp"/>
+                                    android:textSize="14dp"/>
 
                             </LinearLayout>
                         </LinearLayout>
@@ -192,7 +192,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="Taxes/Fee"
                                     android:id="@+id/oneway_tax"
-                                    android:textSize="16dp" />
+                                    android:textSize="14dp" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -209,7 +209,7 @@
                                     android:text="0.00MYR"
                                     android:layout_marginTop="2dp"
                                     android:id="@+id/oneway_tax_price"
-                                    android:textSize="16dp" />
+                                    android:textSize="14dp" />
                             </LinearLayout>
                         </LinearLayout>
 
@@ -250,7 +250,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="Guest @ MYR"
                                     android:id="@+id/return_guest"
-                                    android:textSize="16dp"/>
+                                    android:textSize="14dp"/>
 
                             </LinearLayout>
 
@@ -267,7 +267,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="0.00MYR"
                                     android:id="@+id/return_guest_price"
-                                    android:textSize="16dp"/>
+                                    android:textSize="14dp"/>
 
                             </LinearLayout>
                         </LinearLayout>
@@ -292,7 +292,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="Taxes/Fee"
                                     android:id="@+id/return_tax"
-                                    android:textSize="16dp" />
+                                    android:textSize="14dp" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -309,7 +309,7 @@
                                     android:text="0.00MYR"
                                     android:id="@+id/return_tax_price"
                                     android:layout_marginTop="2dp"
-                                    android:textSize="16dp" />
+                                    android:textSize="14dp" />
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
@@ -349,7 +349,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="Insurance"
                                     android:id="@+id/insurance_details"
-                                    android:textSize="16dp" />
+                                    android:textSize="14dp" />
 
                                 <TextView
                                     android:layout_marginTop="10dp"
@@ -357,7 +357,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="Taxes/Fee"
                                     android:id="@+id/tax_details"
-                                    android:textSize="16dp" />
+                                    android:textSize="14dp" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -373,7 +373,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="0.00MYR"
                                     android:id="@+id/insurance_price"
-                                    android:textSize="16dp" />
+                                    android:textSize="14dp" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -381,7 +381,7 @@
                                     android:text="0.00MYR"
                                     android:layout_marginTop="10dp"
                                     android:id="@+id/tax_price"
-                                    android:textSize="16dp" />
+                                    android:textSize="14dp" />
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
@@ -412,6 +412,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="TOTAL PRICE"
                                     android:textStyle="bold"
+                                    android:textColor="@color/myrColour"
                                     android:id="@+id/txt_sumtotalPrice"
                                     android:textSize="18dp" />
 
@@ -430,7 +431,8 @@
                                     android:layout_height="wrap_content"
                                     android:text="0.00MYR"
                                     android:id="@+id/sumtotalPrice"
-                                    android:textSize="18dp" />
+                                    android:textSize="18dp"
+                                    android:textColor="@color/myrColour"/>
 
                             </LinearLayout>
                         </LinearLayout>
