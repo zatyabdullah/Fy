@@ -1,6 +1,7 @@
 package com.fly.firefly.ui.activity.BookingFlight;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,8 +33,8 @@ public class ItinenaryFragment extends BaseFragment implements BookingPresenter.
     @Inject
     BookingPresenter presenter;
 
-    @InjectView(R.id.btnSummary)
-    Button btnSummary;
+    @InjectView(R.id.btnItinerary)
+    Button btnItinerary;
 
     @InjectView(R.id.txtService)
     TextView txtService;
@@ -170,6 +171,14 @@ public class ItinenaryFragment extends BaseFragment implements BookingPresenter.
             ServiceFeesblock.setVisibility(View.GONE);
 
         }
+
+        btnItinerary.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent seatSelection = new Intent(getActivity(), PaymentFlightActivity.class);
+                getActivity().startActivity(seatSelection);
+            }
+        });
 
         return view;
     }

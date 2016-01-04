@@ -468,7 +468,7 @@
                             android:text="@string/general_continue"
                             android:textColor="@color/white"
                             android:textStyle="bold"
-                            android:id="@+id/btnSummary"
+                            android:id="@+id/btnItinerary"
                             android:background="@drawable/login_login_button_clicked"/>
 
                     </LinearLayout>
