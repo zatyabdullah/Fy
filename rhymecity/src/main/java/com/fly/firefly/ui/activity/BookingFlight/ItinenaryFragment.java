@@ -135,16 +135,19 @@ public class ItinenaryFragment extends BaseFragment implements BookingPresenter.
         bookingID = initBookingID.get(SharedPrefManager.BOOKING_ID);
 
 
-        //Flight Type - oneway or coming back
-        if(obj.getObj().getFlight_details().toArray().length <2){
-            flightType_return = null;
-        }
-
         //ONEWAY DETAILS
         txtOneway.setText(obj.getObj().getFlight_details().get(0).getStation());
         oneway_guest.setText(obj.getObj().getPrice_details().get(0).getGuest());
         oneway_guest_price.setText((obj.getObj().getPrice_details().get(0).getTotal_guest()));
         oneway_tax_price.setText(obj.getObj().getPrice_details().get(0).getTaxes_or_fees().getTotal());
+
+        //RETURN DETAILS
+        if(obj.getObj().getFlight_details().toArray().length >1){
+            txt_return.setText(obj.getObj().getFlight_details().get(1).getStation());
+            return_guest.setText(obj.getObj().getPrice_details().get(1).getGuest());
+            return_guest_price.setText((obj.getObj().getPrice_details().get(1).getTotal_guest()));
+            return_tax_price.setText(obj.getObj().getPrice_details().get(1).getTaxes_or_fees().getTotal());
+        }
 
         //Total Price
         sumtotalPrice.setText(obj.getObj().getTotal_price());
@@ -154,15 +157,9 @@ public class ItinenaryFragment extends BaseFragment implements BookingPresenter.
             oneWayBlock.setVisibility(View.VISIBLE);
             returnblock.setVisibility(View.GONE);
 
-        } else if(obj.getObj().getFlight_details().toArray().length >2) {
+        } else if(obj.getObj().getFlight_details().toArray().length >1) {
             oneWayBlock.setVisibility(View.VISIBLE);
             returnblock.setVisibility(View.VISIBLE);
-
-            //RETURN DETAILS
-            txt_return.setText(obj.getObj().getFlight_details().get(1).getStation());
-            return_guest.setText(obj.getObj().getPrice_details().get(1).getGuest());
-            return_guest_price.setText((obj.getObj().getPrice_details().get(1).getTotal_guest()));
-            return_tax_price.setText(obj.getObj().getPrice_details().get(1).getTaxes_or_fees().getTotal());
         }
 
         if(obj.getStatus()!= null && obj.getStatus().equals("Services and Fees")) {
