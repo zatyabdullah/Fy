@@ -20,6 +20,11 @@ public class ContactInfoReceive {
     private List<FlightDetails> flight_details;
     private List<PriceDetails> price_details;
     private List<Services> services;
+    private  String total_price;
+
+    public String getTotal_price() {return total_price;}
+
+    public void setTotal_price(String total_price) {this.total_price = total_price;}
 
 
     public List<FlightDetails> getFlight_details() {
@@ -354,7 +359,7 @@ public class ContactInfoReceive {
     public class Services{
 
         private String service_name;
-        private  String service_price;
+        private String service_price;
 
         public String getService_name() {
             return service_name;

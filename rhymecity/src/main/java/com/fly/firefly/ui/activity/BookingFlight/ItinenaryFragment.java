@@ -41,6 +41,9 @@ public class ItinenaryFragment extends BaseFragment implements BookingPresenter.
     @InjectView(R.id.insurance_details)
     TextView insurance_details;
 
+    @InjectView(R.id.insurance_price)
+    TextView insurance_price;
+
     @InjectView(R.id.tax_details)
     TextView tax_details;
 
@@ -130,48 +133,43 @@ public class ItinenaryFragment extends BaseFragment implements BookingPresenter.
         HashMap<String, String> initBookingID = pref.getBookingID();
         bookingID = initBookingID.get(SharedPrefManager.BOOKING_ID);
 
+        //Flight Type - oneway or coming back
         String flightType_go = obj.getObj().getFlight_details().get(0).getType();
         String flightType_return = obj.getObj().getFlight_details().get(1).getType();
 
+        //ONEWAY DETAILS
+        txtOneway.setText(obj.getObj().getFlight_details().get(0).getStation());
+        oneway_guest.setText(obj.getObj().getPrice_details().get(0).getGuest());
+        oneway_guest_price.setText((obj.getObj().getPrice_details().get(0).getTotal_guest()));
+        oneway_tax_price.setText(obj.getObj().getPrice_details().get(0).getTaxes_or_fees().getTotal());
 
-        /*String go_guest_price = obj.getObj().getPrice_details().get(0).getTotal_guest();
-        String go_tax_price = obj.getObj().getPrice_details().get(0).getTaxes_or_fees().getTotal();
+        //RETURN DETAILS
+        txt_return.setText(obj.getObj().getFlight_details().get(1).getStation());
+        return_guest.setText(obj.getObj().getPrice_details().get(1).getGuest());
+        return_guest_price.setText((obj.getObj().getPrice_details().get(1).getTotal_guest()));
+        return_tax_price.setText(obj.getObj().getPrice_details().get(1).getTaxes_or_fees().getTotal());
 
-        String ret_guest_price = obj.getObj().getPrice_details().get(1).getTotal_guest();
-        String ret_tax_price = obj.getObj().getPrice_details().get(1).getTaxes_or_fees().getTotal();
+        //Total Price
+        sumtotalPrice.setText(obj.getObj().getTotal_price());
 
-        String num = go_guest_price.replaceAll(".*?(\\d+).*", "");
-        int total = Integer.parseInt(num);*/
-
-
-        if (flightType_go.equals("Going Out")) {
+        //Block Hidden If null
+        if ( flightType_return.equals(null)&& !flightType_return.equals("Coming Back")) {
             oneWayBlock.setVisibility(View.VISIBLE);
-          //  returnblock.setVisibility(View.GONE);
-            txtOneway.setText(obj.getObj().getFlight_details().get(0).getStation());
-            oneway_guest.setText(obj.getObj().getPrice_details().get(0).getGuest());
-            oneway_guest_price.setText((obj.getObj().getPrice_details().get(0).getTotal_guest()));
-            oneway_tax_price.setText(obj.getObj().getPrice_details().get(0).getTaxes_or_fees().getTotal());
+            returnblock.setVisibility(View.GONE);
 
-
-       // }else if(!flightType_return.equals("")){
-           // oneWayBlock.setVisibility(View.VISIBLE);
+        } else if(flightType_return.equals("Coming Back")) {
+            oneWayBlock.setVisibility(View.VISIBLE);
             returnblock.setVisibility(View.VISIBLE);
-            txt_return.setText(obj.getObj().getFlight_details().get(1).getStation());
-            return_guest.setText(obj.getObj().getPrice_details().get(1).getGuest());
-            return_guest_price.setText((obj.getObj().getPrice_details().get(1).getTotal_guest()));
-            return_tax_price.setText(obj.getObj().getPrice_details().get(1).getTaxes_or_fees().getTotal());
-
-          // sumtotalPrice.setText(Integer.toString(total));
         }
-         // returnblock.setVisibility(View.GONE);
 
-        //}else if(status.equals("Services and Fees")){
+        if(obj.getStatus()!= null && obj.getStatus().equals("Services and Fees")) {
+            ServiceFeesblock.setVisibility(View.VISIBLE);
+            insurance_details.setText(obj.getObj().getServices().get(0).getService_name());
+            insurance_price.setText(obj.getObj().getServices().get(0).getService_price());
+        }else{
+            ServiceFeesblock.setVisibility(View.GONE);
 
-        ServiceFeesblock.setVisibility(View.VISIBLE);
-       // insurance_details.setText(obj.getServices().get(0).getService_name());
-
-        // }
-
+        }
 
         return view;
     }
@@ -183,24 +181,6 @@ public class ItinenaryFragment extends BaseFragment implements BookingPresenter.
         String status = obj.getObj().getStatus();
         Log.e("Receive", "success");
 
-       /* //  if (status.equals("success")) {
-        if (obj.getFlight_details().get(0).getType().equals("Going Out")){
-            oneWayBlock.setVisibility(View.VISIBLE);
-            oneway_guest.setText(obj.getPrice_details().get(0).getGuest());
-          //  oneway_guest_price.setText((obj.getPrice_details().get(0).getTotal_guest()));
-
-      }else if(obj.getFlight_details().get(0).getType().equals("Coming Back"))
-          returnblock.setVisibility(View.VISIBLE);
-         // return_guest.setText(obj.getPrice_details().get(0).getGuest());
-
-          // returnblock.setVisibility(View.GONE);
-
-           //}else if(status.equals("Services and Fees")){
-
-           ServiceFeesblock.setVisibility(View.VISIBLE);
-           insurance_details.setText(obj.getServices().get(0).getService_name());*/
-
-           // }
 
 
         }
