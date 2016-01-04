@@ -97,6 +97,7 @@ public class ItinenaryFragment extends BaseFragment implements BookingPresenter.
     private int fragmentContainerId;
     private SharedPrefManager pref;
     private String bookingID,signature;
+    private String flightType_return;
 
     View view;
 
@@ -133,9 +134,11 @@ public class ItinenaryFragment extends BaseFragment implements BookingPresenter.
         HashMap<String, String> initBookingID = pref.getBookingID();
         bookingID = initBookingID.get(SharedPrefManager.BOOKING_ID);
 
+
         //Flight Type - oneway or coming back
-        String flightType_go = obj.getObj().getFlight_details().get(0).getType();
-        String flightType_return = obj.getObj().getFlight_details().get(1).getType();
+        if(obj.getObj().getFlight_details().toArray().length <2){
+            flightType_return = null;
+        }
 
         //ONEWAY DETAILS
         txtOneway.setText(obj.getObj().getFlight_details().get(0).getStation());
@@ -143,23 +146,23 @@ public class ItinenaryFragment extends BaseFragment implements BookingPresenter.
         oneway_guest_price.setText((obj.getObj().getPrice_details().get(0).getTotal_guest()));
         oneway_tax_price.setText(obj.getObj().getPrice_details().get(0).getTaxes_or_fees().getTotal());
 
-        //RETURN DETAILS
-        txt_return.setText(obj.getObj().getFlight_details().get(1).getStation());
-        return_guest.setText(obj.getObj().getPrice_details().get(1).getGuest());
-        return_guest_price.setText((obj.getObj().getPrice_details().get(1).getTotal_guest()));
-        return_tax_price.setText(obj.getObj().getPrice_details().get(1).getTaxes_or_fees().getTotal());
-
         //Total Price
         sumtotalPrice.setText(obj.getObj().getTotal_price());
 
         //Block Hidden If null
-        if ( flightType_return.equals(null)&& !flightType_return.equals("Coming Back")) {
+        if(obj.getObj().getFlight_details().toArray().length <2) {
             oneWayBlock.setVisibility(View.VISIBLE);
             returnblock.setVisibility(View.GONE);
 
-        } else if(flightType_return.equals("Coming Back")) {
+        } else if(obj.getObj().getFlight_details().toArray().length >2) {
             oneWayBlock.setVisibility(View.VISIBLE);
             returnblock.setVisibility(View.VISIBLE);
+
+            //RETURN DETAILS
+            txt_return.setText(obj.getObj().getFlight_details().get(1).getStation());
+            return_guest.setText(obj.getObj().getPrice_details().get(1).getGuest());
+            return_guest_price.setText((obj.getObj().getPrice_details().get(1).getTotal_guest()));
+            return_tax_price.setText(obj.getObj().getPrice_details().get(1).getTaxes_or_fees().getTotal());
         }
 
         if(obj.getStatus()!= null && obj.getStatus().equals("Services and Fees")) {
