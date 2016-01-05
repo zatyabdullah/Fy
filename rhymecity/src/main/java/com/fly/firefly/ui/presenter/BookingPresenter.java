@@ -1,21 +1,20 @@
 package com.fly.firefly.ui.presenter;
 
-import android.util.Log;
-
 import com.fly.firefly.api.obj.ContactInfoReceive;
-import com.fly.firefly.api.obj.FailedConnectToServer;
-import com.fly.firefly.api.obj.FlightInfo;
 import com.fly.firefly.api.obj.PassengerInfoReveice;
+import com.fly.firefly.api.obj.PaymentInfoReceive;
+import com.fly.firefly.api.obj.PaymentReceive;
 import com.fly.firefly.api.obj.SearchFlightReceive;
 import com.fly.firefly.api.obj.SeatSelectionReveice;
 import com.fly.firefly.api.obj.SelectFlightReceive;
-import com.fly.firefly.rhymes.RhymesRequestedEvent;
+import com.fly.firefly.ui.object.BaseObj;
 import com.fly.firefly.ui.object.ContactInfo;
 import com.fly.firefly.ui.object.Passenger;
+import com.fly.firefly.ui.object.Payment;
 import com.fly.firefly.ui.object.SearchFlightObj;
-import com.fly.firefly.ui.object.SeatSelect;
 import com.fly.firefly.ui.object.SeatSelection;
 import com.fly.firefly.ui.object.SelectFlight;
+import com.fly.firefly.ui.object.Signature;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
@@ -47,6 +46,11 @@ public class BookingPresenter {
         //void onSeatSelect();
     }
 
+    public interface PaymentFlightView{
+       void onPaymentInfoReceive(PaymentInfoReceive obj);
+       void onPaymentReceive(PaymentReceive obj);
+    }
+
 
     private SearchFlightView view;
     private ListFlightView view2;
@@ -54,6 +58,7 @@ public class BookingPresenter {
     private ContactInfoView view4;
     private SeatSelectionView view5;
     private ItinenaryView view6;
+    private PaymentFlightView view7;
 
 
     private final Bus bus;
@@ -88,6 +93,10 @@ public class BookingPresenter {
         this.bus = bus;
     }
 
+    public BookingPresenter(PaymentFlightView view, Bus bus) {
+        this.view7 = view;
+        this.bus = bus;
+    }
 
     /*User Search FLight*/
     public void searchFlight(SearchFlightObj flightObj) {
@@ -114,6 +123,22 @@ public class BookingPresenter {
         bus.post(new SeatSelection(obj));
     }
 
+    /*User Input Passenger Info*/
+    public void paymentInfo(Signature obj) {
+        bus.post(new Signature(obj));
+    }
+
+    /*User Payment*/
+    public void paymentRequest(Payment obj) {
+        bus.post(new Payment(obj));
+    }
+
+
+    @Subscribe
+    public void onPaymentInfoReceive(PaymentInfoReceive event) {
+        /*Save Session And Redirect To Homepage*/
+        view7.onPaymentInfoReceive(event);
+    }
 
     @Subscribe
     public void onSearchFlight(SearchFlightReceive event) {
@@ -140,6 +165,13 @@ public class BookingPresenter {
     public void onSeatReceive(SeatSelectionReveice event) {
         view5.onSeatSelect(event);
     }
+
+    @Subscribe
+    public void onPaymentReceive(PaymentReceive event) {
+        view7.onPaymentReceive(event);
+    }
+
+
 
 
     public void onResume() {

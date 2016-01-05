@@ -611,8 +611,8 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
 
             getActivity().startActivity(flight);
 
-        }else if(obj.getStatus().equals("error_validation")){
-            croutonAlert(getActivity(), obj.getMessage());
+        }else if(obj.getJourneyObj().getStatus().equals("error")){
+            croutonAlert(getActivity(), obj.getJourneyObj().getMessage());
         }
 
     }

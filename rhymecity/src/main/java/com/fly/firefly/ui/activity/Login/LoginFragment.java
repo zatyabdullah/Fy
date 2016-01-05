@@ -198,6 +198,7 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
 
         if (obj.getStatus().equals("success")) {
             pref.setLoginStatus("Y");
+            pref.setSignatureToLocalStorage(obj.getUser_info().getSignature());
             Log.e("X", obj.getUser_info().getFirst_name());
             pref.setUsername(obj.getUser_info().getFirst_name());
 

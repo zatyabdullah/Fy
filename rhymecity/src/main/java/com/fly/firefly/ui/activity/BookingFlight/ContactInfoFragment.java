@@ -54,6 +54,7 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
     @Inject
     BookingPresenter presenter;
 
+    @Order(1) @NotEmpty
     @InjectView(R.id.txtPurpose)
     TextView txtPurpose;
 
@@ -69,6 +70,7 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
     @InjectView(R.id.txtCompanyAddress3)
     TextView txtCompanyAddress3;
 
+    @Order(2) @NotEmpty
     @InjectView(R.id.txtTitle)
     TextView txtTitle;
 
@@ -78,32 +80,49 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
     @InjectView(R.id.btnWithoutSeatSelection)
     Button btnWithoutSeatSelection;
 
-    @NotEmpty(sequence = 1)
-    @Order(1)
+    @NotEmpty
+    @Order(3)
     @InjectView(R.id.txtFirstName)
     TextView txtFirstName;
 
+
+    @NotEmpty
+    @Order(4)
     @InjectView(R.id.txtLastName)
     TextView txtLastName;
 
+    @NotEmpty
+    @Order(5)
     @InjectView(R.id.txtEmailAddress)
     TextView txtEmailAddress;
 
+    @NotEmpty
+    @Order(6)
     @InjectView(R.id.txtCountry)
     TextView txtCountry;
 
+    @NotEmpty
+    @Order(7)
     @InjectView(R.id.txtState)
     TextView txtState;
 
+    @NotEmpty
+    @Order(8)
     @InjectView(R.id.txtCity)
     TextView txtCity;
 
+    @NotEmpty
+    @Order(9)
     @InjectView(R.id.txtPostCode)
     TextView txtPostCode;
 
+    @NotEmpty
+    @Order(10)
     @InjectView(R.id.txtPhone)
     TextView txtPhone;
 
+    @NotEmpty
+    @Order(11)
     @InjectView(R.id.txtAlternatePhone)
     TextView txtAlternatePhone;
 
@@ -148,7 +167,6 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
     private Boolean boolDob = false;
     private Boolean boolExpireDate = false;
 
-
     private ArrayList<DropDownItem> stateList = new ArrayList<DropDownItem>();
     private ArrayList<DropDownItem> countrysList = new ArrayList<DropDownItem>();
     private ArrayList<DropDownItem> purposeList = new ArrayList<DropDownItem>();
@@ -187,7 +205,6 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
         Bundle bundle = getArguments();
 
         String insurance = bundle.getString("INSURANCE_STATUS");
-        Log.e("insurance",insurance);
 
         Gson gson = new Gson();
         PassengerInfoReveice obj = gson.fromJson(insurance, PassengerInfoReveice.class);
@@ -390,7 +407,7 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
                 getActivity().startActivity(intent);
             }else{
 
-                Intent intent = new Intent(getActivity(), ItinenaryActivity.class);
+                Intent intent = new Intent(getActivity(), PaymentFlightActivity.class);
                 intent.putExtra("ITINENARY_INFORMATION", (new Gson()).toJson(obj));
                 getActivity().startActivity(intent);
             }
@@ -418,7 +435,7 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
     @Override
     public void onValidationSucceeded() {
 
-          requestContacInfo();
+        requestContacInfo();
         Log.e("Success", "True");
     }
 
@@ -434,13 +451,15 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
             // Display error messages
             if (view instanceof EditText) {
                 ((EditText) view).setError(splitErrorMsg[0]);
+
             }else if(view instanceof TextView){
                 ((TextView) view).setError(splitErrorMsg[0]);
             }
             else if (view instanceof CheckBox){
                 ((CheckBox) view).setError(splitErrorMsg[0]);
-                croutonAlert(getActivity(), splitErrorMsg[0]);
+               // croutonAlert(getActivity(), splitErrorMsg[0]);
             }
+            croutonAlert(getActivity(), "Fill empty field");
 
             Log.e("Validation Failed",splitErrorMsg[0]);
 

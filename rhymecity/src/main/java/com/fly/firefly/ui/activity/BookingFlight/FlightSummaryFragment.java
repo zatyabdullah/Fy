@@ -50,29 +50,17 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.Optional;
 
-public class ItinenaryFragment extends BaseFragment implements BookingPresenter.ItinenaryView {
+public class FlightSummaryFragment extends BaseFragment implements BookingPresenter.ItinenaryView {
 
     @Inject
     BookingPresenter presenter;
 
     private int fragmentContainerId;
 
+    public static FlightSummaryFragment newInstance() {
 
-
-    private ArrayList<DropDownItem> stateList = new ArrayList<DropDownItem>();
-    private ArrayList<DropDownItem> countrysList = new ArrayList<DropDownItem>();
-    private ArrayList<DropDownItem> purposeList = new ArrayList<DropDownItem>();
-    private ArrayList<DropDownItem> titleList = new ArrayList<DropDownItem>();
-    private String selectedCountryCode;
-    private String selectedState;
-    private Validator mValidator;
-    private String insuranceTxt1,insuranceTxt2,insuranceTxt3,insuranceTxt4;
-    private boolean withSeat = false;
-    View view;
-
-    public static ItinenaryFragment newInstance(Bundle bundle) {
-
-        ItinenaryFragment fragment = new ItinenaryFragment();
+        FlightSummaryFragment fragment = new FlightSummaryFragment();
+        Bundle bundle = new Bundle();
         fragment.setArguments(bundle);
         return fragment;
 
@@ -82,23 +70,13 @@ public class ItinenaryFragment extends BaseFragment implements BookingPresenter.
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FireFlyApplication.get(getActivity()).createScopedGraph(new ItinenaryModule(this)).inject(this);
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 
-        view = inflater.inflate(R.layout.itinenary, container, false);
+        View view = inflater.inflate(R.layout.flight_summary, container, false);
         ButterKnife.inject(this, view);
-        //pref = new SharedPrefManager(getActivity());
-        Bundle bundle = getArguments();
-
-        String itinenary = bundle.getString("ITINENARY_INFORMATION");
-        Log.e("itinenary",itinenary);
-
-        /*Booking Id*/
-        //HashMap<String, String> initBookingID = pref.getBookingID();
-        //bookingID = initBookingID.get(SharedPrefManager.BOOKING_ID);
 
         return view;
     }

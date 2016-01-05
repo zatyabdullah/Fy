@@ -1,15 +1,19 @@
 package com.fly.firefly.ui.activity.SplashScreen;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.fly.firefly.FireFlyApplication;
 import com.fly.firefly.R;
+import com.fly.firefly.Controller;
 import com.fly.firefly.api.obj.DeviceInfoSuccess;
 import com.fly.firefly.base.BaseFragment;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
@@ -78,45 +82,67 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
 
 
     public void sendDeviceInformationToServer(DeviceInformation info){
+        if(Controller.connectionAvailable(getActivity())){
+            presenter.deviceInformation(info);
+            Log.e("Internet", "Ok");
+        }else{
+            Log.e("Internet", "X");
+            connectionRetry("No Internet Connection");
+        }
+    }
 
-        presenter.deviceInformation(info);
+    public void connectionRetry(String msg){
+        new AlertDialog.Builder(getActivity()).setTitle("Connection Error").setMessage(msg).setNeutralButton(getActivity().getString(R.string.TRY), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int arg1) {
+                sendDeviceInformationToServer(info);
+            }
+        }).show();
     }
 
     @Override
     public void loadingSuccess(DeviceInfoSuccess obj) {
 
-
-        String signature = obj.getObj().getSignature();
-        String bannerUrl = obj.getObj().getBanner_default();
-        String promoBannerUrl = obj.getObj().getBanner_promo();
+        Boolean status = Controller.getRequestStatus(obj.getObj().getStatus(), obj.getObj().getMessage(), getActivity());
+        if(status){
+            String signature = obj.getObj().getSignature();
+            String bannerUrl = obj.getObj().getBanner_default();
+            String promoBannerUrl = obj.getObj().getBanner_promo();
 
         /*Save All to pref for reference*/
-        Gson gsonTitle = new Gson();
-        String title = gsonTitle.toJson(obj.getObj().getData_title());
-        pref.setUserTitle(title);
+            Gson gsonTitle = new Gson();
+            String title = gsonTitle.toJson(obj.getObj().getData_title());
+            pref.setUserTitle(title);
 
-        Gson gsonCountry = new Gson();
-        String country = gsonCountry.toJson(obj.getObj().getData_country());
-        pref.setCountry(country);
+            Gson gsonCountry = new Gson();
+            String country = gsonCountry.toJson(obj.getObj().getData_country());
+            pref.setCountry(country);
 
-        Gson gsonState = new Gson();
-        String state = gsonState.toJson(obj.getObj().getData_state());
-        pref.setState(state);
+            Gson gsonState = new Gson();
+            String state = gsonState.toJson(obj.getObj().getData_state());
+            pref.setState(state);
 
-        Gson gsonFlight = new Gson();
-        String flight = gsonFlight.toJson(obj.getObj().getData_market());
-        pref.setFlight(flight);
+            Gson gsonFlight = new Gson();
+            String flight = gsonFlight.toJson(obj.getObj().getData_market());
+            pref.setFlight(flight);
         /*End*/
 
         /*Save Signature to local storage*/
-        pref.setSignatureToLocalStorage(signature);
-        pref.setBannerUrl(bannerUrl);
-        pref.setPromoBannerUrl(promoBannerUrl);
+            pref.setSignatureToLocalStorage(signature);
+            pref.setBannerUrl(bannerUrl);
+            pref.setPromoBannerUrl(promoBannerUrl);
 
-        //Redirect to homepage after success loading splashscreen
-        Intent home = new Intent(getActivity(), HomeActivity.class);
-        getActivity().startActivity(home);
-        getActivity().finish();
+            //Redirect to homepage after success loading splashscreen
+            Intent home = new Intent(getActivity(), HomeActivity.class);
+            getActivity().startActivity(home);
+            getActivity().finish();
+        }
+    }
+
+
+    @Override
+    public void onConnectionFailed() {
+        connectionRetry("Unable to connect to server");
     }
 
     @Override

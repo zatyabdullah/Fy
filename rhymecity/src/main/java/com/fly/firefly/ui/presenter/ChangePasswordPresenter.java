@@ -38,7 +38,7 @@ public class ChangePasswordPresenter {
 
 
    // @Subscribe
-    //public void onUserFailedReqPassword(FailedConnectToServer event) {
+    //public void onUserFailedReqPassword(SplashFailedConnect event) {
 //
         //*Save Session And Redirect To Homepage*//*
   //      view.onPasswordRequesFailed(event.getDummy());

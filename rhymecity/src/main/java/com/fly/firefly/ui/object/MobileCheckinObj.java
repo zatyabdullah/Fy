@@ -3,7 +3,7 @@ package com.fly.firefly.ui.object;
 /**
  * Created by Dell on 11/23/2015.
  */
-public class MobileCheckinObj extends BaseClass{
+public class MobileCheckinObj extends BaseObj {
 
     private String type;
     private String departure_station ;

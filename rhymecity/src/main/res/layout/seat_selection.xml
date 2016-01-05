@@ -361,7 +361,18 @@
                         android:orientation="vertical"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:id="@+id/seatList"
+                        android:id="@+id/seatListDepart"
+                        android:gravity="center"
+                        android:layout_gravity="center">
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_marginTop="10dp"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/seatListReturn"
                         android:gravity="center"
                         android:layout_gravity="center">
 

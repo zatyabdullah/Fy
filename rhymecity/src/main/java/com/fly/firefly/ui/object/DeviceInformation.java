@@ -3,7 +3,7 @@ package com.fly.firefly.ui.object;
 /**
  * Created by Dell on 11/9/2015.
  */
-public class DeviceInformation extends BaseClass{
+public class DeviceInformation extends BaseObj {
 
     private String sdkVersion;
     private String version;

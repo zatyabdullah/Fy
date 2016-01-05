@@ -101,7 +101,8 @@
                         android:layout_height="match_parent"
                         android:gravity="center"
                         android:padding="5dp"
-                        android:background="@color/actionBarColour_default_theme" >
+                        android:background="@color/actionBarColour_default_theme"
+                        android:visibility="gone">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -117,7 +118,7 @@
                         android:orientation="vertical"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:visibility="visible">
+                        android:visibility="gone">
 
                         <LinearLayout
                             android:orientation="vertical"
@@ -585,8 +586,7 @@
                         android:layout_height="match_parent"
                         android:gravity="center"
                         android:padding="5dp"
-                        android:background="@color/actionBarColour_default_theme"
-                        android:layout_marginTop="20dp">
+                        android:background="@color/actionBarColour_default_theme">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -618,192 +618,343 @@
                             android:layout_height="match_parent"
                             android:background="@drawable/drawable_login_bottom_border"
                             android:paddingBottom="5dp"
-                            android:paddingTop="5dp">
+                            android:paddingTop="5dp"
+                            android:id="@+id/paymentChannelList">
 
-                            <RadioButton
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Credit Card"
-                                android:id="@+id/radioButton"
-                                android:textSize="14dp"/>
 
-                            <RadioButton
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Maybank2u"
-                                android:id="@+id/radioButton2"
-                                android:textSize="14dp"/>
-
-                            <RadioButton
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Cimb Click"
-                                android:id="@+id/radioButton3"
-                                android:textSize="14dp"/>
                         </LinearLayout>
 
                         <LinearLayout
                             android:orientation="vertical"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginTop="15dp"
-                            android:paddingBottom="15dp">
+                            android:id="@+id/creditCardFormLayout">
 
                             <LinearLayout
-                                android:orientation="horizontal"
+                                android:orientation="vertical"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent">
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="15dp"
+                                 >
 
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Card Number:"
-                                    android:id="@+id/txtCardNumber"
-                                    android:textStyle="bold" />
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent" >
 
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="*"
-                                    android:textColor="@color/red"
-                                    android:id="@+id/txtAsterisk"
-                                    android:textStyle="bold" />
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Card Type:"
+                                        android:id="@+id/textView178"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="*"
+                                        android:textColor="@color/red"
+                                        android:id="@+id/textView182"
+                                        android:textStyle="bold" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@drawable/block_with_border"
+                                    android:layout_marginTop="5dp" >
+
+                                    <TextView
+                                        android:layout_width="fill_parent"
+                                        android:layout_height="wrap_content"
+                                        android:inputType="number"
+                                        android:ems="10"
+                                        android:padding="7dp"
+                                        android:id="@+id/txtCardType"
+                                        android:background="@null" />
+                                </LinearLayout>
                             </LinearLayout>
 
                             <LinearLayout
                                 android:orientation="vertical"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:background="@drawable/block_with_border"
-                                android:layout_marginTop="5dp" >
+                                android:layout_marginTop="15dp"
+                                android:paddingBottom="15dp">
 
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
 
-                                <EditText
-                                    android:layout_width="fill_parent"
-                                    android:layout_height="wrap_content"
-                                    android:inputType="number"
-                                    android:ems="10"
-                                    android:id="@+id/editText3"
-                                    android:background="@null"/>
-                            </LinearLayout>
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Card Number:"
+                                        android:textStyle="bold" />
 
-                        </LinearLayout>
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="*"
+                                        android:textColor="@color/red"
+                                        android:id="@+id/txtAsterisk"
+                                        android:textStyle="bold" />
+                                </LinearLayout>
 
-                        <LinearLayout
-                            android:orientation="vertical"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:paddingBottom="15dp">
-
-                            <LinearLayout
-                                android:orientation="horizontal"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent" >
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Expired Date:"
-                                    android:id="@+id/textView69"
-                                    android:textStyle="bold" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="*"
-                                    android:textColor="@color/red"
-                                    android:id="@+id/textView72"
-                                    android:textStyle="bold" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:orientation="horizontal"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-
-                                android:layout_marginTop="5dp"
-                                android:weightSum="1">
-
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_weight="0.4"
-                                    android:layout_height="wrap_content"
-                                    android:text="Month"
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
                                     android:background="@drawable/block_with_border"
-                                    android:id="@+id/textView73"
-                                    android:padding="4dp"
-                                    android:layout_marginRight="10dp"/>
+                                    android:layout_marginTop="5dp" >
 
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_weight="0.4"
-                                    android:layout_height="wrap_content"
-                                    android:background="@drawable/block_with_border"
-                                    android:text="Year"
-                                    android:id="@+id/textView74"
-                                    android:padding="4dp"/>
-                            </LinearLayout>
-                        </LinearLayout>
 
-                        <LinearLayout
-                            android:orientation="vertical"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:paddingBottom="15dp" >
+                                    <EditText
+                                        android:layout_width="fill_parent"
+                                        android:layout_height="wrap_content"
+                                        android:inputType="number"
+                                        android:ems="10"
+                                        android:padding="5dp"
+                                        android:id="@+id/txtCardNumber"
+                                        android:background="@null"/>
+                                </LinearLayout>
 
-                            <LinearLayout
-                                android:orientation="horizontal"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent" >
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Card Holder Name:"
-                                    android:id="@+id/textView75"
-                                    android:textStyle="bold" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="*"
-                                    android:textColor="@color/red"
-                                    android:id="@+id/textView76"
-                                    android:textStyle="bold" />
                             </LinearLayout>
 
                             <LinearLayout
                                 android:orientation="vertical"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:background="@drawable/block_with_border"
-                                android:layout_marginTop="5dp" >
+                                android:paddingBottom="15dp">
 
-                                <EditText
-                                    android:layout_width="fill_parent"
-                                    android:layout_height="wrap_content"
-                                    android:inputType="number"
-                                    android:ems="10"
-                                    android:id="@+id/editText11"
-                                    android:background="@null" />
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent" >
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Expired Date:"
+                                        android:id="@+id/textView69"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="*"
+                                        android:textColor="@color/red"
+                                        android:id="@+id/textView72"
+                                        android:textStyle="bold" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="5dp"
+                                    android:weightSum="1">
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_weight="0.5"
+                                        android:layout_height="wrap_content"
+                                        android:text="Month"
+                                        android:background="@drawable/block_with_border"
+                                        android:id="@+id/txtPaymentMonth"
+                                        android:padding="7dp"
+                                        android:layout_marginRight="10dp"/>
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_weight="0.5"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/block_with_border"
+                                        android:text="Year"
+                                        android:id="@+id/txtPaymentYear"
+                                        android:padding="7dp"/>
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:paddingBottom="15dp" >
+
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent" >
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Card Holder Name:"
+                                        android:id="@+id/textView75"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="*"
+                                        android:textColor="@color/red"
+                                        android:id="@+id/textView76"
+                                        android:textStyle="bold" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@drawable/block_with_border"
+                                    android:layout_marginTop="5dp" >
+
+                                    <EditText
+                                        android:layout_width="fill_parent"
+                                        android:layout_height="wrap_content"
+                                        android:inputType="textPersonName"
+                                        android:ems="10"
+                                        android:padding="5dp"
+                                        android:id="@+id/txtCardHolderName"
+                                        android:background="@null" />
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:paddingBottom="15dp" >
+
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent" >
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="CVV / CVC Number:"
+                                        android:id="@+id/textView184"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="*"
+                                        android:textColor="@color/red"
+                                        android:id="@+id/textView186"
+                                        android:textStyle="bold" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@drawable/block_with_border"
+                                    android:layout_marginTop="5dp" >
+
+                                    <EditText
+                                        android:layout_width="fill_parent"
+                                        android:layout_height="wrap_content"
+                                        android:inputType="numberPassword"
+                                        android:ems="10"
+                                        android:padding="5dp"
+                                        android:id="@+id/txtCardCVV"
+                                        android:background="@null" />
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:paddingBottom="15dp" >
+
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent" >
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Credit / Debit Card Issuing Bank:"
+                                        android:id="@+id/textView187"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="*"
+                                        android:textColor="@color/red"
+                                        android:id="@+id/textView189"
+                                        android:textStyle="bold" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="@drawable/block_with_border"
+                                    android:layout_marginTop="5dp" >
+
+                                    <EditText
+                                        android:layout_width="fill_parent"
+                                        android:layout_height="wrap_content"
+                                        android:ems="10"
+                                        android:padding="5dp"
+                                        android:inputType="text"
+                                        android:id="@+id/txtIssuingBank"
+                                        android:background="@null" />
+                                </LinearLayout>
                             </LinearLayout>
                         </LinearLayout>
+
                     </LinearLayout>
+
+
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center">
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:weightSum="1"
+                    android:layout_marginBottom="5dp" >
 
-                    <Button
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Continue"
-                        android:layout_marginRight="15dp"/>
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.05"
+                        android:layout_height="match_parent" />
 
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.9"
+                        android:layout_height="wrap_content" >
+
+                        <Button
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:text="PAY"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:id="@+id/btnPay"
+                            android:background="@drawable/login_login_button_clicked" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.05"
+                        android:layout_height="match_parent" />
                 </LinearLayout>
 
             </LinearLayout>
