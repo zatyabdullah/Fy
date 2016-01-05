@@ -2,6 +2,7 @@ package com.fly.firefly.ui.activity.BookingFlight;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 
 import com.fly.firefly.AnalyticsApplication;
 import com.fly.firefly.MainFragmentActivity;
@@ -14,7 +15,7 @@ import butterknife.ButterKnife;
 
 //import android.view.WindowManager;
 
-public class ContactInfoActivity extends MainFragmentActivity implements FragmentContainerActivity {
+public class FlightSummaryActivity extends MainFragmentActivity implements FragmentContainerActivity {
 
     private Tracker mTracker;
 
@@ -23,26 +24,23 @@ public class ContactInfoActivity extends MainFragmentActivity implements Fragmen
         super.onCreate(savedInstanceState);
         ButterKnife.inject(this);
 
-        AnalyticsApplication application = (AnalyticsApplication) getApplication();
-        mTracker = application.getDefaultTracker();
-
-        Bundle bundle = getIntent().getExtras();
-
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.main_content, ContactInfoFragment.newInstance(bundle)).commit();
+        fragmentManager.beginTransaction().replace(R.id.main_content, FlightSummaryFragment.newInstance()).commit();
 
-        hideTitle();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mTracker.setScreenName("Personal Detail" + "A");
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override
     public int getFragmentContainerId() {
-        return R.id.main_activity_fragment_container;
+        return R.id.main_content;
     }
 }

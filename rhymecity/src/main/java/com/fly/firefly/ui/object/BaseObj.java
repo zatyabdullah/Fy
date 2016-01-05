@@ -3,10 +3,19 @@ package com.fly.firefly.ui.object;
 /**
  * Created by Dell on 11/9/2015.
  */
-public abstract class BaseClass {
+public class BaseObj {
 
     String username;
     String signature;
+    public BaseObj(){
+
+    }
+
+    public BaseObj(BaseObj obj){
+        this.username = obj.getUsername();
+        this.signature = obj.getSignature();
+    }
+
 
     public String getUsername() {
         return username;

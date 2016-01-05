@@ -8,11 +8,13 @@ import com.fly.firefly.MainFragmentActivity;
 import com.fly.firefly.api.obj.ChangePasswordReceive;
 import com.fly.firefly.api.obj.ContactInfoReceive;
 import com.fly.firefly.api.obj.DeviceInfoSuccess;
-import com.fly.firefly.api.obj.FailedConnectToServer;
+import com.fly.firefly.api.obj.SplashFailedConnect;
 import com.fly.firefly.api.obj.ForgotPasswordReceive;
 import com.fly.firefly.api.obj.LoginReceive;
 import com.fly.firefly.api.obj.MobileCheckinReceive;
 import com.fly.firefly.api.obj.PassengerInfoReveice;
+import com.fly.firefly.api.obj.PaymentInfoReceive;
+import com.fly.firefly.api.obj.PaymentReceive;
 import com.fly.firefly.api.obj.RegisterReceive;
 import com.fly.firefly.api.obj.SearchFlightReceive;
 import com.fly.firefly.api.obj.SeatSelectionReveice;
@@ -28,10 +30,12 @@ import com.fly.firefly.ui.object.LoginRequest;
 import com.fly.firefly.ui.object.MobileCheckinObj;
 import com.fly.firefly.ui.object.Passenger;
 import com.fly.firefly.ui.object.PasswordRequest;
+import com.fly.firefly.ui.object.Payment;
 import com.fly.firefly.ui.object.RegisterObj;
 import com.fly.firefly.ui.object.SearchFlightObj;
 import com.fly.firefly.ui.object.SeatSelection;
 import com.fly.firefly.ui.object.SelectFlight;
+import com.fly.firefly.ui.object.Signature;
 import com.fly.firefly.ui.object.TermsRequest;
 import com.fly.firefly.ui.object.UpdateProfileRequest;
 import com.squareup.otto.Bus;
@@ -55,6 +59,44 @@ public class ApiRequestHandler {
     }
 
 
+    // - 1
+    /* Subscribe From HomePresenter - Send Device Information to server - ImalPasha */
+    @Subscribe
+    public void onDeviceInfo(final DeviceInformation event) {
+
+        apiService.onSendDeviceInfo(event, new Callback<DeviceInfoSuccess>() {
+
+            @Override
+            public void success(DeviceInfoSuccess deviceResponse, Response response) {
+
+                bus.post(new DeviceInfoSuccess(deviceResponse));
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+                bus.post(new SplashFailedConnect());
+
+            }
+
+        });
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     @Subscribe
     public void onLoginRequest(final LoginRequest event) {
 
@@ -71,15 +113,15 @@ public class ApiRequestHandler {
             public void success(LoginReceive rhymesResponse, Response response) {
 
 
-     Log.e("Success","OK");
-               bus.post(new LoginReceive(rhymesResponse));
+                Log.e("Success", "OK");
+                bus.post(new LoginReceive(rhymesResponse));
             }
 
             @Override
             public void failure(RetrofitError error) {
 
-                bus.post(new FailedConnectToServer("Unable to connect to server"));
-              //  loading(false);
+                bus.post(new SplashFailedConnect("Unable to connect to server"));
+                //  loading(false);
             }
 
         });
@@ -106,8 +148,8 @@ public class ApiRequestHandler {
             @Override
             public void failure(RetrofitError error) {
 
-                bus.post(new FailedConnectToServer("Unable to connect to server"));
-               // loading(false);
+                bus.post(new SplashFailedConnect("Unable to connect to server"));
+                // loading(false);
             }
 
         });
@@ -132,14 +174,14 @@ public class ApiRequestHandler {
 
                 Log.e("Success", "OK");
                 bus.post(new ChangePasswordReceive(rhymesResponse));
-               // loading(false);
+                // loading(false);
             }
 
             @Override
             public void failure(RetrofitError error) {
 
-                bus.post(new FailedConnectToServer("Unable to connect to server"));
-               // loading(false);
+                bus.post(new SplashFailedConnect("Unable to connect to server"));
+                // loading(false);
             }
 
         });
@@ -170,7 +212,7 @@ public class ApiRequestHandler {
             @Override
             public void failure(RetrofitError error) {
 
-                bus.post(new FailedConnectToServer("Unable to connect to server"));
+                bus.post(new SplashFailedConnect("Unable to connect to server"));
               //  loading(false);
             }
 
@@ -208,28 +250,7 @@ public class ApiRequestHandler {
         });
     }
 
-    /* Subscribe From HomePresenter - Send Device Information to server - ImalPasha */
-    @Subscribe
-    public void onDeviceInfo(final DeviceInformation event) {
 
-        apiService.onSendDeviceInfo(event, new Callback<DeviceInfoSuccess>() {
-
-            @Override
-            public void success(DeviceInfoSuccess deviceResponse, Response response) {
-
-                bus.post(new DeviceInfoSuccess(deviceResponse));
-
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-
-                bus.post(new FailedConnectToServer("Unable to connect to server"));
-
-            }
-
-        });
-    }
 
 
     @Subscribe
@@ -274,7 +295,7 @@ public class ApiRequestHandler {
 
                 Crouton.makeText(MainFragmentActivity.getContext(), "Unable to connect to server", Style.ALERT).show();
                 Log.e("Failed", "True");
-                //bus.post(new FailedConnectToServer("Unable to connect to server"));
+                //bus.post(new SplashFailedConnect("Unable to connect to server"));
                 //loading(false);
 
             }
@@ -374,7 +395,6 @@ public class ApiRequestHandler {
             public void failure(RetrofitError error) {
 
                 Crouton.makeText(MainFragmentActivity.getContext(), "Unable to connect to server", Style.ALERT).show();
-                Log.e("Failed", error.getMessage());
 
             }
 
@@ -434,7 +454,52 @@ public class ApiRequestHandler {
         });
     }
 
+    @Subscribe
+    public void onPaymentInfo(final Signature event) {
 
+        apiService.onPaymentInfo(event, new Callback<PaymentInfoReceive>() {
+
+            @Override
+            public void success(PaymentInfoReceive responseData, Response response) {
+
+                bus.post(new PaymentInfoReceive(responseData));
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+                Crouton.makeText(MainFragmentActivity.getContext(), "Unable to connect to server", Style.ALERT).show();
+                Log.e("Failed", error.getMessage());
+
+            }
+
+        });
+    }
+
+
+    @Subscribe
+    public void onPaymentRequest(final Payment event) {
+
+        apiService.onPaymentProcess(event, new Callback<PaymentReceive>() {
+
+            @Override
+            public void success(PaymentReceive responseData, Response response) {
+
+                bus.post(new PaymentReceive(responseData));
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+                Crouton.makeText(MainFragmentActivity.getContext(), "Unable to connect to server", Style.ALERT).show();
+                Log.e("Failed", error.getMessage());
+
+            }
+
+        });
+    }
 
     @Subscribe
     public void onItineraryRequest(final ItineraryObj event) {

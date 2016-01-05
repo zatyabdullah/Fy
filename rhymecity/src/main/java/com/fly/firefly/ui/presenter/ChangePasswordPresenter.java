@@ -39,6 +39,9 @@ public class ChangePasswordPresenter {
 
 
 
+   // @Subscribe
+    //public void onUserFailedReqPassword(SplashFailedConnect event) {
+//
     @Subscribe
     public void onUserSuccessReqPassword(ChangePasswordReceive event) {
 

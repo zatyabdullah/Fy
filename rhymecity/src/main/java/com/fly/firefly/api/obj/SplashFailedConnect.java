@@ -3,14 +3,17 @@ package com.fly.firefly.api.obj;
 /**
  * Created by Dell on 11/16/2015.
  */
-public class FailedConnectToServer {
+public class SplashFailedConnect {
 
 
 
     private String dummy;
 
-    public FailedConnectToServer(String dummy2){
+    public SplashFailedConnect(String dummy2){
         dummy = dummy2;
+    }
+
+    public SplashFailedConnect(){
     }
 
     public String getDummy() {

@@ -94,6 +94,79 @@ public class ContactInfoReceive {
 
     }
 
+   /* public class PassengerSeatStatus{
+
+        private boolean passengerSelected;
+        private String passengerSeat;
+        private String passengerCompartment;
+        private String flightStatus;
+
+        public boolean getPassengerSelected() {
+            return passengerSelected;
+        }
+
+        public void setPassengerSelected(boolean passengerSelected) {
+            this.passengerSelected = passengerSelected;
+        }
+
+        public String getPassengerSeat() {
+            return passengerSeat;
+        }
+
+        public void setPassengerSeat(String passengerSeat) {
+            this.passengerSeat = passengerSeat;
+        }
+
+        public String getPassengerCompartment() {
+            return passengerCompartment;
+        }
+
+        public void setPassengerCompartment(String passengerCompartment) {
+            this.passengerCompartment = passengerCompartment;
+        }
+
+        public String getFlightStatus() {
+            return flightStatus;
+        }
+
+        public void setFlightStatus(String flightStatus) {
+            this.flightStatus = flightStatus;
+        }
+
+    }
+    */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     public class PasssengerInfo{
@@ -105,8 +178,50 @@ public class ContactInfoReceive {
         private String passenger_below_182;
         private String with_infant;
         private boolean selected;
+        private boolean active;
         private String seat;
         private String compartment;
+        private String compartmentReturn;
+        private String seatReturn;
+
+
+       /* private PassengerSeatStatus seatStatus;
+
+        public PassengerSeatStatus getSeatStatus() {
+            return seatStatus;
+        }
+
+        public void setSeatStatus(PassengerSeatStatus seatStatus) {
+            this.seatStatus = seatStatus;
+        }*/
+
+
+
+        public String getCompartmentReturn() {
+            return compartmentReturn;
+        }
+
+        public void setCompartmentReturn(String compartmentReturn) {
+            this.compartmentReturn = compartmentReturn;
+        }
+
+        public String getSeatReturn() {
+            return seatReturn;
+        }
+
+        public void setSeatReturn(String seatReturn) {
+            this.seatReturn = seatReturn;
+        }
+
+
+
+        public boolean isActive() {
+            return active;
+        }
+
+        public void setActive(boolean active) {
+            this.active = active;
+        }
 
         public String getCompartment() {
             return compartment;

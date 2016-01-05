@@ -1,8 +1,9 @@
 package com.fly.firefly.ui.module;
 
 import com.fly.firefly.AppModule;
-import com.fly.firefly.ui.fragment.BookingFlight.PaymentFlightFragment;
+import com.fly.firefly.ui.activity.BookingFlight.PaymentFlightFragment;
 import com.fly.firefly.ui.presenter.BF_PaymentFlightPresenter;
+import com.fly.firefly.ui.presenter.BookingPresenter;
 import com.squareup.otto.Bus;
 
 import javax.inject.Singleton;
@@ -17,15 +18,15 @@ import dagger.Provides;
 )
 public class PaymentFlightModule {
 
-    private final BF_PaymentFlightPresenter.PaymentFlightView paymentFlightView;
+    private final BookingPresenter.PaymentFlightView paymentFlightView;
 
-    public PaymentFlightModule(BF_PaymentFlightPresenter.PaymentFlightView paymentFlightView) {
+    public PaymentFlightModule(BookingPresenter.PaymentFlightView paymentFlightView) {
         this.paymentFlightView = paymentFlightView;
     }
 
     @Provides
     @Singleton
-    BF_PaymentFlightPresenter provideSearchFlightPresenter(Bus bus) {
-        return new BF_PaymentFlightPresenter(paymentFlightView, bus);
+    BookingPresenter provideSearchFlightPresenter(Bus bus) {
+        return new BookingPresenter(paymentFlightView, bus);
     }
 }

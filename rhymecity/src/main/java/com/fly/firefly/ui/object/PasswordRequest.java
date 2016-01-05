@@ -3,7 +3,7 @@ package com.fly.firefly.ui.object;
 /**
  * Created by Dell on 11/4/2015.
  */
-public class PasswordRequest extends BaseClass {
+public class PasswordRequest extends BaseObj {
 
 
     /*Initiate Class*/

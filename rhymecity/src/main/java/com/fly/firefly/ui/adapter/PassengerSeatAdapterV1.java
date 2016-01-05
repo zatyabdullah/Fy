@@ -17,16 +17,17 @@ import com.fly.firefly.api.obj.ContactInfoReceive;
 import com.fly.firefly.api.obj.FlightInfo;
 import com.fly.firefly.ui.activity.BookingFlight.FlightDetailFragment;
 import com.fly.firefly.ui.activity.BookingFlight.SeatSelectionFragment;
+import com.fly.firefly.ui.object.PasssengerInfoV2;
 
 import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class PassengerSeatAdapter extends BaseAdapter {
+public class PassengerSeatAdapterV1 extends BaseAdapter {
 
     private final Context context;
-    private final List<ContactInfoReceive.PasssengerInfo> obj;
+    private final List<PasssengerInfoV2> obj;
     private String departureAirport;
     private String arrivalAirport;
     private String flightClass;
@@ -36,7 +37,7 @@ public class PassengerSeatAdapter extends BaseAdapter {
     private Boolean active = false;
     SeatSelectionFragment frag;
 
-    public PassengerSeatAdapter(Context context, List<ContactInfoReceive.PasssengerInfo> passengers,SeatSelectionFragment fragment) {
+    public PassengerSeatAdapterV1(Context context, List<PasssengerInfoV2> passengers, SeatSelectionFragment fragment) {
         this.context = context;
         this.obj = passengers;
         this.frag = fragment;
@@ -138,7 +139,7 @@ public class PassengerSeatAdapter extends BaseAdapter {
             public void onClick(View v) {
 
                 if(obj.get(position).isSelected()){
-                    frag.clearSelectedOnFragment(obj.get(position).getSeat());
+                    frag.clearSelectedOnFragmentV1(obj.get(position).getSeat());
                     obj.get(position).setSeat(null);
 
                     notifyDataSetChanged();
@@ -167,7 +168,7 @@ public class PassengerSeatAdapter extends BaseAdapter {
     public void clearSelected(){
 
         int x = 0;
-        for (ContactInfoReceive.PasssengerInfo pic : obj)
+        for (PasssengerInfoV2 pic : obj)
         {
 
             pic.setSelected(false);
@@ -181,7 +182,7 @@ public class PassengerSeatAdapter extends BaseAdapter {
     public void setSelectedPasssengerSeat(String seatNumber){
 
         int x = 0;
-        for (ContactInfoReceive.PasssengerInfo pic : obj)
+        for (PasssengerInfoV2 pic : obj)
         {
             if(obj.get(x).isSelected()){
                 obj.get(x).setSeat(seatNumber);
@@ -194,7 +195,7 @@ public class PassengerSeatAdapter extends BaseAdapter {
     public void setSelectedCompartmentSeat(String seatNumber){
 
         int x = 0;
-        for (ContactInfoReceive.PasssengerInfo pic : obj)
+        for (PasssengerInfoV2 pic : obj)
         {
             if(obj.get(x).isSelected()){
                 obj.get(x).setCompartment(seatNumber);

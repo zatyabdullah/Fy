@@ -27,7 +27,9 @@ public class SharedPrefManager {
 
     public static final String BOOKING_ID = "BOOKING_ID";
     // public static final String SELECTED = "SELECTED";
+
     public static final String SEAT = "SEAT";
+    public static final String PAYMENT_DUMMY = "PAYMENT_DUMMY";
 
 
 
@@ -44,6 +46,16 @@ public class SharedPrefManager {
     }
 
 
+
+
+
+
+    /*PAYMENT*/
+    public HashMap<String, String> getPaymentDummy() {
+        HashMap<String, String> init = new HashMap<String, String>();
+        init.put(PAYMENT_DUMMY, _sharedPrefs.getString(PAYMENT_DUMMY, null));
+        return init;
+    }
 
     /*SEAT*/
     public HashMap<String, String> getSeat() {
@@ -170,6 +182,12 @@ public class SharedPrefManager {
     }
 
     /*Set SEAT*/
+    public void setPaymentDummy(String payment) {
+        _prefsEditor.putString(PAYMENT_DUMMY, payment);
+        _prefsEditor.apply();
+    }
+
+    /*Set SEAT*/
     public void setSeat(String seat) {
         _prefsEditor.putString(SEAT, seat);
         _prefsEditor.apply();
@@ -287,6 +305,14 @@ public class SharedPrefManager {
     public void checkinInfoURL() {
         // Clearing All URL
         _sharedPrefs.edit().remove(CHECKIN_INFO).apply();
+
+
+    }
+
+    /*Clear TermValue*/
+    public void clearPayment() {
+        // Clearing All URL
+        _sharedPrefs.edit().remove(PAYMENT_DUMMY).apply();
 
 
     }

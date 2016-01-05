@@ -2,6 +2,7 @@ package com.fly.firefly.ui.presenter;
 
 import com.fly.firefly.MainFragmentActivity;
 import com.fly.firefly.api.obj.DeviceInfoSuccess;
+import com.fly.firefly.api.obj.SplashFailedConnect;
 import com.fly.firefly.rhymes.RhymesRequestedEvent;
 import com.fly.firefly.ui.object.DeviceInformation;
 import com.fly.firefly.utils.SharedPrefManager;
@@ -18,6 +19,8 @@ public class HomePresenter {
 
     public interface SplashScreen {
         void loadingSuccess(DeviceInfoSuccess obj);
+        void onConnectionFailed();
+
     }
 
     private HomeView view;
@@ -64,4 +67,8 @@ public class HomePresenter {
         }
     }
 
+    @Subscribe
+    public void onFailedConnect(SplashFailedConnect event) {
+        view2.onConnectionFailed();
+    }
 }

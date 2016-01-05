@@ -474,6 +474,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:padding="5dp"
+                                            android:inputType="textPhonetic"
                                             android:background="@drawable/block_with_border"
                                             android:id="@+id/passenger1_doc_no"
                                             android:tag="passenger1_doc_no"/>
@@ -506,6 +507,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:padding="5dp"
+                                            android:inputType="textPhonetic"
                                             android:background="@drawable/block_with_border"
                                             android:id="@+id/passenger1_enrich"
                                             android:tag="passenger1_enrich"/>
@@ -891,6 +893,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:padding="5dp"
+                                            android:inputType="textPhonetic"
                                             android:background="@drawable/block_with_border"
                                             android:id="@+id/passenger2_doc_no"
                                             android:tag="passenger2_doc_no"/>
@@ -925,6 +928,7 @@
                                             android:padding="5dp"
                                             android:background="@drawable/block_with_border"
                                             android:id="@+id/passenger2_enrich"
+                                            android:inputType="textPhonetic"
                                             android:tag="passenger2_enrich"/>
                                     </LinearLayout>
                                 </LinearLayout>

@@ -30,7 +30,10 @@
 
         <!-- android:theme="@style/Theme1" -->
         <!-- android:name="com.fly.firefly.ui.activity.MainActivity" -->
-        <activity android:name=".ui.activity.Homepage.HomeActivity"/>
+        <activity android:name=".ui.activity.Homepage.HomeActivity">
+
+        </activity>
+
         <activity android:name=".ui.activity.BookingFlight.ContactInfoActivity" />
         <activity android:name=".ui.activity.Login.LoginActivity" />
         <activity android:name=".ui.activity.Register.RegisterActivity" />
@@ -38,8 +41,19 @@
         <activity android:name=".ui.activity.BookingFlight.FlightDetailActivity" />
         <activity android:name=".ui.activity.BookingFlight.PersonalDetailActivity" />
         <activity android:name=".ui.activity.BookingFlight.SeatSelectionActivity" />
+        <activity android:name=".ui.activity.BookingFlight.FlightSummaryActivity" />
+
+
+
+
         <activity android:name=".ui.activity.BookingFlight.ItinenaryActivity" />
-        <activity android:name=".ui.activity.BookingFlight.PaymentFlightActivity" />
+        <activity android:name=".ui.activity.BookingFlight.PaymentFlightActivity" >
+
+        </activity>
+        <activity android:name=".ui.activity.BookingFlight.PaymentWebViewActivity" >
+
+        </activity>
+
         <activity android:name=".ui.activity.MobileCheckIn.MobileCheckInActivity1" />
         <activity android:name=".ui.activity.MobileCheckIn.MobileCheckInActivity2" />
         <activity android:name=".ui.activity.MobileCheckIn.MobileCheckInActivity3" />
@@ -51,6 +65,11 @@
         <activity android:name=".ui.activity.ManageFlight.ManageFlight_SeatSelection" />
         <activity android:name=".ui.activity.ManageFlight.ManageFlight_SentItinerary" />
         <activity android:name=".ui.activity.UpdateProfile.UpdateProfileActivity" />
+
+
+
+
+
 
         <!-- Boarding PASS -->
         <activity android:name=".ui.activity.BoardingPass.BoardingPassActivity" />

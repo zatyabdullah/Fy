@@ -20,8 +20,6 @@ public class SeatSelectionReveice {
         this.obj = obj;
     }
 
-
-
     public String getStatus() {
         return status;
     }

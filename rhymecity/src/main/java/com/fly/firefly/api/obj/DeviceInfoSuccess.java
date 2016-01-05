@@ -27,6 +27,16 @@ public class DeviceInfoSuccess{
     private String status;
     private String signature;
 
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    private String message;
+
     public List<State> getData_state() {
         return data_state;
     }

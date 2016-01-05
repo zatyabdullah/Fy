@@ -2,7 +2,7 @@ package com.fly.firefly.ui.presenter;
 
 import android.util.Log;
 
-import com.fly.firefly.api.obj.FailedConnectToServer;
+import com.fly.firefly.api.obj.SplashFailedConnect;
 import com.fly.firefly.api.obj.ForgotPasswordReceive;
 import com.fly.firefly.api.obj.LoginReceive;
 import com.fly.firefly.ui.object.LoginRequest;
@@ -60,7 +60,7 @@ public class LoginPresenter {
 
 
     @Subscribe
-    public void onUserSuccessLogin(FailedConnectToServer event) {
+    public void onUserSuccessLogin(SplashFailedConnect event) {
 
         /*Save Session And Redirect To Homepage*/
         view.onLoginFailed(event.getDummy());
@@ -74,8 +74,11 @@ public class LoginPresenter {
         view.onRequestPasswordSuccess(obj.getUserObj());
     }
 
+   // @Subscribe
+    //public void onUserFailedReqPassword(SplashFailedConnect event) {
     /*@Subscribe
     public void onUserFailedReqPassword(FailedConnectToServer event) {
+>>>>>>> 6401c7b9c51ce353bbc670f4f01fdaaabf4b7ad8
 //
         /*//*Save Session And Redirect To Homepage*//**//*
       view.onPasswordRequestFailed(event.getDummy());

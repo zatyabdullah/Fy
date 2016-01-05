@@ -27,6 +27,7 @@ import com.fly.firefly.ui.object.Country;
 import com.fly.firefly.utils.DropDownItem;
 import com.fly.firefly.utils.DropMenuAdapter;
 import com.fly.firefly.utils.SharedPrefManager;
+import com.fly.firefly.utils.Utils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,6 +35,7 @@ import org.json.JSONObject;
 
 import java.text.DateFormatSymbols;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 
 import de.keyboardsurfer.android.widget.crouton.Configuration;
@@ -58,7 +60,54 @@ public class BaseFragment extends Fragment {
 	}
 
 
-	public void croutonAlert(Activity act,String msg){
+	public ArrayList<DropDownItem> getListOfYear(Activity act){
+		int totalMonth = 12;
+		String monthToDisplay;
+		ArrayList<DropDownItem> yearList = new ArrayList<DropDownItem>();
+
+		Calendar calendar = Calendar.getInstance();
+		int year = calendar.get(Calendar.YEAR);
+
+
+		for(int yearX =  year ; yearX < year+15 ; yearX++){
+
+			DropDownItem itemYear = new DropDownItem();
+			itemYear.setText(Integer.toString(yearX));
+			itemYear.setCode(Integer.toString(yearX));
+			itemYear.setTag("Year");
+			yearList.add(itemYear);
+		}
+
+
+		return yearList;
+
+	}
+
+	public ArrayList<DropDownItem> getListOfMonth(Activity act){
+		int totalMonth = 12;
+		String monthToDisplay;
+		ArrayList<DropDownItem> monthList = new ArrayList<DropDownItem>();
+
+		for(int month =  1 ; month < totalMonth+1 ; month++){
+			if(month < 10){
+				 monthToDisplay = "0"+Integer.toString(month);
+			}else{
+				monthToDisplay = Integer.toString(month);
+			}
+
+			DropDownItem itemTitle = new DropDownItem();
+			itemTitle.setText(monthToDisplay);
+			itemTitle.setCode(monthToDisplay);
+			itemTitle.setTag("Month");
+			monthList.add(itemTitle);
+		}
+
+
+		return monthList;
+
+	}
+
+	public static void croutonAlert(Activity act,String msg){
 		Crouton.makeText(act, msg, Style.ALERT)
 				.setConfiguration(new Configuration.Builder()
 				.setDuration(Configuration.DURATION_LONG).build())
@@ -102,7 +151,7 @@ public class BaseFragment extends Fragment {
 		mProgressDialog = new SpotsDialog(act,R.style.Custom);
 		//mProgressDialog.setIndeterminate(false);
 		mProgressDialog.setCancelable(true);
-		mProgressDialog.setMessage("Loading...");
+		mProgressDialog.setMessage("Loading");
 
 		WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
 		//lp.copyFrom(mProgressDialog.getWindow().getAttributes());

@@ -19,8 +19,10 @@ import com.fly.firefly.api.obj.ContactInfoReceive;
 import com.fly.firefly.api.obj.SeatSelectionReveice;
 import com.fly.firefly.base.BaseFragment;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
-import com.fly.firefly.ui.adapter.PassengerSeatAdapter;
+import com.fly.firefly.ui.adapter.PassengerSeatAdapterV1;
+import com.fly.firefly.ui.adapter.PassengerSeatAdapterV2;
 import com.fly.firefly.ui.module.SeatSelectionModule;
+import com.fly.firefly.ui.object.PasssengerInfoV2;
 import com.fly.firefly.ui.object.SeatInfo;
 import com.fly.firefly.ui.object.SeatSelect;
 import com.fly.firefly.ui.object.SeatSelection;
@@ -44,22 +46,45 @@ public class SeatSelectionFragment extends BaseFragment implements BookingPresen
     @Inject
     BookingPresenter presenter;
 
-    @InjectView(R.id.btnSeat) Button btnSeat ;
-    @InjectView(R.id.seatList) LinearLayout seatList ;
+    @InjectView(R.id.btnSeat)
+    Button btnSeat ;
 
-    @InjectView(R.id.listPassengerDepart)ExpandAbleGridView listPassengerDepart;
+    @InjectView(R.id.seatListDepart)
+    LinearLayout seatListDepart;
+
+    @InjectView(R.id.seatListReturn)
+    LinearLayout seatListReturn;
+
+    @InjectView(R.id.listPassengerDepart)
+    ExpandAbleGridView listPassengerDepart;
+
+    @InjectView(R.id.listPassengerReturn)
+    ExpandAbleGridView listPassengerReturn;
+
+    @InjectView(R.id.txtSeatDeparture)
+    TextView txtSeatDeparture;
+
+    @InjectView(R.id.txtSeatReturn)
+    TextView txtSeatReturn;
+
+    @InjectView(R.id.passengerSeatListReturn)
+    LinearLayout passengerSeatListReturn;
 
     private SharedPrefManager pref;
-    private PassengerSeatAdapter passengerSeatList;
+    private PassengerSeatAdapterV1 passengerSeatListV1;
+    private PassengerSeatAdapterV2 passengerSeatListV2;
 
     private int fragmentContainerId;
-    private List<String> seatTag;
+    private List<String> seatTag1;
+    private List<String> seatTag2;
+
     private List<String> selectedSeatTag;
-    private int passengerNo;
+    private int passengerNoV1,passengerNoV2;
     private View view;
     private String bookingID,signature;
-
-
+    private List<SeatInfo> seatInfoReturn;
+    private List<SeatInfo> seatInfoDepart;
+    private boolean twoWay = false;
     public static SeatSelectionFragment newInstance(Bundle bundle) {
 
         SeatSelectionFragment fragment = new SeatSelectionFragment();
@@ -82,9 +107,9 @@ public class SeatSelectionFragment extends BaseFragment implements BookingPresen
 
         /*Preference Manager*/
         pref = new SharedPrefManager(MainFragmentActivity.getContext());
-        //HashMap<String, String> init = pref.getSeat();
-        //String seatHash = init.get(SharedPrefManager.SEAT);
-
+        HashMap<String, String> init = pref.getSeat();
+        String seatHash = init.get(SharedPrefManager.SEAT);
+        Log.e("SeatHash",seatHash);
         /*Booking Id*/
         HashMap<String, String> initBookingID = pref.getBookingID();
         bookingID = initBookingID.get(SharedPrefManager.BOOKING_ID);
@@ -92,42 +117,97 @@ public class SeatSelectionFragment extends BaseFragment implements BookingPresen
         HashMap<String, String> initSignature = pref.getSignatureFromLocalStorage();
         signature = initSignature.get(SharedPrefManager.SIGNATURE);
 
-        Bundle bundle = getArguments();
-        String seatGSON = bundle.getString("SEAT_INFORMATION");
+        //Bundle bundle = getArguments();
+        //String seatGSON = bundle.getString("SEAT_INFORMATION");
 
         /*Initiate Seat Row*/
         Gson gson = new Gson();
-        ContactInfoReceive obj = gson.fromJson(seatGSON, ContactInfoReceive.class);
-        List<SeatInfo> seatInfoDepart = obj.getObj().getJourneys().get(0).getSeat_info();
+        ContactInfoReceive obj = gson.fromJson(seatHash, ContactInfoReceive.class);
+        seatInfoDepart = obj.getObj().getJourneys().get(0).getSeat_info();
         List<ContactInfoReceive.Journeys> journeys = obj.getObj().getJourneys();
 
         /*Set Passenger to adapter*/
         final List<ContactInfoReceive.PasssengerInfo> passengers = obj.getObj().getPassengers();
-        setSeat(seatInfoDepart);
 
-        setPassenger(passengers,journeys.get(0).getDeparture_station(),journeys.get(0).getArrival_station());
+        /*Create New Passenger Obj*/
+        final List<PasssengerInfoV2> objV2 = new ArrayList<PasssengerInfoV2>();
+        for(int v = 0 ; v < passengers.size() ; v++){
+            PasssengerInfoV2 obj2 = new PasssengerInfoV2();
+            obj2.setFirst_name(passengers.get(v).getFirst_name());
+            obj2.setLast_name(passengers.get(v).getLast_name());
+            obj2.setTitle(passengers.get(v).getTitle());
+            objV2.add(obj2);
+        }
+
+        final List<PasssengerInfoV2> objV3 = new ArrayList<PasssengerInfoV2>();
+        for(int v = 0 ; v < passengers.size() ; v++){
+            PasssengerInfoV2 obj3 = new PasssengerInfoV2();
+            obj3.setFirst_name(passengers.get(v).getFirst_name());
+            obj3.setLast_name(passengers.get(v).getLast_name());
+            obj3.setTitle(passengers.get(v).getTitle());
+            objV3.add(obj3);
+        }
+
+
+
+        setSeat1(seatListDepart,seatInfoDepart);
+        setPassenger1("DEPART",listPassengerDepart,txtSeatDeparture,objV2,journeys.get(0).getDeparture_station(),journeys.get(0).getArrival_station());
+
         if(journeys.size() > 1){
 
-            List<SeatInfo> seatInfoReturn = obj.getObj().getJourneys().get(1).getSeat_info();
-            setPassenger(passengers,journeys.get(1).getDeparture_station(),journeys.get(1).getArrival_station());
-            setSeat(seatInfoReturn);
+            twoWay = true;
+            seatInfoReturn = obj.getObj().getJourneys().get(1).getSeat_info();
+            setPassenger2("RETURN",listPassengerReturn,txtSeatReturn,objV3,journeys.get(1).getDeparture_station(),journeys.get(1).getArrival_station());
+            setSeat2(seatListReturn,seatInfoReturn);
 
         }
 
 
         listPassengerDepart.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> myAdapter, View myView, int myItemInt, long mylng) {
-                ContactInfoReceive.PasssengerInfo selectedFromList = (ContactInfoReceive.PasssengerInfo) (listPassengerDepart.getItemAtPosition(myItemInt));
-
+                PasssengerInfoV2 selectedFromList = (PasssengerInfoV2) (listPassengerDepart.getItemAtPosition(myItemInt));
+                //setSeat(seatInfoDepart);
+                seatListReturn.setVisibility(View.GONE);
+                seatListDepart.setVisibility(View.VISIBLE);
+                //oneWay = true;
                 //Clear Previous
-                passengerSeatList.clearSelected();
-                seatTag = new ArrayList<>(1);
+                passengerSeatListV1.clearSelected();
 
-                passengerNo = myItemInt;
+                if(twoWay){
+                    passengerSeatListV2.clearSelected();
+                }
+                seatTag1 = new ArrayList<>(1);
+
+                passengerNoV1 = myItemInt;
                 //Set selected
                 LinearLayout clickedPassenger = (LinearLayout) myView.findViewById(R.id.passengerLinearLayout);
                 clickedPassenger.setBackgroundColor(getResources().getColor(R.color.blue));
                 selectedFromList.setSelected(true);
+                selectedFromList.setActive(true);
+
+            }
+        });
+
+        listPassengerReturn.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> myAdapter, View myView, int myItemInt, long mylng) {
+                PasssengerInfoV2 selectedFromList = (PasssengerInfoV2) (listPassengerReturn.getItemAtPosition(myItemInt));
+
+                seatListReturn.setVisibility(View.VISIBLE);
+                seatListDepart.setVisibility(View.GONE);
+
+                //setSeat(seatInfoReturn);
+                //Clear Previous
+                passengerSeatListV2.clearSelected();
+                passengerSeatListV1.clearSelected();
+
+                seatTag2 = new ArrayList<>(1);
+
+                passengerNoV2 = myItemInt;
+                //Set selected
+                LinearLayout clickedPassenger = (LinearLayout) myView.findViewById(R.id.passengerLinearLayout);
+                clickedPassenger.setBackgroundColor(getResources().getColor(R.color.blue));
+                selectedFromList.setSelected(true);
+                selectedFromList.setActive(true);
 
                 Log.e("Selected Passenger", selectedFromList.getFirst_name());
 
@@ -144,10 +224,19 @@ public class SeatSelectionFragment extends BaseFragment implements BookingPresen
 
                 for(int x = 0 ; x < passengers.size() ; x++){
                     SeatSelect obj = new SeatSelect();
-                    obj.setCompartment_designator(passengers.get(x).getCompartment());
-                    obj.setSeat_number(passengers.get(x).getSeat());
+                    obj.setCompartment_designator(objV2.get(x).getCompartment());
+                    obj.setSeat_number(objV2.get(x).getSeat());
                     goingSeat.add(obj);
                 }
+                if(twoWay){
+                    for(int x = 0 ; x < passengers.size() ; x++){
+                        SeatSelect obj = new SeatSelect();
+                        obj.setCompartment_designator(objV3.get(x).getCompartment());
+                        obj.setSeat_number(objV3.get(x).getSeat());
+                        returnSeat.add(obj);
+                    }
+                }
+
 
                 //Validate
                 SeatSelection seatObj = new SeatSelection();
@@ -164,15 +253,36 @@ public class SeatSelectionFragment extends BaseFragment implements BookingPresen
         return view;
     }
 
-    public void setPassenger(List<ContactInfoReceive.PasssengerInfo> passengers,String depart,String arrival){
+    public void setPassenger1(String type,ExpandAbleGridView list,TextView txtSeat,List<PasssengerInfoV2> passengers,String depart,String arrival){
 
-        passengers.get(0).setSelected(true);
-        passengerSeatList = new PassengerSeatAdapter(getActivity(),passengers,this);
-        listPassengerDepart.setAdapter(passengerSeatList);
+        Log.e(type,type);
+       // if(type.equals("DEPART")){
+           passengers.get(0).setSelected(true);
+         //   Log.e(type, type);
+
+        //}
+        txtSeat.setText(depart + " - " + arrival);
+        passengerSeatListV1 = new PassengerSeatAdapterV1(getActivity(),passengers,this);
+        list.setAdapter(passengerSeatListV1);
 
     }
 
-    public void setSeat(List<SeatInfo> seatInfo){
+    public void setPassenger2(String type,ExpandAbleGridView list,TextView txtSeat,List<PasssengerInfoV2> passengers,String depart,String arrival){
+
+        Log.e(type,type);
+        // if(type.equals("DEPART")){
+        //    passengers.get(0).setSelected(true);
+        //   Log.e(type, type);
+
+        //}
+        txtSeat.setText(depart + " - " + arrival);
+        passengerSeatListV2 = new PassengerSeatAdapterV2(getActivity(),passengers,this);
+        list.setAdapter(passengerSeatListV2);
+
+    }
+
+
+    public void setSeat1(LinearLayout seatList,List<SeatInfo> seatInfo){
 
         int seatSize = seatInfo.size();
         int seatCount = 0;
@@ -224,8 +334,7 @@ public class SeatSelectionFragment extends BaseFragment implements BookingPresen
 
         }
 
-        /*3 passenger -- set array to 3 only*/
-        seatTag = new ArrayList<>(1);
+        seatTag1 = new ArrayList<>(1);
         selectedSeatTag = new ArrayList<>(2);
 
         for (int label = 0; label < tempSeatStorage.size(); label++)
@@ -262,42 +371,46 @@ public class SeatSelectionFragment extends BaseFragment implements BookingPresen
                     public void onClick(View v) {
 
 
-                        if (seatTag.size() == 1) {
+                        if (seatTag1.size() == 1) {
 
-                            Log.e("NEED TO REMOVE", seatTag.get(0));
+                            Log.e("NEED TO REMOVE", seatTag1.get(0));
 
                             //TextView seatToRemove = (TextView) view.findViewWithTag(seatTag.get(0));
-                            TextView seatToRemove = (TextView) view.findViewWithTag(passengerSeatList.getSelected(passengerNo));
+                            TextView seatToRemove = (TextView) view.findViewWithTag(passengerSeatListV1.getSelected(passengerNoV1));
 
                             seatToRemove.setBackgroundColor(getResources().getColor(R.color.grey_background));
                             seatToRemove.setClickable(true);
                             //seatToRemove.setTextColor(getResources().getColor(R.color.white));
 
-                            seatTag.remove(0);
-                            seatTag.add(txtDetailList.getText().toString());
+                            seatTag1.remove(0);
+                            seatTag1.add(txtDetailList.getText().toString());
 
                             txtDetailList.setBackgroundColor(getResources().getColor(R.color.bright_green));
                             txtDetailList.setClickable(false);
 
-                            passengerSeatList.setSelectedPasssengerSeat(txtDetailList.getText().toString());
-                            passengerSeatList.setSelectedCompartmentSeat(compartment);
+                            passengerSeatListV1.setSelectedPasssengerSeat(txtDetailList.getText().toString());
+                            passengerSeatListV1.setSelectedCompartmentSeat(compartment);
+
+
                             //passengerSeatListDepart.setSelectedSeatCompartment(passengerSeatListDepart.getSelected(passengerNo));
                             //selectedSeatTag.add(txtDetailList.getText().toString());
-
+                            Log.e("X","X");
                         } else {
 
-                            if(passengerSeatList.getSelected(passengerNo) != null){
-                                TextView seatToRemove = (TextView) view.findViewWithTag(passengerSeatList.getSelected(passengerNo));
+                            if(passengerSeatListV1.getSelected(passengerNoV1) != null){
+                                TextView seatToRemove = (TextView) view.findViewWithTag(passengerSeatListV1.getSelected(passengerNoV1));
                                 seatToRemove.setBackgroundColor(getResources().getColor(R.color.grey_background));
                                 seatToRemove.setClickable(true);
                             }
 
-                            seatTag.add(txtDetailList.getText().toString());
+                            seatTag1.add(txtDetailList.getText().toString());
                             txtDetailList.setBackgroundColor(getResources().getColor(R.color.bright_green));
                             txtDetailList.setClickable(false);
-                            passengerSeatList.setSelectedPasssengerSeat(txtDetailList.getText().toString());
-                            passengerSeatList.setSelectedCompartmentSeat(compartment);
 
+                            passengerSeatListV1.setSelectedPasssengerSeat(txtDetailList.getText().toString());
+                            passengerSeatListV1.setSelectedCompartmentSeat(compartment);
+
+                            Log.e("Y","Y");
                             //selectedSeatTag.add(txtDetailList.getText().toString());
                         }
 
@@ -352,13 +465,210 @@ public class SeatSelectionFragment extends BaseFragment implements BookingPresen
         }
     }
 
-    public void clearSelectedOnFragment(String seat){
+    public void setSeat2(LinearLayout seatList,List<SeatInfo> seatInfo){
+
+        int seatSize = seatInfo.size();
+        int seatCount = 0;
+        /*Set Seat Row*/
+        List<String> tempSeatStorage = new ArrayList<String>();
+        List<SeatSetup> tempSeatValue = new ArrayList<SeatSetup>();
+
+        for(int seatNumber = 0 ; seatNumber < seatSize ; seatNumber++){
+
+            boolean injectSeatSetup;
+
+            String seatNumberEx = seatInfo.get(seatNumber).getSeat_number();
+            String seatNumberWithoutAlphabet = seatNumberEx.substring(0, seatNumberEx.length()-1);
+            String lastSeatCharacter = seatNumberEx.substring(seatNumberEx.length() - 1);
+
+            if (tempSeatStorage.contains(seatNumberWithoutAlphabet)){
+                /*SKIP*/
+                injectSeatSetup = false;
+            }else {
+                tempSeatStorage.add(seatNumberWithoutAlphabet);
+                seatCount++;
+                injectSeatSetup = true;
+            }
+
+            if(injectSeatSetup){
+                /*SeatNumberByRow*/
+                ArrayList<SeatInfo> seat = new ArrayList<SeatInfo>();
+
+                for(int seatNumberRow = 0 ; seatNumberRow < seatSize ; seatNumberRow++){
+
+                    String seatNumberExx = seatInfo.get(seatNumberRow).getSeat_number();
+                    String seatNumberWithoutAlphabex = seatNumberExx.substring(0, seatNumberExx.length() - 1);
+
+                    if(tempSeatStorage.get(seatCount-1).equals(seatNumberWithoutAlphabex)){
+                        SeatInfo rebuildSeatInfo = new SeatInfo();
+                        rebuildSeatInfo.setCompartment_designator(seatInfo.get(seatNumberRow).getCompartment_designator());
+                        rebuildSeatInfo.setSeat_number(seatInfo.get(seatNumberRow).getSeat_number());
+                        rebuildSeatInfo.setSeat_type(seatInfo.get(seatNumberRow).getSeat_type());
+                        rebuildSeatInfo.setStatus(seatInfo.get(seatNumberRow).getStatus());
+                        seat.add(rebuildSeatInfo);
+                    }
+                }
+
+                SeatSetup seatSetup = new SeatSetup();
+                seatSetup.setSeatRow(tempSeatStorage.get(seatCount - 1));
+                seatSetup.setSeatRowArray(seat);
+                tempSeatValue.add(seatSetup);
+            }
+
+        }
+
+        seatTag2 = new ArrayList<>(1);
+        selectedSeatTag = new ArrayList<>(2);
+
+        for (int label = 0; label < tempSeatStorage.size(); label++)
+        {
+            LinearLayout seatRow = new LinearLayout(getActivity());
+            seatRow.setOrientation(LinearLayout.HORIZONTAL);
+            seatRow.setGravity(LinearLayout.TEXT_ALIGNMENT_GRAVITY);
+            seatRow.setWeightSum(1);
+
+
+            for (int x = 1; x < tempSeatValue.get(label).getSeatRowArray().size()+1; x++)
+            {
+
+                String seatNumber = tempSeatValue.get(label).getSeatRowArray().get(x-1).getSeat_number();
+                String seatType = tempSeatValue.get(label).getSeatRowArray().get(x-1).getSeat_type();
+                String seatStatus = tempSeatValue.get(label).getSeatRowArray().get(x-1).getStatus();
+                final String compartment = tempSeatValue.get(label).getSeatRowArray().get(x-1).getCompartment_designator();
+
+                LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT, 0.25f);
+
+
+                final TextView txtDetailList = new TextView(getActivity());
+                txtDetailList.setText(seatNumber);
+                txtDetailList.setGravity(Gravity.CENTER);
+                txtDetailList.setTextColor(getResources().getColor(R.color.white));
+                txtDetailList.setPadding(5, 20, 5, 20);
+                txtDetailList.setTag("RETURN" + "_" + seatNumber);
+                txtDetailList.setBackgroundColor(getResources().getColor(R.color.grey_background));
+
+                txtDetailList.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+
+                        if (seatTag2.size() == 1) {
+
+                            Log.e("NEED TO REMOVE", seatTag2.get(0));
+
+                            //TextView seatToRemove = (TextView) view.findViewWithTag(seatTag.get(0));
+                            Log.e("Previouse", passengerSeatListV2.getSelected(passengerNoV2));
+                            TextView seatToRemove = (TextView) view.findViewWithTag("RETURN"+"_"+passengerSeatListV2.getSelected(passengerNoV2));
+
+                            seatToRemove.setBackgroundColor(getResources().getColor(R.color.grey_background));
+                            seatToRemove.setClickable(true);
+                            //seatToRemove.setTextColor(getResources().getColor(R.color.white));
+
+                            seatTag2.remove(0);
+                            seatTag2.add(txtDetailList.getText().toString());
+
+                            txtDetailList.setBackgroundColor(getResources().getColor(R.color.bright_green));
+                            txtDetailList.setClickable(false);
+
+                        //    if(oneWay){
+                            passengerSeatListV2.setSelectedPasssengerSeat(txtDetailList.getText().toString());
+                            passengerSeatListV2.setSelectedCompartmentSeat(compartment);
+                         //   }else{
+                         //       passengerSeatList.setSelectedPasssengerSeat(txtDetailList.getText().toString());
+                         //       passengerSeatList.setSelectedCompartmentSeat(compartment);
+                         //   }
+
+                            //passengerSeatListDepart.setSelectedSeatCompartment(passengerSeatListDepart.getSelected(passengerNo));
+                            //selectedSeatTag.add(txtDetailList.getText().toString());
+                            Log.e("X","X");
+                        } else {
+
+                            if(passengerSeatListV2.getSelected(passengerNoV2) != null){
+                                TextView seatToRemove = (TextView) view.findViewWithTag("RETURN"+"_"+
+                                        passengerSeatListV2.getSelected(passengerNoV2));
+                                seatToRemove.setBackgroundColor(getResources().getColor(R.color.grey_background));
+                                seatToRemove.setClickable(true);
+                            }
+
+                            seatTag2.add(txtDetailList.getText().toString());
+                            txtDetailList.setBackgroundColor(getResources().getColor(R.color.bright_green));
+                            txtDetailList.setClickable(false);
+
+                            passengerSeatListV2.setSelectedPasssengerSeat(txtDetailList.getText().toString());
+                            passengerSeatListV2.setSelectedCompartmentSeat(compartment);
+
+                        }
+
+                    }
+
+                });
+
+
+                //"seat_type":"standard",
+                //Set color and clickable
+
+                if(seatType.equals("standard")){
+                    txtDetailList.setClickable(true);
+                    seatRow.setBackgroundColor(getResources().getColor(R.color.seat_standard));
+
+                }else if(seatType.equals("preferred")){
+                    txtDetailList.setClickable(true);
+                    seatRow.setBackgroundColor(getResources().getColor(R.color.seat_preferred));
+
+                }else if(seatType.equals("desired")){
+                    txtDetailList.setClickable(true);
+                    seatRow.setBackgroundColor(getResources().getColor(R.color.seat_desired));
+                }
+
+                if(!seatStatus.equals("available")){
+                    txtDetailList.setBackgroundColor(getResources().getColor(R.color.red));
+                    txtDetailList.setClickable(false);
+                }
+
+                /*Only for 4 seat row flight - change accordingly*/
+                if(x == 2){
+                    param.setMargins(5, 5,20,5);
+                }
+                else if(x == 3){
+                    param.setMargins(20, 5,5,5);
+                }
+                else if(x == 1){
+                    param.setMargins(20,5,5,5);
+                }
+                else if(x == 4){
+                    param.setMargins(5,5,20,5);
+                }
+                txtDetailList.setLayoutParams(param);
+
+
+                seatRow.addView(txtDetailList);
+            }
+
+            //Log.e("seatTag", seatTag.toString());
+            seatList.addView(seatRow);
+
+        }
+    }
+
+    public void clearSelectedOnFragmentV1(String seat){
 
         Log.e("seat",seat);
         TextView seatToRemove = (TextView) view.findViewWithTag(seat);
         seatToRemove.setBackgroundColor(getResources().getColor(R.color.grey_background));
         seatToRemove.setClickable(true);
-        seatTag = new ArrayList<>(1);
+        seatTag1 = new ArrayList<>(1);
+
+    }
+
+    public void clearSelectedOnFragmentV2(String seat){
+
+        Log.e("seat",seat);
+        TextView seatToRemove = (TextView) view.findViewWithTag(seat);
+        seatToRemove.setBackgroundColor(getResources().getColor(R.color.grey_background));
+        seatToRemove.setClickable(true);
+        seatTag2 = new ArrayList<>(1);
 
     }
 
@@ -380,7 +690,7 @@ public class SeatSelectionFragment extends BaseFragment implements BookingPresen
         String status = obj.getObj().getStatus();
         if(status.equals("success")){
 
-           Intent intent = new Intent(getActivity(), ItinenaryActivity.class);
+           Intent intent = new Intent(getActivity(), PaymentFlightActivity.class);
            intent.putExtra("ITINENARY_INFORMATION", (new Gson()).toJson(obj));
            getActivity().startActivity(intent);
        }

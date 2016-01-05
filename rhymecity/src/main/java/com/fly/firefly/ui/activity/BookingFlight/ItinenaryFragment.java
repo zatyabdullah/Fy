@@ -18,9 +18,12 @@ import com.fly.firefly.base.BaseFragment;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
 import com.fly.firefly.ui.module.ItinenaryModule;
 import com.fly.firefly.ui.presenter.BookingPresenter;
+import com.fly.firefly.utils.DropDownItem;
 import com.fly.firefly.utils.SharedPrefManager;
 import com.google.gson.Gson;
+import com.mobsandgeeks.saripaar.Validator;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.inject.Inject;
@@ -32,6 +35,16 @@ public class ItinenaryFragment extends BaseFragment implements BookingPresenter.
 
     @Inject
     BookingPresenter presenter;
+
+    private ArrayList<DropDownItem> stateList = new ArrayList<DropDownItem>();
+    private ArrayList<DropDownItem> countrysList = new ArrayList<DropDownItem>();
+    private ArrayList<DropDownItem> purposeList = new ArrayList<DropDownItem>();
+    private ArrayList<DropDownItem> titleList = new ArrayList<DropDownItem>();
+    private String selectedCountryCode;
+    private String selectedState;
+    private Validator mValidator;
+    private String insuranceTxt1,insuranceTxt2,insuranceTxt3,insuranceTxt4;
+    private boolean withSeat = false;
 
     @InjectView(R.id.btnItinerary)
     Button btnItinerary;
@@ -122,7 +135,7 @@ public class ItinenaryFragment extends BaseFragment implements BookingPresenter.
 
         view = inflater.inflate(R.layout.itinenary, container, false);
         ButterKnife.inject(this, view);
-        pref = new SharedPrefManager(getActivity());
+        //pref = new SharedPrefManager(getActivity());
         Bundle bundle = getArguments();
 
         String itinenary = bundle.getString("ITINENARY_INFORMATION");
@@ -132,8 +145,8 @@ public class ItinenaryFragment extends BaseFragment implements BookingPresenter.
         ContactInfoReceive obj = gson.fromJson(itinenary, ContactInfoReceive.class);
 
         /*Booking Id*/
-        HashMap<String, String> initBookingID = pref.getBookingID();
-        bookingID = initBookingID.get(SharedPrefManager.BOOKING_ID);
+        //HashMap<String, String> initBookingID = pref.getBookingID();
+        //bookingID = initBookingID.get(SharedPrefManager.BOOKING_ID);
 
 
         //ONEWAY DETAILS
@@ -189,10 +202,7 @@ public class ItinenaryFragment extends BaseFragment implements BookingPresenter.
 
         String status = obj.getObj().getStatus();
         Log.e("Receive", "success");
-
-
-
-        }
+     }
 
 
 
