@@ -43,6 +43,7 @@ public class BookingPresenter {
     }
 
     public interface ItinenaryView{
+        void onContactInfo(ContactInfoReceive obj);
         //void onSeatSelect();
     }
 
@@ -140,6 +141,7 @@ public class BookingPresenter {
         view7.onPaymentInfoReceive(event);
     }
 
+
     @Subscribe
     public void onSearchFlight(SearchFlightReceive event) {
         /*Save Session And Redirect To Homepage*/
@@ -171,8 +173,8 @@ public class BookingPresenter {
         view7.onPaymentReceive(event);
     }
 
-
-
+   //@Subscribe
+   // public void onItineraryReceive(ContactInfoReceive event) {view6.onItineraryInfo(event);}
 
     public void onResume() {
         bus.register(this);

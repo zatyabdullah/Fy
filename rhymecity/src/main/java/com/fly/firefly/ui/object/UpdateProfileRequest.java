@@ -33,7 +33,7 @@ public class UpdateProfileRequest {
         state = data.getState();
         username = data.getUsername();
         password = data.getPassword();
-        new_password = data. getNew_password();
+        new_password = data.getNew_password();
         first_name = data.getFirst_name();
         dob = data.getDob();
         last_name = data.getLast_name();
@@ -64,9 +64,7 @@ public class UpdateProfileRequest {
         return new_password;
     }
 
-    public void setNew_password(String new_password) {
-        this.new_password = new_password;
-    }
+    public void setNew_password(String new_password) {this.new_password = new_password;}
 
     public String getCountry() {
         return country;

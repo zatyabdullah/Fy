@@ -836,6 +836,9 @@
     <string name="title_terms">TERMS AND CONDITIONS</string>
 
 
+    <string name="update_success">Update Success</string>
+    <string name="term_webview">http://fyapidev.me-tech.com.my/api/displayTerm</string>
+
 
 
 

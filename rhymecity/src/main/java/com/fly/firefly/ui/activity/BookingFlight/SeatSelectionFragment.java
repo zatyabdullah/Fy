@@ -70,7 +70,6 @@ public class SeatSelectionFragment extends BaseFragment implements BookingPresen
     @InjectView(R.id.passengerSeatListReturn)
     LinearLayout passengerSeatListReturn;
 
-
     private SharedPrefManager pref;
     private PassengerSeatAdapterV1 passengerSeatListV1;
     private PassengerSeatAdapterV2 passengerSeatListV2;

@@ -3,10 +3,7 @@ package com.fly.firefly.ui.object;
 /**
  * Created by Metech User
  */
-public class TermsRequest {
-
-
-
+public class ItineraryRequest {
 
     private String id;
     private String title;
@@ -19,7 +16,7 @@ public class TermsRequest {
 
     //private String registerAddressLine2;
 
-    public TermsRequest(TermsRequest data){
+    public ItineraryRequest(ItineraryRequest data){
         id          = data.getId();
         title       = data.getTitle();
         body        = data.getBody();
@@ -92,7 +89,7 @@ public class TermsRequest {
     }
 
     /*Initiate Class*/
-    public TermsRequest(){
+    public ItineraryRequest(){
     }
 
     //public LoginRequest(String username123){

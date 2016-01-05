@@ -158,12 +158,15 @@ public class BaseFragmentActivity extends FragmentActivity {
         aq.id(R.id.tabBackButton).visible();
         aq.id(R.id.tabBackButton).clicked(new OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 finish();
             }
         });
     }
+
+
+
+
 
 
     @Override
@@ -190,7 +193,7 @@ public class BaseFragmentActivity extends FragmentActivity {
     public void startActivity(Intent intent)
     {
         super.startActivity(intent);
-        overridePendingTransition(0, 0);
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
     }
 
     @Override
@@ -204,7 +207,7 @@ public class BaseFragmentActivity extends FragmentActivity {
     public void onBackPressed()
     {
         super.onBackPressed();
-        overridePendingTransition(0, 0);
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setResult(RESULT_CANCELED);
     }
 

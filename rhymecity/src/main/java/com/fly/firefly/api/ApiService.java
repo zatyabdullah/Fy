@@ -13,6 +13,7 @@ import com.fly.firefly.api.obj.RegisterReceive;
 import com.fly.firefly.api.obj.SearchFlightReceive;
 import com.fly.firefly.api.obj.SeatSelectionReveice;
 import com.fly.firefly.api.obj.SelectFlightReceive;
+import com.fly.firefly.api.obj.ItineraryInfoReceive;
 import com.fly.firefly.api.obj.TermsReceive;
 import com.fly.firefly.api.obj.UpdateProfileReceive;
 import com.fly.firefly.api.obj.tryObj;
@@ -87,11 +88,15 @@ public interface ApiService {
     @POST("/checkInFlight")
     void onMobileCheckinRequest(@Body MobileCheckinObj obj, Callback<MobileCheckinReceive> callback);
 
+    @POST("/flightSummary")
+    void onItineraryRequest( Callback<ItineraryInfoReceive> callback);
+
     @POST("/seatMap")
     void onSeatSelection(@Body SeatSelection obj, Callback<SeatSelectionReveice> callback);
 
     @POST("/terms")
-    void onTermsRequest(@Body TermsRequest obj, Callback<TermsReceive> callback);
+    //void onTermsRequest(@Body TermsRequest obj, Callback<TermsReceive> callback);
+    void onTermsRequest(Callback<TermsReceive> callback);
 
     @POST("/selectionPayment")
     void onPaymentInfo(@Body Signature obj, Callback<PaymentInfoReceive> callback);

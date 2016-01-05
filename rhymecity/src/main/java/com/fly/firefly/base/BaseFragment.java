@@ -2,7 +2,6 @@ package com.fly.firefly.base;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -16,6 +15,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -52,6 +53,11 @@ public class BaseFragment extends Fragment {
 	private static SharedPrefManager prefManager;
 	private static Country obj = new Country();
 	private static SpotsDialog mProgressDialog;
+
+	public void setShake(View view) {
+		Animation shake = AnimationUtils.loadAnimation(getActivity(), R.anim.shake);
+		view.startAnimation(shake);
+	}
 
 
 	public ArrayList<DropDownItem> getListOfYear(Activity act){
@@ -142,7 +148,7 @@ public class BaseFragment extends Fragment {
 	public static void initiateLoading(Activity act){
 
 
-		mProgressDialog = new SpotsDialog(act,R.style.SpotsDialogDefault);
+		mProgressDialog = new SpotsDialog(act,R.style.Custom);
 		//mProgressDialog.setIndeterminate(false);
 		mProgressDialog.setCancelable(true);
 		mProgressDialog.setMessage("Loading");
@@ -159,6 +165,7 @@ public class BaseFragment extends Fragment {
 	}
 
 	public static void dismissLoading(){
+
 		if(mProgressDialog.isShowing()){
 			mProgressDialog.dismiss();
 		}
@@ -495,18 +502,18 @@ public class BaseFragment extends Fragment {
 	}
 
 
-	/*Get All Country From OS*/
-	public JSONArray getTerm(Activity act) {
+	/*Get From OS*/
+	public JSONArray getTermInfo(Activity act) {
 		JSONArray json = null;
 
 		prefManager = new SharedPrefManager(act);
 		HashMap<String, String> init = prefManager.getTermInfo();
 		String dataTerm = init.get(SharedPrefManager.TERM_INFO);
-		Log.e("dataTerm", dataTerm);
+		//Log.e("dataTerm", dataTerm);
 
 		try {
 			json = new JSONArray(dataTerm);
-			Log.e("json", Integer.toString(json.length()));
+			//Log.e("json", Integer.toString(json.length()));
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}

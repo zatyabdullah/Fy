@@ -106,7 +106,6 @@ public class UpdateProfileFragment extends BaseFragment implements
     EditText editNewPassword;
 
     @Order(3)@Optional
-    //@ConfirmPassword(sequence =1)
     @InjectView(R.id.editConfirmPassword)
     EditText editConfirmPassword;
 
@@ -176,7 +175,7 @@ public class UpdateProfileFragment extends BaseFragment implements
     CheckBox checkSubscribe;
 
     @Order(17)
-    @Checked(message = "You must agree with tem & condition")
+    @Checked(message = "You must agree with term & condition")
     @InjectView(R.id.checkTNC)
     CheckBox checkTNC;
 
@@ -261,6 +260,7 @@ public class UpdateProfileFragment extends BaseFragment implements
         editFax.setText(fax, TextView.BufferType.EDITABLE);
         txtRegisterDatePicker.setText(dob);
         editCurrentPassword.setText("",TextView.BufferType.EDITABLE);
+        editNewPassword.setText("",TextView.BufferType.EDITABLE);
 
 
 
@@ -366,7 +366,6 @@ public class UpdateProfileFragment extends BaseFragment implements
                 //Validate form
                 Log.e("Clicked", "Ok");
                 mValidator.validate();
-                requestUpdateProfile();
                 Utils.hideKeyboard(getActivity(), v);
                 //requestChangePassword(editTextemail.getText().toString(), editTextPasswordCurrent.getText().toString(), editTextPasswordNew.getText().toString());
 
@@ -491,6 +490,10 @@ public class UpdateProfileFragment extends BaseFragment implements
             data.setNew_password(newPassword);
         }
 
+        if(!editNewPassword.getText().toString().equals(editConfirmPassword.getText().toString())){
+            dismissLoading();
+            croutonAlert(getActivity(), "Password don't match.");
+        }
 
         //Post title
             if (editTitle.getTag() == null ) {
@@ -536,11 +539,12 @@ public class UpdateProfileFragment extends BaseFragment implements
        dismissLoading();
        Log.e("Update","success");
         if (obj.getStatus().equals("success")) {
-            Crouton.makeText(getActivity(), "Profile Successfully Updated", Style.CONFIRM).show();
+            Crouton.makeText(getActivity(), R.string.update_success, Style.CONFIRM).show();
             //goHomePage();
            // pref.setLoginStatus("Y");
             Log.e("X", obj.getUserInfo().getFirst_name());
             pref.setUsername(obj.getUserInfo().getFirst_name());
+
             Gson gsonUserInfo = new Gson();
             String userInfo = gsonUserInfo.toJson(obj.getUserInfo());
             pref.setUserInfo(userInfo);
@@ -548,6 +552,8 @@ public class UpdateProfileFragment extends BaseFragment implements
         else if (obj.getStatus().equals("error_validation")) {
             croutonAlert(getActivity(), obj.getMessage());
             Log.e("error validation", obj.getMessage());
+        }else {
+            croutonAlert(getActivity(), obj.getMessage());
         }
     }
 
@@ -563,16 +569,18 @@ public class UpdateProfileFragment extends BaseFragment implements
     //Validator Result//
     @Override
     public void onValidationSucceeded() {
-        //requestUpdateProfile();
+        requestUpdateProfile();
         Log.e("Validation", "success");
 
     }
 
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
+
         Log.e("Validation","fail");
        for (ValidationError error : errors) {
             View view = error.getView();
+            setShake(view);
 
             String message = error.getCollatedErrorMessage(getActivity());
             String splitErrorMsg[] = message.split("\\r?\\n");

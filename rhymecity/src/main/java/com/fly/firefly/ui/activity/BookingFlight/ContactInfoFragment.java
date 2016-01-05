@@ -220,7 +220,7 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
 
 
             txtInsurance1.setText(Html.fromHtml(insuranceTxt1));
-            txtInsurance2.setText(Html.fromHtml(insuranceTxt2));
+            txtInsurance2.setText(Html.fromHtml(insuranceTxt2.replaceAll("</br>","<p>")));
             txtInsurance2.setMovementMethod(LinkMovementMethod.getInstance());
 
             txtInsurance3.setText(Html.fromHtml(insuranceTxt3));

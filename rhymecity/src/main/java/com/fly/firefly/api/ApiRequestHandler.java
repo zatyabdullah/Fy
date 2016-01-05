@@ -19,11 +19,13 @@ import com.fly.firefly.api.obj.RegisterReceive;
 import com.fly.firefly.api.obj.SearchFlightReceive;
 import com.fly.firefly.api.obj.SeatSelectionReveice;
 import com.fly.firefly.api.obj.SelectFlightReceive;
+import com.fly.firefly.api.obj.ItineraryInfoReceive;
 import com.fly.firefly.api.obj.TermsReceive;
 import com.fly.firefly.api.obj.UpdateProfileReceive;
 import com.fly.firefly.ui.object.ChangePasswordRequest;
 import com.fly.firefly.ui.object.ContactInfo;
 import com.fly.firefly.ui.object.DeviceInformation;
+import com.fly.firefly.ui.object.ItineraryObj;
 import com.fly.firefly.ui.object.LoginRequest;
 import com.fly.firefly.ui.object.MobileCheckinObj;
 import com.fly.firefly.ui.object.Passenger;
@@ -131,10 +133,6 @@ public class ApiRequestHandler {
     public void onPasswordRequest(final PasswordRequest event) {
 
         Log.e("Email", event.getEmail());
-
-
-       // initiateLoading();
-        //loading(true);
 
 
         apiService.onRequestPassword(event, new Callback<ForgotPasswordReceive>() {
@@ -411,7 +409,7 @@ public class ApiRequestHandler {
         // loading(true);
 
 
-        apiService.onTermsRequest(data, new Callback<TermsReceive>() {
+        apiService.onTermsRequest(new Callback<TermsReceive>() {
 
             @Override
             public void success(TermsReceive rhymesResponse, Response response) {
@@ -503,6 +501,28 @@ public class ApiRequestHandler {
         });
     }
 
+    @Subscribe
+    public void onItineraryRequest(final ItineraryObj event) {
+
+        apiService.onItineraryRequest( new Callback<ItineraryInfoReceive>() {
+
+            @Override
+            public void success(ItineraryInfoReceive responseData, Response response) {
+
+                bus.post(new ItineraryInfoReceive(responseData));
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+                Crouton.makeText(MainFragmentActivity.getContext(), "Unable to connect to server", Style.ALERT).show();
+                Log.e("Failed", error.getMessage());
+
+            }
+
+        });
+    }
 
 
 

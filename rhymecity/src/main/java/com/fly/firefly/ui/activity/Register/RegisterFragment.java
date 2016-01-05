@@ -416,7 +416,7 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
     public void onValidationFailed(List<ValidationError> errors) {
         for (ValidationError error : errors) {
             View view = error.getView();
-
+            setShake(view);
              /* Split Error Message. Display first sequence only */
             String message = error.getCollatedErrorMessage(getActivity());
             String splitErrorMsg[] = message.split("\\r?\\n");
