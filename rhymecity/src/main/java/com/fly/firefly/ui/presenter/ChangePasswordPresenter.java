@@ -2,13 +2,15 @@ package com.fly.firefly.ui.presenter;
 
 import android.util.Log;
 
+import com.fly.firefly.api.obj.ChangePasswordReceive;
 import com.fly.firefly.ui.object.ChangePasswordRequest;
 import com.squareup.otto.Bus;
+import com.squareup.otto.Subscribe;
 
 public class ChangePasswordPresenter {
 
     public interface ChangePasswordView {
-        //void onPasswordRequesFailed(String dumm);
+        void onUpdatePasswordSuccess(ChangePasswordReceive event);
     }
 
     private final ChangePasswordView view;
@@ -37,11 +39,11 @@ public class ChangePasswordPresenter {
 
 
 
-   // @Subscribe
-    //public void onUserFailedReqPassword(FailedConnectToServer event) {
-//
+    @Subscribe
+    public void onUserSuccessReqPassword(ChangePasswordReceive event) {
+
         //*Save Session And Redirect To Homepage*//*
-  //      view.onPasswordRequesFailed(event.getDummy());
-   // }
+        view.onUpdatePasswordSuccess(event.getUserObj());
+    }
 
 }
