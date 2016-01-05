@@ -16,7 +16,7 @@ public class LoginPresenter {
 
         void onLoginSuccess(LoginReceive obj);
         void onLoginFailed(String dumm);
-        void onUpdatePasswordSuccess(ForgotPasswordReceive obj);
+        void onRequestPasswordSuccess(ForgotPasswordReceive obj);
       //  void onPasswordRequestFailed(ForgotPasswordReceive obj);
         //void onPasswordRequesFailed(String dumm);
 
@@ -71,7 +71,7 @@ public class LoginPresenter {
     public void onUserSuccessReqPassword(ForgotPasswordReceive obj) {
 
         //*Save Session And Redirect To Homepage*//*
-        view.onUpdatePasswordSuccess(obj.getUserObj());
+        view.onRequestPasswordSuccess(obj.getUserObj());
     }
 
     /*@Subscribe

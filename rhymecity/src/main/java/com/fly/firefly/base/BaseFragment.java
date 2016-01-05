@@ -15,6 +15,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -49,6 +51,11 @@ public class BaseFragment extends Fragment {
 	private static SharedPrefManager prefManager;
 	private static Country obj = new Country();
 	private static SpotsDialog mProgressDialog;
+
+	public void setShake(View view) {
+		Animation shake = AnimationUtils.loadAnimation(getActivity(), R.anim.shake);
+		view.startAnimation(shake);
+	}
 
 
 	public void croutonAlert(Activity act,String msg){

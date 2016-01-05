@@ -580,6 +580,7 @@ public class UpdateProfileFragment extends BaseFragment implements
         Log.e("Validation","fail");
        for (ValidationError error : errors) {
             View view = error.getView();
+            setShake(view);
 
             String message = error.getCollatedErrorMessage(getActivity());
             String splitErrorMsg[] = message.split("\\r?\\n");
