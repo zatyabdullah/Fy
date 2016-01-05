@@ -16,7 +16,6 @@ import android.widget.TextView;
 import com.fly.firefly.AnalyticsApplication;
 import com.fly.firefly.FireFlyApplication;
 import com.fly.firefly.R;
-import com.fly.firefly.api.obj.ChangePasswordReceive;
 import com.fly.firefly.api.obj.ForgotPasswordReceive;
 import com.fly.firefly.api.obj.LoginReceive;
 import com.fly.firefly.base.BaseFragment;
@@ -147,10 +146,8 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
     }
 
     public void loginFromFragment(String username,String password){
-
         /*Start Loading*/
         initiateLoading(getActivity());
-
         LoginRequest data = new LoginRequest();
         data.setUsername(username);
         data.setPassword(password);
@@ -189,7 +186,6 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
 
         /*Dismiss Loading*/
         dismissLoading();
-
         if (obj.getStatus().equals("success")) {
             pref.setLoginStatus("Y");
             Log.e("X", obj.getUser_info().getFirst_name());
@@ -198,12 +194,13 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
             Gson gsonUserInfo = new Gson();
             String userInfo = gsonUserInfo.toJson(obj.getUser_info());
             pref.setUserInfo(userInfo);
-
             goBookingPage();
         }
         else if (obj.getStatus().equals("change_password")) {
             pref.setLoginStatus("Y");
             goChangePasswordPage();
+        }else if(obj.getStatus().equals("error_validation")) {
+            croutonAlert(getActivity(),obj.getMessage());
         }else{
             croutonAlert(getActivity(),obj.getMessage());
            /*Crouton.makeText(getActivity(), obj.getMessage(), Style.ALERT)
@@ -224,11 +221,13 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
     @Override
     public void onUpdatePasswordSuccess(ForgotPasswordReceive obj) {
         dismissLoading();
+        Log.e("Message",obj.getMessage());
         if (obj.getStatus().equals("success")) {
-            Crouton.makeText(getActivity(),"Password Updated", Style.CONFIRM).show();
+            Crouton.makeText(getActivity(),obj.getMessage(), Style.CONFIRM).show();
             //goHomePage();
         }else{
-            croutonAlert(getActivity(),obj.getMessage());
+            dismissLoading();
+            Crouton.makeText(getActivity(), obj.getMessage(), Style.ALERT).show();
         }
 
     }
@@ -236,14 +235,14 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
     /* Validation Success - Start send data to server */
     @Override
     public void onValidationSucceeded() {
-        loginFromFragment(txtLoginEmail.getText().toString(), AESCBC.encrypt(App.KEY, App.IV, txtLoginPassword.getText().toString()));
+        loginFromFragment(txtLoginEmail.getText().toString(),
+                AESCBC.encrypt(App.KEY, App.IV, txtLoginPassword.getText().toString()));
 
     }
 
     /* Validation Failed - Toast Error */
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
-    dismissLoading();
         for (ValidationError error : errors) {
             View view = error.getView();
 
@@ -271,7 +270,7 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
         final View myView = li.inflate(R.layout.forgot_password_screen, null);
         Button cont = (Button)myView.findViewById(R.id.btncontinue);
 
-        final EditText editEmail = (EditText)myView.findViewById(R.id.editTextemail);
+        final EditText editEmail = (EditText)myView.findViewById(R.id.editTextemail_login);
 
 
         cont.setOnClickListener(new View.OnClickListener() {
