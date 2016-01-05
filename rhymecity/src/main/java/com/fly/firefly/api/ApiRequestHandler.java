@@ -93,10 +93,6 @@ public class ApiRequestHandler {
         Log.e("Email", event.getEmail());
 
 
-       // initiateLoading();
-        //loading(true);
-
-
         apiService.onRequestPassword(event, new Callback<ForgotPasswordReceive>() {
 
             @Override

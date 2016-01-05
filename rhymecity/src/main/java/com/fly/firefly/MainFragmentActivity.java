@@ -152,8 +152,8 @@ public class MainFragmentActivity extends BaseFragmentActivity implements Naviga
                 item.setBackgroundColor(getResources().getColor(R.color.white));
                 Intent homepage = new Intent(this, HomeActivity.class);
                 homepage.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
                 startActivity(homepage);
+                this.overridePendingTransition(R.anim.fadein, R.anim.fadeout);
             }
             else if (item.getTag().equals("Login"))
             {
@@ -161,6 +161,7 @@ public class MainFragmentActivity extends BaseFragmentActivity implements Naviga
                 Intent login = new Intent(this, LoginActivity.class);
                 login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(login);
+                this.overridePendingTransition(R.anim.fadein, R.anim.fadeout);
             }
             else if (item.getTag().equals("Logout"))
             {
@@ -168,6 +169,7 @@ public class MainFragmentActivity extends BaseFragmentActivity implements Naviga
                 Intent login = new Intent(this, HomeActivity.class);
                 login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(login);
+                this.overridePendingTransition(R.anim.fadein, R.anim.fadeout);
             }
             else if (item.getTag().equals("Register"))
             {
@@ -175,18 +177,21 @@ public class MainFragmentActivity extends BaseFragmentActivity implements Naviga
                 Intent register = new Intent(this, RegisterActivity.class);
                 register.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(register);
+                this.overridePendingTransition(R.anim.fadein, R.anim.fadeout);
             }
             else if (item.getTag().equals("Profile"))
             {
                 Intent register = new Intent(this, UpdateProfileActivity.class);
                 register.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(register);
+                this.overridePendingTransition(R.anim.fadein, R.anim.fadeout);
             }
             else if (item.getTag().equals("Terms"))
             {
                 Intent terms = new Intent(this, Terms.class);
                 terms.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(terms);
+                this.overridePendingTransition(R.anim.fadein, R.anim.fadeout);
             }
             else if (item.getTag().equals("HEADER"))
             {

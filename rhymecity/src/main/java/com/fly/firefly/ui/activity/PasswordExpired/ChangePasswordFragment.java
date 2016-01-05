@@ -163,7 +163,6 @@ public class ChangePasswordFragment extends BaseFragment implements ChangePasswo
 
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
-        dismissLoading();
         for (ValidationError error : errors) {
             View view = error.getView();
 

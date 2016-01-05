@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fly.firefly.AnalyticsApplication;
 import com.fly.firefly.FireFlyApplication;
@@ -160,6 +161,7 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
     {
         Intent loginPage = new Intent(getActivity(), RegisterActivity.class);
         getActivity().startActivity(loginPage);
+        getActivity().overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 
     }
 
@@ -167,7 +169,9 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
     {
         Intent loginPage = new Intent(getActivity(), SearchFlightActivity.class);
         getActivity().startActivity(loginPage);
+        getActivity().overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         getActivity().finish();
+
     }
 
 
@@ -219,15 +223,18 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
 
 
     @Override
-    public void onUpdatePasswordSuccess(ForgotPasswordReceive obj) {
+    public void onRequestPasswordSuccess(ForgotPasswordReceive obj) {
         dismissLoading();
         Log.e("Message",obj.getMessage());
+
         if (obj.getStatus().equals("success")) {
             Crouton.makeText(getActivity(),obj.getMessage(), Style.CONFIRM).show();
             //goHomePage();
+        }else if(obj.getStatus().equals("error_validation")){
+            Toast.makeText(getActivity(),obj.getMessage(),Toast.LENGTH_LONG).show();
+           // Crouton.makeText(getActivity(), obj.getMessage(), Style.ALERT).show();
         }else{
-            dismissLoading();
-            Crouton.makeText(getActivity(), obj.getMessage(), Style.ALERT).show();
+            Toast.makeText(getActivity(),obj.getMessage(),Toast.LENGTH_LONG).show();
         }
 
     }
@@ -276,8 +283,13 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
         cont.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                requestForgotPassword(editEmail.getText().toString(),"");
-                dialog.dismiss();
+                if(editEmail.getText().toString().equals("")){
+                    Toast.makeText(getActivity(), "Email is required",Toast.LENGTH_LONG).show();
+                }else{
+                    requestForgotPassword(editEmail.getText().toString(),"");
+                    dialog.dismiss();
+                }
+
             }
 
         });
