@@ -188,6 +188,7 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
     @Override
     public void onLoginSuccess(LoginReceive obj) {
 
+        Log.e("STATUS",obj.getStatus());
         /*Dismiss Loading*/
         dismissLoading();
         if (obj.getStatus().equals("success")) {
@@ -229,12 +230,9 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
 
         if (obj.getStatus().equals("success")) {
             Crouton.makeText(getActivity(),obj.getMessage(), Style.CONFIRM).show();
-            //goHomePage();
-        }else if(obj.getStatus().equals("error_validation")){
-            Toast.makeText(getActivity(),obj.getMessage(),Toast.LENGTH_LONG).show();
-           // Crouton.makeText(getActivity(), obj.getMessage(), Style.ALERT).show();
+           
         }else{
-            Toast.makeText(getActivity(),obj.getMessage(),Toast.LENGTH_LONG).show();
+            croutonAlert(getActivity(),obj.getMessage());
         }
 
     }
@@ -263,7 +261,7 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
                ((EditText) view).setError(splitErrorMsg[0]);
             } else {
                 croutonAlert(getActivity(), splitErrorMsg[0]);
-              // Toast.makeText(getActivity(), splitErrorMsg[0], Toast.LENGTH_LONG).show();
+
 
 
             }
@@ -279,14 +277,19 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
         Button cont = (Button)myView.findViewById(R.id.btncontinue);
 
         final EditText editEmail = (EditText)myView.findViewById(R.id.editTextemail_login);
+        final String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
 
         cont.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(editEmail.getText().toString().equals("")){
-                    Toast.makeText(getActivity(), "Email is required",Toast.LENGTH_LONG).show();
-                }else{
+
+            if(editEmail.getText().toString().equals("")) {
+                Toast.makeText(getActivity(), "Email is required", Toast.LENGTH_LONG).show();
+
+            }else if (!editEmail.getText().toString().matches(emailPattern)) {
+                Toast.makeText(getActivity(), "Invalid Email", Toast.LENGTH_LONG).show();
+            }else{
                     requestForgotPassword(editEmail.getText().toString(),"");
                     dialog.dismiss();
                 }

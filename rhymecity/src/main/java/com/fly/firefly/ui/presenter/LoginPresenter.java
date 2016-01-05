@@ -17,7 +17,7 @@ public class LoginPresenter {
         void onLoginSuccess(LoginReceive obj);
         void onLoginFailed(String dumm);
         void onRequestPasswordSuccess(ForgotPasswordReceive obj);
-      //  void onPasswordRequestFailed(ForgotPasswordReceive obj);
+        //  void onPasswordRequestFailed(ForgotPasswordReceive obj);
         //void onPasswordRequesFailed(String dumm);
 
 
