@@ -199,6 +199,7 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
     {
         Intent loginPage = new Intent(getActivity(), ManageFlight_Activity.class);
         getActivity().startActivity(loginPage);
+        getActivity().overridePendingTransition(R.anim.fadein_right, R.anim.fadeout_right);
     }
 
     /*Public-Inner Func*/
@@ -206,6 +207,7 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
     {
         Intent mcheckin = new Intent(getActivity(), MobileCheckInActivity1.class);
         getActivity().startActivity(mcheckin);
+        getActivity().overridePendingTransition(R.anim.fadein_right, R.anim.fadeout_right);
     }
 
     public void goToBeacon()
@@ -213,6 +215,7 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
         Intent loginPage = new Intent(getActivity(), BeaconRanging.class);
         //Intent loginPage = new Intent(getActivity(), CurrentGateActivity.class);
         getActivity().startActivity(loginPage);
+        getActivity().overridePendingTransition(R.anim.fadein_right, R.anim.fadeout_right);
     }
 
     public void goToBoardingPass()
@@ -220,12 +223,14 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
         //Intent loginPage = new Intent(getActivity(), BeaconRanging.class);
         Intent loginPage = new Intent(getActivity(), BoardingPassActivity.class);
         getActivity().startActivity(loginPage);
+        getActivity().overridePendingTransition(R.anim.fadein_right, R.anim.fadeout_right);
     }
 
     public void goBookingPage()
     {
         Intent loginPage = new Intent(getActivity(), SearchFlightActivity.class);
         getActivity().startActivity(loginPage);
+        getActivity().overridePendingTransition(R.anim.fadein_right, R.anim.fadeout_right);
 
         //getActivity().finish();
     }
