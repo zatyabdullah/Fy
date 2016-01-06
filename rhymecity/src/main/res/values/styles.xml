@@ -41,7 +41,7 @@
     <style name="Custom" parent="android:Theme.DeviceDefault.Dialog">
         <item name="DialogTitleAppearance">@android:style/TextAppearance.Medium</item>
         <item name="android:colorBackground">@color/theme1_tab_bg_5</item>
-        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textColor">@android:color/white</item>
         <item name="DialogTitleText">Loading…</item>
         <item name="DialogSpotColor">@color/white</item>
         <item name="DialogSpotCount">5</item>
