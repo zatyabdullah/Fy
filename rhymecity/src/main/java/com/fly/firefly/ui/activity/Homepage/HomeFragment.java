@@ -35,6 +35,7 @@ import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 //import com.estimote.sdk.BeaconManager;
 
@@ -266,6 +267,20 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
         presenter.onPause();
     }
 
+    public void registerBackFunction()
+    {
+        new SweetAlertDialog(getActivity(), SweetAlertDialog.WARNING_TYPE)
+                .setTitleText("EXIT FIREFLY")
+                .setContentText("Confirm exit?")
+                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        getActivity().finish();
+                    }
+                })
+                .show();
+
+    }
 
 
 

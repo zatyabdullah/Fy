@@ -24,7 +24,6 @@ import com.google.gson.Gson;
 import com.mobsandgeeks.saripaar.Validator;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import javax.inject.Inject;
 
@@ -76,9 +75,35 @@ public class ItinenaryFragment extends BaseFragment implements BookingPresenter.
     @InjectView(R.id.oneway_tax)
     TextView oneway_tax;
 
+    @InjectView(R.id.oneway_tax_link)
+    TextView oneway_tax_link;
+
     @InjectView(R.id.oneway_tax_price)
     TextView oneway_tax_price;
 
+    @InjectView(R.id.admin_fee_price)
+    TextView admin_fee_price;
+
+    @InjectView(R.id.airport_tax_price)
+    TextView airport_tax_price;
+
+    @InjectView(R.id.fuel_surcharge_price)
+    TextView fuel_surcharge_price;
+
+    @InjectView(R.id.good_services_price)
+    TextView good_services_price;
+
+    @InjectView(R.id.adminfee_return_price)
+    TextView adminfee_return_price;
+
+    @InjectView(R.id.airporttax_return_price)
+    TextView airporttax_return_price;
+
+    @InjectView(R.id.fuelsurcharge_return_price)
+    TextView fuelsurcharge_return_price;
+
+    @InjectView(R.id.goodservices_return_price)
+    TextView goodservices_return_price;
 
     @InjectView(R.id.txt_sumtotalPrice)
     TextView txt_sumtotalPrice;
@@ -95,6 +120,9 @@ public class ItinenaryFragment extends BaseFragment implements BookingPresenter.
     @InjectView(R.id.return_tax)
     TextView return_tax;
 
+    @InjectView(R.id.return_tax_link)
+    TextView return_tax_link;
+
     @InjectView(R.id.return_tax_price)
     TextView return_tax_price;
 
@@ -107,11 +135,18 @@ public class ItinenaryFragment extends BaseFragment implements BookingPresenter.
     @InjectView(R.id.returnblock)
     LinearLayout returnblock;
 
+    @InjectView(R.id.detailblockoneway)
+    LinearLayout detailblockoneway;
+
+    @InjectView(R.id.detailblockreturn)
+    LinearLayout detailblockreturn;
+
 
     private int fragmentContainerId;
     private SharedPrefManager pref;
     private String bookingID,signature;
     private String flightType_return;
+    boolean showingFirst = true;
 
     View view;
 
@@ -155,12 +190,25 @@ public class ItinenaryFragment extends BaseFragment implements BookingPresenter.
         oneway_guest_price.setText((obj.getObj().getPrice_details().get(0).getTotal_guest()));
         oneway_tax_price.setText(obj.getObj().getPrice_details().get(0).getTaxes_or_fees().getTotal());
 
+        //Tax details
+        admin_fee_price.setText(obj.getObj().getPrice_details().get(0).getTaxes_or_fees().getAdmin_fee());
+        airport_tax_price.setText(obj.getObj().getPrice_details().get(0).getTaxes_or_fees().getAirport_tax());
+        fuel_surcharge_price.setText(obj.getObj().getPrice_details().get(0).getTaxes_or_fees().getFuel_surcharge());
+        good_services_price.setText(obj.getObj().getPrice_details().get(0).getTaxes_or_fees().getGoods_and_services_tax());
+
+
         //RETURN DETAILS
         if(obj.getObj().getFlight_details().toArray().length >1){
             txt_return.setText(obj.getObj().getFlight_details().get(1).getStation());
             return_guest.setText(obj.getObj().getPrice_details().get(1).getGuest());
             return_guest_price.setText((obj.getObj().getPrice_details().get(1).getTotal_guest()));
             return_tax_price.setText(obj.getObj().getPrice_details().get(1).getTaxes_or_fees().getTotal());
+
+            //Tax details
+            adminfee_return_price.setText(obj.getObj().getPrice_details().get(1).getTaxes_or_fees().getAdmin_fee());
+            airporttax_return_price.setText(obj.getObj().getPrice_details().get(1).getTaxes_or_fees().getAirport_tax());
+            fuelsurcharge_return_price.setText(obj.getObj().getPrice_details().get(1).getTaxes_or_fees().getFuel_surcharge());
+            goodservices_return_price.setText(obj.getObj().getPrice_details().get(1).getTaxes_or_fees().getGoods_and_services_tax());
         }
 
         //Total Price
@@ -170,10 +218,14 @@ public class ItinenaryFragment extends BaseFragment implements BookingPresenter.
         if(obj.getObj().getFlight_details().toArray().length <2) {
             oneWayBlock.setVisibility(View.VISIBLE);
             returnblock.setVisibility(View.GONE);
+            detailblockoneway.setVisibility(View.GONE);
+            detailblockreturn.setVisibility(View.GONE);
 
         } else if(obj.getObj().getFlight_details().toArray().length >1) {
             oneWayBlock.setVisibility(View.VISIBLE);
             returnblock.setVisibility(View.VISIBLE);
+            detailblockoneway.setVisibility(View.GONE);
+            detailblockreturn.setVisibility(View.GONE);
         }
 
         if(obj.getStatus()!= null && obj.getStatus().equals("Services and Fees")) {
@@ -184,6 +236,33 @@ public class ItinenaryFragment extends BaseFragment implements BookingPresenter.
             ServiceFeesblock.setVisibility(View.GONE);
 
         }
+
+        oneway_tax_link.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(showingFirst == true) {
+                    detailblockoneway.setVisibility(View.VISIBLE);
+                 showingFirst = false;
+                }else {
+                    detailblockoneway.setVisibility(View.GONE);
+                    showingFirst = true;
+                }
+            }
+        });
+
+        return_tax_link.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(showingFirst == true) {
+                    detailblockreturn.setVisibility(View.VISIBLE);
+                    showingFirst = false;
+                }else {
+                    detailblockreturn.setVisibility(View.GONE);
+                    showingFirst = true;
+                }
+            }
+        });
+
 
         btnItinerary.setOnClickListener(new View.OnClickListener() {
             @Override

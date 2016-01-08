@@ -3,7 +3,8 @@ package com.fly.firefly.ui.object;
 /**
  * Created by Dell on 11/23/2015.
  */
-public class ItineraryObj {
+
+public class ItineraryObj{
 
     private String type;
     private String departure_station ;
@@ -20,7 +21,7 @@ public class ItineraryObj {
         type = data.getType();
         departure_station = data.getDeparture_station();
         arrival_station = data.getArrival_station();
-        signature = data.getSignature();
+       // signature = data.getSignature();
         pnr = data.getPnr();
 
     }
@@ -47,13 +48,7 @@ public class ItineraryObj {
 
     public void setArrival_station(String arrival_station) {this.arrival_station = arrival_station;}
 
-    public String getSignature() {
-        return signature;
-    }
 
-    public void setSignature(String signature) {
-        this.signature = signature;
-    }
 
 
 

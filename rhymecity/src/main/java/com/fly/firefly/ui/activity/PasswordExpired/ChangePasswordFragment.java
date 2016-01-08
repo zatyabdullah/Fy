@@ -58,7 +58,7 @@ public class ChangePasswordFragment extends BaseFragment implements ChangePasswo
     @InjectView(R.id.editTextemail)
     EditText editTextemail;
 
-    @Order(2)@NotEmpty (sequence = 1)
+    @Order(2)@NotEmpty (sequence = 1)@Password(sequence = 2)
     @InjectView(R.id.editTextforgotPasswordCurrent)
     EditText editTextPasswordCurrent;
 
@@ -66,7 +66,7 @@ public class ChangePasswordFragment extends BaseFragment implements ChangePasswo
     @InjectView(R.id.editTextforgotPasswordConfirm)
     EditText editTextPasswordConfirm;
 
-    @Order(4)@NotEmpty(sequence = 1)@ConfirmPassword(sequence = 2)
+    @Order(4)@NotEmpty(sequence = 1)
     @InjectView(R.id.editTextforgotPasswordNew)
     EditText editTextPasswordNew;
 
@@ -143,9 +143,12 @@ public class ChangePasswordFragment extends BaseFragment implements ChangePasswo
     @Override
     public void onUpdatePasswordSuccess(ChangePasswordReceive obj) {
         dismissLoading();
-        if (obj.getStatus().equals("success")) {
-            Crouton.makeText(getActivity(),R.string.update_success, Style.CONFIRM).show();
+        Log.e("STATUS",(obj.getStatus()));
 
+        if (obj.getStatus().equals("success")) {
+            Crouton.makeText(getActivity(), R.string.update_success, Style.CONFIRM).show();
+        }else if(obj.getStatus().equals("error_validation")) {
+            croutonAlert(getActivity(),obj.getMessage());
         }else{
             croutonAlert(getActivity(),obj.getMessage());
         }
@@ -165,7 +168,7 @@ public class ChangePasswordFragment extends BaseFragment implements ChangePasswo
     public void onValidationFailed(List<ValidationError> errors) {
         for (ValidationError error : errors) {
             View view = error.getView();
-
+            setShake(view);
              /* Split Error Message. Display first sequence only */
             String message = error.getCollatedErrorMessage(getActivity());
             String splitErrorMsg[] = message.split("\\r?\\n");

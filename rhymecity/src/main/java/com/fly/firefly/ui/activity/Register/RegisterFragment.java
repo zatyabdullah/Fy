@@ -390,14 +390,9 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
 
         dismissLoading();
         if (obj.getStatus().equals("success")) {
-            Intent home = new Intent(getActivity(), LoginActivity.class);
-            home.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            getActivity().startActivity(home);
-            getActivity().finish();
-
+            setSuccessDialog(getActivity(), obj.getMessage(), getActivity(), LoginActivity.class);
         }
         else if (obj.getStatus().equals("error")) {
-
             croutonAlert(getActivity(), obj.getMessage());
 
         }else if (obj.getStatus().equals("error_validation")) {

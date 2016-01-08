@@ -177,8 +177,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:weightSum="1"
-                            android:padding="5dp"
-                            android:layout_marginTop="2dp" >
+                            android:layout_marginTop="2dp"
+                            android:paddingRight="5dp"
+                            android:paddingBottom="5dp">
 
                             <LinearLayout
                                 android:orientation="vertical"
@@ -186,13 +187,47 @@
                                 android:layout_weight="0.5"
                                 android:layout_height="match_parent" >
 
-                                <TextView
-                                    android:layout_marginTop="2dp"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Taxes/Fee"
-                                    android:id="@+id/oneway_tax"
-                                    android:textSize="14dp" />
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:weightSum="1"
+                                    android:paddingLeft="5dp"
+                                    android:paddingRight="5dp">
+
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="0dp"
+                                        android:layout_weight="0.5"
+                                        android:layout_height="match_parent" >
+
+                                        <TextView
+                                            android:layout_marginTop="2dp"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Taxes/Fee"
+                                            android:id="@+id/oneway_tax"
+                                            android:textSize="14dp" />
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="0dp"
+                                        android:layout_weight="0.5"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_marginTop="2dp"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="[details]"
+                                            android:textColor="@color/myrColour"
+                                            android:id="@+id/oneway_tax_link"
+                                            android:textSize="14dp" />
+
+                                    </LinearLayout>
+                                </LinearLayout>
                             </LinearLayout>
 
                             <LinearLayout
@@ -212,6 +247,243 @@
                                     android:textSize="14dp" />
                             </LinearLayout>
                         </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:paddingBottom="10dp"
+                            android:id="@+id/detailblockoneway"
+                            android:background="@drawable/drawable_login_bottom_border" >
+
+                            <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:weightSum="1"
+                                android:layout_marginTop="2dp"
+                                android:padding="5dp">
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="0.5"
+                                    android:layout_height="match_parent" >
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:weightSum="1">
+
+                                        <LinearLayout
+                                            android:orientation="vertical"
+                                            android:layout_width="0dp"
+                                            android:layout_weight="0.5"
+                                            android:layout_height="match_parent" >
+
+                                            <TextView
+                                                android:layout_marginTop="2dp"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text=" Admin Fee"
+                                                android:textColor="@color/darkgrey"
+                                                android:id="@+id/txt_admin_fee"
+                                                android:textSize="14dp" />
+                                        </LinearLayout>
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="0.5"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="right"
+                                    android:gravity="right" >
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="0.00MYR"
+                                        android:layout_marginTop="2dp"
+                                        android:textColor="@color/darkgrey"
+                                        android:id="@+id/admin_fee_price"
+                                        android:textSize="14dp" />
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:weightSum="1"
+                                android:layout_marginTop="2dp"
+                                android:paddingRight="5dp"
+                                android:paddingBottom="5dp" >
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="0.5"
+                                    android:layout_height="match_parent" >
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:weightSum="1"
+                                        android:paddingLeft="5dp"
+                                        android:paddingRight="5dp" >
+
+
+
+                                            <TextView
+                                                android:layout_marginTop="2dp"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="Airport Tax"
+                                                android:textColor="@color/darkgrey"
+                                                android:id="@+id/txt_airport_tax"
+                                                android:textSize="14dp" />
+
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="0.5"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="right"
+                                    android:gravity="right" >
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="0.00MYR"
+                                        android:layout_marginTop="2dp"
+                                        android:id="@+id/airport_tax_price"
+                                        android:textSize="14dp"
+                                        android:textColor="@color/darkgrey"/>
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:weightSum="1"
+                                android:layout_marginTop="2dp"
+                                android:paddingRight="5dp"
+                                android:paddingBottom="5dp" >
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="0.5"
+                                    android:layout_height="match_parent" >
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:weightSum="1"
+                                        android:paddingLeft="5dp"
+                                        android:paddingRight="5dp" >
+
+
+
+                                            <TextView
+                                                android:layout_marginTop="2dp"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="Fuel Surcharge"
+                                                android:textColor="@color/darkgrey"
+                                                android:id="@+id/txt_fuel_surcharge"
+                                                android:textSize="14dp" />
+
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="0.5"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="right"
+                                    android:gravity="right" >
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="0.00MYR"
+                                        android:layout_marginTop="2dp"
+                                        android:id="@+id/fuel_surcharge_price"
+                                        android:textColor="@color/darkgrey"
+                                        android:textSize="14dp" />
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:weightSum="1"
+                                android:layout_marginTop="2dp"
+                                android:paddingRight="5dp"
+                                android:paddingBottom="5dp" >
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="0.5"
+                                    android:layout_height="match_parent" >
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:weightSum="1"
+                                        android:paddingLeft="5dp"
+                                        android:paddingRight="5dp" >
+
+
+
+                                            <TextView
+                                                android:layout_marginTop="2dp"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="Good and Services"
+                                                android:id="@+id/txt_good_services"
+                                                android:textSize="14dp"
+                                                android:textColor="@color/darkgrey"/>
+
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="0.5"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="right"
+                                    android:gravity="right" >
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="0.00MYR"
+                                        android:layout_marginTop="2dp"
+                                        android:id="@+id/good_services_price"
+                                        android:textColor="@color/darkgrey"
+                                        android:textSize="14dp" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+
 
                     </LinearLayout>
 
@@ -286,13 +558,47 @@
                                 android:layout_weight="0.5"
                                 android:layout_height="match_parent" >
 
-                                <TextView
-                                    android:layout_marginTop="2dp"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Taxes/Fee"
-                                    android:id="@+id/return_tax"
-                                    android:textSize="14dp" />
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:weightSum="1"
+                                    android:paddingLeft="5dp"
+                                    android:paddingRight="5dp">
+
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="0dp"
+                                        android:layout_weight="0.5"
+                                        android:layout_height="match_parent" >
+
+                                        <TextView
+                                            android:layout_marginTop="2dp"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Taxes/Fee"
+                                            android:id="@+id/return_tax"
+                                            android:textSize="14dp" />
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="0dp"
+                                        android:layout_weight="0.5"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_marginTop="2dp"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="[details]"
+                                            android:textColor="@color/myrColour"
+                                            android:id="@+id/return_tax_link"
+                                            android:textSize="14dp" />
+
+                                    </LinearLayout>
+                                </LinearLayout>
                             </LinearLayout>
 
                             <LinearLayout
@@ -310,6 +616,233 @@
                                     android:id="@+id/return_tax_price"
                                     android:layout_marginTop="2dp"
                                     android:textSize="14dp" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:paddingBottom="10dp"
+                            android:id="@+id/detailblockreturn"
+                            android:background="@drawable/drawable_login_bottom_border" >
+
+                            <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:weightSum="1"
+                                android:layout_marginTop="2dp"
+                                android:padding="5dp" >
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="0.5"
+                                    android:layout_height="match_parent" >
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:weightSum="1" >
+
+                                        <LinearLayout
+                                            android:orientation="vertical"
+                                            android:layout_width="0dp"
+                                            android:layout_weight="0.5"
+                                            android:layout_height="match_parent" >
+
+                                            <TextView
+                                                android:layout_marginTop="2dp"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text=" Admin Fee"
+                                                android:textColor="@color/darkgrey"
+                                                android:id="@+id/adminfee_return"
+                                                android:textSize="14dp" />
+                                        </LinearLayout>
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="0.5"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="right"
+                                    android:gravity="right" >
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="0.00MYR"
+                                        android:layout_marginTop="2dp"
+                                        android:textColor="@color/darkgrey"
+                                        android:id="@+id/adminfee_return_price"
+                                        android:textSize="14dp" />
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:weightSum="1"
+                                android:layout_marginTop="2dp"
+                                android:paddingRight="5dp"
+                                android:paddingBottom="5dp" >
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="0.5"
+                                    android:layout_height="match_parent" >
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:weightSum="1"
+                                        android:paddingLeft="5dp"
+                                        android:paddingRight="5dp" >
+
+                                        <TextView
+                                            android:layout_marginTop="2dp"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Airport Tax"
+                                            android:textColor="@color/darkgrey"
+                                            android:id="@+id/txt_airport"
+                                            android:textSize="14dp" />
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="0.5"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="right"
+                                    android:gravity="right" >
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="0.00MYR"
+                                        android:layout_marginTop="2dp"
+                                        android:textColor="@color/darkgrey"
+                                        android:id="@+id/airporttax_return_price"
+                                        android:textSize="14dp" />
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:weightSum="1"
+                                android:layout_marginTop="2dp"
+                                android:paddingRight="5dp"
+                                android:paddingBottom="5dp" >
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="0.5"
+                                    android:layout_height="match_parent" >
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:weightSum="1"
+                                        android:paddingLeft="5dp"
+                                        android:paddingRight="5dp" >
+
+                                        <TextView
+                                            android:layout_marginTop="2dp"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Fuel Surcharge"
+                                            android:id="@+id/fuelsurcharge_return"
+                                            android:textColor="@color/darkgrey"
+                                            android:textSize="14dp" />
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="0.5"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="right"
+                                    android:gravity="right" >
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="0.00MYR"
+                                        android:layout_marginTop="2dp"
+                                        android:id="@+id/fuelsurcharge_return_price"
+                                        android:textColor="@color/darkgrey"
+                                        android:textSize="14dp" />
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:weightSum="1"
+                                android:layout_marginTop="2dp"
+                                android:paddingRight="5dp"
+                                android:paddingBottom="5dp" >
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="0.5"
+                                    android:layout_height="match_parent" >
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:weightSum="1"
+                                        android:paddingLeft="5dp"
+                                        android:paddingRight="5dp" >
+
+                                        <TextView
+                                            android:layout_marginTop="2dp"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Good and Services"
+                                            android:id="@+id/textView204"
+                                            android:textSize="14dp"
+                                            android:textColor="@color/darkgrey"/>
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="0dp"
+                                    android:layout_weight="0.5"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="right"
+                                    android:gravity="right" >
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="0.00MYR"
+                                        android:layout_marginTop="2dp"
+                                        android:id="@+id/goodservices_return_price"
+                                        android:textSize="14dp"
+                                        android:textColor="@color/darkgrey"/>
+                                </LinearLayout>
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
