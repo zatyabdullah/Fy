@@ -200,7 +200,8 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
             Gson gsonUserInfo = new Gson();
             String userInfo = gsonUserInfo.toJson(obj.getUser_info());
             pref.setUserInfo(userInfo);
-            goBookingPage();
+            setSuccessDialog(getActivity(), obj.getMessage(), getActivity(), SearchFlightActivity.class);
+            //goBookingPage();
         }
         else if (obj.getStatus().equals("change_password")) {
             pref.setLoginStatus("Y");

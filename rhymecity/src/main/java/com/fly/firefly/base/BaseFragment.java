@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -27,7 +28,6 @@ import com.fly.firefly.ui.object.Country;
 import com.fly.firefly.utils.DropDownItem;
 import com.fly.firefly.utils.DropMenuAdapter;
 import com.fly.firefly.utils.SharedPrefManager;
-import com.fly.firefly.utils.Utils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import de.keyboardsurfer.android.widget.crouton.Configuration;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
@@ -54,9 +55,24 @@ public class BaseFragment extends Fragment {
 	private static Country obj = new Country();
 	private static SpotsDialog mProgressDialog;
 
+
 	public void setShake(View view) {
 		Animation shake = AnimationUtils.loadAnimation(getActivity(), R.anim.shake);
 		view.startAnimation(shake);
+	}
+
+	public void setSuccessDialog(Activity act,String msg,final Context context,final Class<?> cls){
+		new SweetAlertDialog(act, SweetAlertDialog.SUCCESS_TYPE)
+				.setTitleText("Success!")
+				.setContentText(msg)
+				.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+					@Override
+					public void onClick(SweetAlertDialog sDialog) {
+						Intent explicitIntent = new Intent(context, cls);
+						context.startActivity(explicitIntent);
+					}
+				})
+				.show();
 	}
 
 
