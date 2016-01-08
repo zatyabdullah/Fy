@@ -193,12 +193,13 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
 
 
         final Calendar calendar = Calendar.getInstance();
+        final int year = calendar.get(Calendar.YEAR);
+
         final DatePickerDialog datePickerDialog = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 
         pref = new SharedPrefManager(getActivity());
         countrys = new ArrayList<DropDownItem>();
         titleList = new ArrayList<DropDownItem>();
-
 
         /*Display Country Data*/
         JSONArray jsonCountry = getCountry(getActivity());
@@ -251,7 +252,7 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
             public void onClick(View v) {
                 AnalyticsApplication.sendEvent("Edit", "Date");
                 //datePickerDialog.setVibrate(isVibrate());
-                datePickerDialog.setYearRange(1985, 2028);
+                datePickerDialog.setYearRange(year - 100, year);
                 //datePickerDialog.setCloseOnSingleTapDay(isCloseOnSingleTapDay());
                 datePickerDialog.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
             }

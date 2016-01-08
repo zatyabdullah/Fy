@@ -8,6 +8,7 @@ import com.fly.firefly.MainFragmentActivity;
 import com.fly.firefly.api.obj.ChangePasswordReceive;
 import com.fly.firefly.api.obj.ContactInfoReceive;
 import com.fly.firefly.api.obj.DeviceInfoSuccess;
+import com.fly.firefly.api.obj.FlightSummaryReceive;
 import com.fly.firefly.api.obj.SplashFailedConnect;
 import com.fly.firefly.api.obj.ForgotPasswordReceive;
 import com.fly.firefly.api.obj.LoginReceive;
@@ -25,6 +26,7 @@ import com.fly.firefly.api.obj.UpdateProfileReceive;
 import com.fly.firefly.ui.object.ChangePasswordRequest;
 import com.fly.firefly.ui.object.ContactInfo;
 import com.fly.firefly.ui.object.DeviceInformation;
+import com.fly.firefly.ui.object.FlightSummary;
 import com.fly.firefly.ui.object.ItineraryObj;
 import com.fly.firefly.ui.object.LoginRequest;
 import com.fly.firefly.ui.object.MobileCheckinObj;
@@ -504,13 +506,34 @@ public class ApiRequestHandler {
     @Subscribe
     public void onItineraryRequest(final ItineraryObj event) {
 
-        apiService.onItineraryRequest( new Callback<ItineraryInfoReceive>() {
+        apiService.onItineraryRequest(new Callback<ItineraryInfoReceive>() {
 
             @Override
             public void success(ItineraryInfoReceive responseData, Response response) {
 
                 bus.post(new ItineraryInfoReceive(responseData));
 
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+                Crouton.makeText(MainFragmentActivity.getContext(), "Unable to connect to server", Style.ALERT).show();
+                Log.e("Failed", error.getMessage());
+
+            }
+
+        });
+    }
+
+    @Subscribe
+    public void onFlightSummary(final FlightSummary event) {
+
+        apiService.onFlightSummary(event,new Callback<FlightSummaryReceive>() {
+
+            @Override
+            public void success(FlightSummaryReceive responseData, Response response) {
+                bus.post(new FlightSummaryReceive(responseData));
             }
 
             @Override

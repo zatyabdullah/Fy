@@ -407,7 +407,7 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
                 getActivity().startActivity(intent);
             }else{
 
-                Intent intent = new Intent(getActivity(), PaymentFlightActivity.class);
+                Intent intent = new Intent(getActivity(), ItinenaryActivity.class);
                 intent.putExtra("ITINENARY_INFORMATION", (new Gson()).toJson(obj));
                 getActivity().startActivity(intent);
             }

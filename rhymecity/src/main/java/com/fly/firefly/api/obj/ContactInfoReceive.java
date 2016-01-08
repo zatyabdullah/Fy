@@ -10,6 +10,8 @@ import java.util.List;
  */
 public class ContactInfoReceive {
 
+    private String pnr;
+    private String booking_status;
     private String status;
     private String booking_id;
     private ContactInfoReceive obj;
@@ -21,6 +23,22 @@ public class ContactInfoReceive {
     private List<PriceDetails> price_details;
     private List<Services> services;
     private  String total_price;
+
+    public String getPnr() {
+        return pnr;
+    }
+
+    public void setPnr(String pnr) {
+        this.pnr = pnr;
+    }
+
+    public String getBooking_status() {
+        return booking_status;
+    }
+
+    public void setBooking_status(String booking_status) {
+        this.booking_status = booking_status;
+    }
 
     public String getTotal_price() {return total_price;}
 

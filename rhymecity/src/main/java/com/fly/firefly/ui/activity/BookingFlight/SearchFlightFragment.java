@@ -152,8 +152,9 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
 
         /*DatePicker Setup - Failed to make it global*/
         final Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
         final DatePickerDialog datePickerDialog = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-        datePickerDialog.setYearRange(1985, 2028);
+        datePickerDialog.setYearRange(year, year + 1);
 
         /*Preference Manager*/
         pref = new SharedPrefManager(MainFragmentActivity.getContext());

@@ -148,7 +148,7 @@ public class BaseFragment extends Fragment {
 	public static void initiateLoading(Activity act){
 
 
-		mProgressDialog = new SpotsDialog(act,R.style.Custom);
+		mProgressDialog = new SpotsDialog(act);
 		//mProgressDialog.setIndeterminate(false);
 		mProgressDialog.setCancelable(true);
 		mProgressDialog.setMessage("Loading");

@@ -242,13 +242,13 @@ public class PaymentFlightFragment extends BaseFragment implements BookingPresen
 
             //Open Secure Site At Browser
             String sanitizeUrl = obj.getObj().getPass().replaceAll("[/]", "");
-            String url = obj.getObj().getLink()+"/"+sanitizeUrl;
+            String url = obj.getObj().getLink()+"/android/"+sanitizeUrl;
+
 
 
             Intent intent = new Intent(getActivity(), PaymentWebViewActivity.class);
             intent.putExtra("PAYMENT_URL", url);
             getActivity().startActivity(intent);
-
             //Intent i = new Intent(Intent.ACTION_VIEW);
             //i.setData(Uri.parse(url));
             //startActivity(i);

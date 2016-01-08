@@ -18,6 +18,7 @@ import com.fly.firefly.R;
 import com.fly.firefly.base.BaseFragment;
 import com.fly.firefly.ui.activity.Beacon.BeaconRanging;
 import com.fly.firefly.ui.activity.BoardingPass.BoardingPassActivity;
+import com.fly.firefly.ui.activity.BookingFlight.FlightSummaryActivity2;
 import com.fly.firefly.ui.activity.BookingFlight.SearchFlightActivity;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
 import com.fly.firefly.ui.activity.Login.LoginActivity;
@@ -101,6 +102,9 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
         String defaultBanner = init.get(SharedPrefManager.DEFAULT_BANNER);
         //Log.e("defaultBanner",defaultBanner);
         //aq.id(R.id.bannerImg).image(defaultBanner);
+        HashMap<String, String> init2 = pref.getSignatureFromLocalStorage();
+        String signature = init2.get(SharedPrefManager.SIGNATURE);
+        Log.e("signature",signature);
 
         // [START shared_tracker]
         // Obtain the shared Tracker instance.
@@ -261,6 +265,8 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
         super.onPause();
         presenter.onPause();
     }
+
+
 
 
 

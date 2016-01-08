@@ -161,7 +161,6 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
     {
         Intent loginPage = new Intent(getActivity(), RegisterActivity.class);
         getActivity().startActivity(loginPage);
-        getActivity().overridePendingTransition(R.anim.fadein, R.anim.fadeout);
 
     }
 
@@ -169,7 +168,6 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
     {
         Intent loginPage = new Intent(getActivity(), SearchFlightActivity.class);
         getActivity().startActivity(loginPage);
-        getActivity().overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         getActivity().finish();
 
     }

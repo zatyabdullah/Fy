@@ -15,9 +15,8 @@ import butterknife.ButterKnife;
 
 //import android.view.WindowManager;
 
-public class FlightSummaryActivity extends MainFragmentActivity implements FragmentContainerActivity {
+public class FlightSummaryActivity2 extends MainFragmentActivity implements FragmentContainerActivity {
 
-    private Tracker mTracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -41,9 +41,11 @@
         <activity android:name=".ui.activity.BookingFlight.FlightDetailActivity" />
         <activity android:name=".ui.activity.BookingFlight.PersonalDetailActivity" />
         <activity android:name=".ui.activity.BookingFlight.SeatSelectionActivity" />
-        <activity android:name=".ui.activity.BookingFlight.FlightSummaryActivity" />
+       <!-- <activity android:name=".ui.activity.BookingFlight.FlightSummaryActivity2" /> -->
 
+        <activity android:name=".ui.activity.BookingFlight.FlightSummaryActivity2">
 
+        </activity>
 
 
         <activity android:name=".ui.activity.BookingFlight.ItinenaryActivity" />
@@ -68,9 +70,6 @@
 
 
 
-
-
-
         <!-- Boarding PASS -->
         <activity android:name=".ui.activity.BoardingPass.BoardingPassActivity" />
 
@@ -89,7 +88,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".ui.activity.PasswordExpired.ChangePasswordActivity"

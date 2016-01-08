@@ -3,13 +3,13 @@ package com.fly.firefly.ui.object;
 /**
  * Created by Dell on 11/23/2015.
  */
-public class ItineraryObj extends BaseClass{
+public class ItineraryObj {
 
     private String type;
     private String departure_station ;
     private String arrival_station ;
-    private  String pnr;
-
+    private String pnr;
+    private String signature;
 
     //private String registerAddressLine2;
     public ItineraryObj(){

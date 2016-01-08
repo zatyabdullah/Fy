@@ -36,14 +36,6 @@ public class HomeActivity extends MainFragmentActivity implements FragmentContai
                 .commit();
     }*/
 
-   /* @Override
-    public void onBackPressed() {
-        if (fragmentManager.getBackStackEntryCount() > 0) {
-            fragmentManager.popBackStack();
-        } else {
-            super.onBackPressed();
-        }
-    }*/
 
     /*@Override
     public ProgressBar getProgressIndicator() {

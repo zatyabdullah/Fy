@@ -1,5 +1,6 @@
 package com.fly.firefly.ui.adapter;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -81,6 +82,7 @@ public class FlightDetailAdapter extends BaseAdapter {
         } else {
             vh = (ViewHolder) view.getTag();
         }
+
 
         /*CheckBox*/
         if(position==selected_position)

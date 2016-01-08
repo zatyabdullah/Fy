@@ -131,8 +131,13 @@ public class PersonalDetailFragment extends BaseFragment implements DatePickerDi
 
         /*DatePicker Setup - Failed to make it global*/
         final Calendar calendar = Calendar.getInstance();
-        final DatePickerDialog datePickerDialog = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-        datePickerDialog.setYearRange(1985, 2028);
+        int year = calendar.get(Calendar.YEAR);
+        final DatePickerDialog datePickerYear = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+        final DatePickerDialog datePickerExpire = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+
+        datePickerYear.setYearRange(year - 100, year);
+        datePickerExpire.setYearRange(year, year+20);
+
         titleList = new ArrayList<DropDownItem>();
         genderList = new ArrayList<DropDownItem>();
         travelDocList = new ArrayList<DropDownItem>();
@@ -265,7 +270,7 @@ public class PersonalDetailFragment extends BaseFragment implements DatePickerDi
                 txtDob.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        datePickerDialog.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
+                        datePickerYear.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
                         clickedPassenger = selectedPassenger;
                         boolDob = true;
                     }
@@ -275,7 +280,7 @@ public class PersonalDetailFragment extends BaseFragment implements DatePickerDi
                 txtExpireDate.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        datePickerDialog.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
+                        datePickerExpire.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
                         clickedPassenger = selectedPassenger;
                         boolExpireDate = true;
                     }

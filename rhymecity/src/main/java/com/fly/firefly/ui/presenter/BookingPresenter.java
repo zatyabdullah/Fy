@@ -1,6 +1,7 @@
 package com.fly.firefly.ui.presenter;
 
 import com.fly.firefly.api.obj.ContactInfoReceive;
+import com.fly.firefly.api.obj.FlightSummaryReceive;
 import com.fly.firefly.api.obj.PassengerInfoReveice;
 import com.fly.firefly.api.obj.PaymentInfoReceive;
 import com.fly.firefly.api.obj.PaymentReceive;
@@ -9,6 +10,7 @@ import com.fly.firefly.api.obj.SeatSelectionReveice;
 import com.fly.firefly.api.obj.SelectFlightReceive;
 import com.fly.firefly.ui.object.BaseObj;
 import com.fly.firefly.ui.object.ContactInfo;
+import com.fly.firefly.ui.object.FlightSummary;
 import com.fly.firefly.ui.object.Passenger;
 import com.fly.firefly.ui.object.Payment;
 import com.fly.firefly.ui.object.SearchFlightObj;
@@ -52,6 +54,9 @@ public class BookingPresenter {
        void onPaymentReceive(PaymentReceive obj);
     }
 
+    public interface FlightSummaryView{
+        void onFlightSummary(FlightSummaryReceive obj);
+    }
 
     private SearchFlightView view;
     private ListFlightView view2;
@@ -60,7 +65,7 @@ public class BookingPresenter {
     private SeatSelectionView view5;
     private ItinenaryView view6;
     private PaymentFlightView view7;
-
+    private FlightSummaryView view8;
 
     private final Bus bus;
 
@@ -99,6 +104,11 @@ public class BookingPresenter {
         this.bus = bus;
     }
 
+    public BookingPresenter(FlightSummaryView view, Bus bus) {
+        this.view8 = view;
+        this.bus = bus;
+    }
+
     /*User Search FLight*/
     public void searchFlight(SearchFlightObj flightObj) {
         bus.post(new SearchFlightObj(flightObj));
@@ -134,6 +144,10 @@ public class BookingPresenter {
         bus.post(new Payment(obj));
     }
 
+    /*Flight Summary*/
+    public void requestFlightSummary(Signature obj){
+        bus.post(new FlightSummary(obj));
+    }
 
     @Subscribe
     public void onPaymentInfoReceive(PaymentInfoReceive event) {
@@ -161,6 +175,13 @@ public class BookingPresenter {
     @Subscribe
     public void onContactInfoReceive(ContactInfoReceive event) {
         view4.onContactInfo(event);
+
+    }
+
+    @Subscribe
+    public void onFlightSummaryReceive(FlightSummaryReceive event) {
+        view8.onFlightSummary(event);
+
     }
 
     @Subscribe

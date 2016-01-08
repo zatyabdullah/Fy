@@ -200,14 +200,15 @@ public class BaseFragmentActivity extends FragmentActivity {
     public void finish()
     {
         super.finish();
-        overridePendingTransition(0, 0);
+        //overridePendingTransition(R.anim.fadeout,R.anim.fadein);
+
     }
 
     @Override
     public void onBackPressed()
     {
         super.onBackPressed();
-        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.fade_out);
         setResult(RESULT_CANCELED);
     }
 

@@ -219,6 +219,13 @@ public class UpdateProfileFragment extends BaseFragment implements
         state = new ArrayList<DropDownItem>();
         titleList = new ArrayList<DropDownItem>();
 
+        HashMap<String, String> init2 = pref.getNewsletterStatus();
+        String newsletter = init2.get(SharedPrefManager.ISNEWSLETTER);
+        if (newsletter.equals("Y")) {
+            checkSubscribe.setChecked(true);
+        }else{
+            checkSubscribe.setChecked(false);
+        }
 
         /*Display Existing User Data*/
 
@@ -447,8 +454,10 @@ public class UpdateProfileFragment extends BaseFragment implements
         HashMap<String, String> init = pref.getSignatureFromLocalStorage();
         String signatureFromLocal = init.get(SharedPrefManager.SIGNATURE);
 
-        HashMap<String, String> init2 = pref.getNewsletterStatus();
-        String newsletter = init2.get(SharedPrefManager.ISNEWSLETTER);
+        //HashMap<String, String> init2 = pref.getNewsletterStatus();
+        String newsletter;
+                //= init2.get(SharedPrefManager.ISNEWSLETTER);
+        //Log.e("newsletter",newsletter);
 
         JSONObject jsonUserInfo = getUserInfo(getActivity());
         UpdateProfileRequest data = new UpdateProfileRequest();
@@ -471,8 +480,10 @@ public class UpdateProfileFragment extends BaseFragment implements
         //Post newsletter
         if (checkSubscribe.isChecked()) {
             pref.setNewsletterStatus("Y");
+            newsletter = "Y";
         }else{
             pref.setNewsletterStatus("N");
+            newsletter = "N";
         }
         data.setNewsletter(newsletter);
 
